@@ -1,0 +1,7 @@
+.DS_Store
+start.sh
+*.swn
+*.swo
+*.swp
+node_modules/
+.orion/
