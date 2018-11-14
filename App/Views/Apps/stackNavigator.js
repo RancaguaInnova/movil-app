@@ -1,6 +1,10 @@
-import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig';
-import { createStackNavigator } from 'react-navigation';
-import Apps from './index';
+import React from 'react'
+import {
+  defaultNavigationConfig,
+  defaultRightMenu,
+} from 'App/components/CustomHeader/defaultNavigationConfig'
+import { createStackNavigator } from 'react-navigation'
+import Apps from './index'
 
 const AppsStack = createStackNavigator(
   {
@@ -8,13 +12,17 @@ const AppsStack = createStackNavigator(
       screen: Apps,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Trámites'
-      }
-    }
+        headerTitle: 'Trámites',
+        headerRight: defaultRightMenu.rightHeader,
+      },
+    },
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
+    cardStyle: {
+      backgroundColor: '#f1f1f1',
+    },
   }
-);
+)
 
-export { AppsStack };
+export { AppsStack }

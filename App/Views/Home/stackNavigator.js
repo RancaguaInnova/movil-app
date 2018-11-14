@@ -1,6 +1,6 @@
-import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig';
-import { createStackNavigator } from 'react-navigation';
-import Home from './index';
+import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig'
+import { createStackNavigator } from 'react-navigation'
+import Home from './index'
 
 const HomeStack = createStackNavigator(
   {
@@ -8,13 +8,16 @@ const HomeStack = createStackNavigator(
       screen: Home,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Bienvenid@'
-      }
-    }
+        headerTitle: 'Bienvenid@',
+      },
+    },
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
+    cardStyle: {
+      backgroundColor: '#f1f1f1',
+    },
   }
-);
+)
 
-export { HomeStack };
+export { HomeStack }

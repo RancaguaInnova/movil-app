@@ -1,9 +1,15 @@
+import React from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import CustomHeader from './index'
-import { defaultHeaderNavigationConfig } from 'App/styles/headerStyle';
+import { defaultHeaderNavigationConfig } from 'App/styles/headerStyle'
 
 const headerDefaultNavigationConfig = {
   header: props => <CustomHeader {...props} />,
-  ...defaultHeaderNavigationConfig
-};
+  ...defaultHeaderNavigationConfig,
+}
 
-export { headerDefaultNavigationConfig };
+const defaultRightMenu = {
+  rightHeader: <Ionicons name='ios-notifications-outline' style={{ paddingRight: 10 }} size={25} />,
+}
+
+export { headerDefaultNavigationConfig, defaultRightMenu }
