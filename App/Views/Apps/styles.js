@@ -10,5 +10,8 @@ export default StyleSheet.create({
   },
   text: {
     ...texts.title
+  },
+  leftIcon: {
+    paddingRight: 10
   }
 })
