@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StatusBar, Modal} from 'react-native'
+import { View, StatusBar, Modal } from 'react-native'
 import styles from './styles.js'
 import Main from './Main'
 import Password from './Password'
@@ -12,20 +12,21 @@ export default class Auth extends React.Component {
 
   @autobind
   open(opened) {
-    this.setState({opened})
+    this.setState({ opened })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#0069ff" barStyle="light-content" />
+        <StatusBar backgroundColor='#0069ff' barStyle='light-content' />
         <Main open={this.open} />
         <Modal
-          animationType="slide"
+          animationType='slide'
           visible={this.state.opened === 'password'}
           onRequestClose={() => {
-            this.setState({opened: null})
-          }}>
+            this.setState({ opened: null })
+          }}
+        >
           <Password open={this.open} />
         </Modal>
       </View>
