@@ -14,6 +14,7 @@ const HomeStack = createStackNavigator(
   },
   {
     navigationOptions: defaultNavigationConfig,
+    headerMode: 'none',
     cardStyle: {
       backgroundColor: '#f1f1f1',
     },
