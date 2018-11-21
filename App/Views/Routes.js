@@ -35,7 +35,7 @@ const AppTabRoutes = createBottomTabNavigator(
     Directory: {
       screen: DirectoryStack,
       navigationOptions: {
-        tabBarLabel: 'Directorio',
+        tabBarLabel: 'Guía',
       },
     },
     Profile: {
