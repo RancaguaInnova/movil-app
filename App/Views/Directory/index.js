@@ -1,12 +1,13 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 import styles from './styles.js'
 import logout from 'App/helpers/auth/logout'
 import LightButton from 'App/components/LightButton'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import { Row, Image, Subtitle, Caption } from '@shoutem/ui'
+import { Ionicons } from '@expo/vector-icons'
+import { Row, Image, Subtitle, Divider, TouchableOpacity, View, Caption } from '@shoutem/ui'
 
 @withGraphQL(gql`
   query getMe {
@@ -16,33 +17,49 @@ import { Row, Image, Subtitle, Caption } from '@shoutem/ui'
     }
   }
 `)
-export default class Home extends React.Component {
+export default class Directory extends React.Component {
   static propTypes = {
     me: PropTypes.object,
   }
 
   renderItem() {
     return (
-      <Row style={{ flex: 1 }}>
-        <Image
-          styleName='small-avatar top'
-          source={{ uri: 'https://shoutem.github.io/img/ui-toolkit/examples/image-11.png' }}
-        />
-        <View styleName='vertical'>
-          <View styleName='horizontal '>
-            <Subtitle>Dustin Malone</Subtitle>
-            <Caption>20 minutes ago</Caption>
+      <TouchableOpacity>
+        <Row styleName='small'>
+          <Image
+            styleName='small-avatar'
+            source={{ uri: 'https://shoutem.github.io/img/ui-toolkit/examples/image-11.png' }}
+          />
+
+          <View styleName='vertical'>
+            <Subtitle>Encargado</Subtitle>
+            <Text numberOfLines={2}>+56 9 11111111</Text>
           </View>
-          <Text styleName='multiline'>asdadasdadasdadasdadasdadasdadasdadasdada</Text>
-        </View>
-      </Row>
+          <Ionicons styleName='disclosure' name='ios-call' size={28} color='green' />
+        </Row>
+        <Divider styleName='line' />
+      </TouchableOpacity>
     )
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Listado de numeros de contacto municipal</Text>
+      <View styleName='content'>
+        <Divider styleName='section-header'>
+          <Caption>Municipio</Caption>
+        </Divider>
+        {this.renderItem()}
+        {this.renderItem()}
+
+        <Divider styleName='section-header'>
+          <Caption>Deporte</Caption>
+        </Divider>
+        {this.renderItem()}
+        <Divider styleName='section-header'>
+          <Caption>Tránsito</Caption>
+        </Divider>
+        {this.renderItem()}
+        {this.renderItem()}
       </View>
     )
   }
