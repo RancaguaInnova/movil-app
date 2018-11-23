@@ -9,7 +9,7 @@ const headerDefaultNavigationConfig = {
 }
 
 const defaultRightMenu = {
-  rightHeader: <Ionicons name='ios-notifications-outline' style={{ paddingRight: 10 }} size={25} />,
+  rightHeader: <Ionicons name='ios-notifications-outline' style={{ paddingRight: 15 }} size={25} />,
 }
 
 export { headerDefaultNavigationConfig, defaultRightMenu }

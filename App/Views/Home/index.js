@@ -5,8 +5,10 @@ import LightButton from 'App/components/LightButton'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
-import { Text } from '@shoutem/ui'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
+import { Text, View, Divider, Caption } from '@shoutem/ui'
+import HomeOverlay from 'App/components/HomeOverlay'
+import NewsListItem from 'App/components/NewsListItem'
 @withGraphQL(gql`
   query getMe {
     me {
@@ -20,11 +22,30 @@ export default class Home extends React.Component {
     me: PropTypes.object,
   }
 
+  renderOverlay() {
+    return <HomeOverlay />
+  }
+
+  renderNews() {
+    return (
+      <View>
+        <NewsListItem />
+        <NewsListItem />
+        <NewsListItem />
+        <NewsListItem />
+        <NewsListItem />
+      </View>
+    )
+  }
+
   render() {
     return (
-      <View styles={styles.container}>
-        <Text>{this.props.me.email}, Welcome to Orionjs app</Text>
-        <LightButton onPress={() => logout()} title='Logout' />
+      <View styleName='content' style={{ marginTop: 23 }}>
+        {this.renderOverlay()}
+        <Divider styleName='section-header'>
+          <Caption>Noticias</Caption>
+        </Divider>
+        <ScrollView style={{ height: 350 }}>{this.renderNews()}</ScrollView>
       </View>
     )
   }
