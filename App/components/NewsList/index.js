@@ -7,7 +7,7 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 
 @withGraphQL(gql`
   query getNewsFeed {
-    news {
+    items {
       title
       text
       date
