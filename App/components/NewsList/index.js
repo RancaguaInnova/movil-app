@@ -2,23 +2,33 @@ import React from 'react'
 import { View, Text } from '@shoutem/ui'
 import NewsListItem from './NewsListItem/index'
 import gql from 'graphql-tag'
+/* import PropTypes from 'prop-types' */
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 
 @withGraphQL(
   gql`
-    query getNewsFeed($limit: Int!) {
+    query getNewsFeed {
       title
       text
       date
     }
   `,
   {
-    limit: 10,
+    options: { errorPolicy: 'all' },
   }
 )
 export default class NewsList extends React.Component {
+  /* static propTypes = {
+    getNewsFeed: PropTypes.array,
+  } */
+
+  constructor(props) {
+    super(props)
+    console.log('!!!!!PRROOOPS', props)
+  }
+
   render() {
-    console.log('this.props.getNewsFeed!!!!!!!!!!!', this.props.getNewsFeed)
+    console.log('this.props!!!!!!!!!!', this.props)
     return (
       <View>
         <NewsListItem />
