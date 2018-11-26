@@ -48,7 +48,7 @@ export default class Home extends React.Component {
           <Caption>Noticias</Caption>
         </Divider>
         <ScrollView style={{ height: 350 }}>
-          <NewsList limit={20} />
+          <NewsList />
         </ScrollView>
       </View>
     )
