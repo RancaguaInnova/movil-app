@@ -6,11 +6,12 @@ import PropTypes from 'prop-types'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 
 @withGraphQL(gql`
-  query getNewsFeed {
-    items {
-      title
-      text
-      date
+  query getNews {
+    getNewsFeed {
+      items {
+        _id
+        title
+      }
     }
   }
 `)
