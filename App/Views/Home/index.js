@@ -16,22 +16,6 @@ import NewsList from 'App/components/NewsList'
   }
 `)
 export default class Home extends React.Component {
-  /* constructor(props) {
-    super(props)
-    this.state = {
-      newsList: [
-        {
-          title: 'titulo de la noticia',
-          subtitle: 'subtitulo de la noticia',
-          image: 'url imagen',
-          date: 'fecha publicacion',
-          link: 'url para abrir en en un webview o en el browser al hacer click',
-          source: 'fuente de publicacion / custom/fbk/twt',
-        },
-      ],
-    }
-  } */
-
   static propTypes = {
     me: PropTypes.object,
   }

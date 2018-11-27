@@ -1,101 +1,13 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { LinearGradient } from 'expo'
-import { Ionicons } from '@expo/vector-icons'
-import styles from './styles.js'
-import { ImageBackground, Tile, Overlay, Subtitle, Title, Caption } from '@shoutem/ui'
-import NotificationButton from 'App/components/NotificationButton'
+import InformationCard from './InformationCard'
+import TopBar from './TopBar'
+import { ImageBackground, Tile, Overlay } from '@shoutem/ui'
 
 export default class HomeOverlay extends React.Component {
   renderInfoCard() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'stretch',
-          /* borderWidth: 1,
-          borderColor: 'red', */
-        }}
-      >
-        <View
-          style={{
-            width: '40%',
-            height: '100%',
-            /* justifyContent: 'center', */
-            alignItems: 'stretch',
-            padding: 0,
-            /* borderColor: 'blue',
-            borderWidth: 1, */
-          }}
-        >
-          <Ionicons
-            name='ios-sunny'
-            size={55}
-            style={{ color: 'yellow', /* borderWidth: 1, borderColor: 'green', */ paddingLeft: 37 }}
-          />
-          <Title
-            styleName='bold h-center'
-            style={{
-              color: 'white',
-              fontSize: 28,
-              paddingTop: 15,
-              /* borderWidth: 1,
-              borderColor: 'yellow', */
-            }}
-          >
-            9
-          </Title>
-        </View>
-        <View style={{ width: '60%', paddingTop: 10 }}>
-          <Title styleName='bold' style={{ color: 'white' }}>
-            Radiación UV
-          </Title>
-          <Subtitle multiline={3}>No salga a la calle</Subtitle>
-        </View>
-      </View>
-    )
-  }
-
-  renderTopBar() {
-    return (
-      <View
-        style={{
-          flex: 0.4,
-          flexDirection: 'row',
-          padding: 5,
-          justifyContent: 'center',
-          alignItems: 'stretch',
-          /* borderWidth: 1,
-          borderColor: 'green', */
-        }}
-      >
-        <View
-          style={{
-            /* borderColor: 'red',
-            borderWidth: 1, */
-            width: '80%',
-          }}
-        >
-          <Title styleName='bold' style={{ color: 'white' }}>
-            RANCAGUA
-          </Title>
-          <Caption style={{ color: 'white' }}>Viernes 14 de Diciembre, 2018</Caption>
-        </View>
-        <View
-          style={{
-            /* borderColor: 'black',
-            borderWidth: 1, */
-            width: '20%',
-            alignItems: 'flex-end',
-            paddingTop: 12,
-          }}
-        >
-          <NotificationButton />
-        </View>
-      </View>
-    )
+    return <InformationCard />
   }
 
   render() {
@@ -118,7 +30,7 @@ export default class HomeOverlay extends React.Component {
           }}
         >
           <LinearGradient colors={['#0399f0', 'transparent']} style={{ height: '100%' }}>
-            {this.renderTopBar()}
+            <TopBar />
 
             <View
               style={{
