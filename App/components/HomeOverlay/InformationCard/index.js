@@ -5,6 +5,8 @@ import { Subtitle, Title } from '@shoutem/ui'
 
 export default class InformationCard extends React.Component {
   render() {
+    const card = this.props.card
+
     return (
       <View
         style={{
@@ -18,9 +20,9 @@ export default class InformationCard extends React.Component {
       >
         <View
           style={{
-            width: '40%',
+            width: '30%',
             height: '100%',
-            /* justifyContent: 'center', */
+            justifyContent: 'center',
             alignItems: 'stretch',
             padding: 0,
             /* borderColor: 'blue',
@@ -28,28 +30,33 @@ export default class InformationCard extends React.Component {
           }}
         >
           <Ionicons
-            name='ios-sunny'
+            name={card.icon}
             size={55}
-            style={{ color: 'yellow', /* borderWidth: 1, borderColor: 'green', */ paddingLeft: 37 }}
+            style={{
+              color: card.color,
+              /* borderWidth: 1, borderColor: 'green', */ paddingLeft: 37,
+            }}
           />
           <Title
             styleName='bold h-center'
             style={{
-              color: 'white',
+              color: card.color,
               fontSize: 28,
               paddingTop: 15,
               /* borderWidth: 1,
               borderColor: 'yellow', */
             }}
           >
-            9
+            {card.datum} {card.measurementUnit}
           </Title>
         </View>
-        <View style={{ width: '60%', paddingTop: 10 }}>
+        <View style={{ width: '70%', paddingTop: 10 /*  borderWidth: 1, borderColor: 'yellow' */ }}>
           <Title styleName='bold' style={{ color: 'white' }}>
-            Radiación UV
+            {card.title}
           </Title>
-          <Subtitle multiline={3}>No salga a la calle</Subtitle>
+          <Subtitle multiline={3} style={{ fontSize: 12 }}>
+            {card.subtitle}
+          </Subtitle>
         </View>
       </View>
     )

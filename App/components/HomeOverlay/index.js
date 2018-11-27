@@ -3,11 +3,32 @@ import { View } from 'react-native'
 import { LinearGradient } from 'expo'
 import InformationCard from './InformationCard'
 import TopBar from './TopBar'
+import gql from 'graphql-tag'
+import PropTypes from 'prop-types'
 import { ImageBackground, Tile, Overlay } from '@shoutem/ui'
+import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 
+@withGraphQL(gql`
+  query {
+    cardsList {
+      datum
+      measurementUnit
+      icon
+      color
+      title
+      subtitle
+    }
+  }
+`)
 export default class HomeOverlay extends React.Component {
+  static propTypes = {
+    cardsList: PropTypes.array,
+  }
+
   renderInfoCard() {
-    return <InformationCard />
+    const cards = this.props.cardsList || []
+
+    return <InformationCard card={cards[0]} />
   }
 
   render() {
@@ -15,7 +36,6 @@ export default class HomeOverlay extends React.Component {
       <ImageBackground
         styleName='large-banner'
         source={{
-          /* uri: 'https://www.welcomechile.com/rancagua/imagenes/catedral-de-rancagua.jpg', */
           uri:
             'https://upload.wikimedia.org/wikipedia/commons/6/67/Plaza_de_los_H%C3%A9roes_de_Rancagua_01.JPG',
         }}
