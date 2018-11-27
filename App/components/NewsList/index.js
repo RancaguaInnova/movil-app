@@ -6,31 +6,31 @@ import PropTypes from 'prop-types'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 
 @withGraphQL(gql`
-  query getNews {
-    getNewsFeed {
+  query {
+    newsList {
       items {
         _id
         title
+        date
+        subtitle
+        imageUrl
       }
     }
   }
 `)
 export default class NewsList extends React.Component {
   static propTypes = {
-    news: PropTypes.array,
-    limit: PropTypes.number
-  }
-
-  constructor(props) {
-    super(props)
-    console.log('!!!!!PRROOOPS', props)
+    newsList: PropTypes.object,
+    limit: PropTypes.number,
   }
 
   render() {
-    console.log('this.props!!!!!!!!!!', this.props)
+    const news = this.props.newsList.items || []
     return (
       <View>
-        <NewsListItem />
+        {news.map(n => (
+          <NewsListItem key={n._id} data={n} />
+        ))}
       </View>
     )
   }
