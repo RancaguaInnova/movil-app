@@ -31,7 +31,7 @@ export default class Home extends React.Component {
         <Divider styleName='section-header'>
           <Caption>Noticias</Caption>
         </Divider>
-        <ScrollView style={{ height: 350 }}>
+        <ScrollView style={{ height: 300 }}>
           <NewsList />
         </ScrollView>
       </View>

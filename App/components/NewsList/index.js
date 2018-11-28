@@ -8,24 +8,23 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 @withGraphQL(gql`
   query {
     newsList {
-      items {
-        _id
-        title
-        date
-        subtitle
-        imageUrl
-      }
+      _id
+      title
+      date
+      subtitle
+      imageUrl
     }
   }
 `)
 export default class NewsList extends React.Component {
   static propTypes = {
-    newsList: PropTypes.object,
+    newsList: PropTypes.array,
     limit: PropTypes.number,
   }
 
   render() {
-    const news = this.props.newsList.items || []
+    console.log('this.props.newsList', this.props.newsList)
+    const news = this.props.newsList || []
     return (
       <View>
         {news.map(n => (
