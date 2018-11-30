@@ -26,12 +26,12 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <View styleName='content' style={{ marginTop: 23 }}>
+      <View styleName='content' style={{ justifyContent: 'center', flex: 1, paddingTop: 24 }}>
         {this.renderOverlay()}
         <Divider styleName='section-header'>
           <Caption>Noticias</Caption>
         </Divider>
-        <ScrollView style={{ height: 300 }}>
+        <ScrollView>
           <NewsList />
         </ScrollView>
       </View>

@@ -5,6 +5,7 @@ import { Image, View, Row, Subtitle, Caption, TouchableOpacity, Text, Divider } 
 export default class NewsListItem extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    onClickNews: PropTypes.func,
   }
 
   getImage() {
@@ -20,9 +21,10 @@ export default class NewsListItem extends React.Component {
       title: this.props.data.title || '',
       subtitle: this.props.data.subtitle || '',
       date: moment(this.props.data.date).fromNow(),
+      externalUrl: this.props.data.externalUrl || '',
     }
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.onClickNews(newsData)}>
         <Row>
           <Image styleName='small rounded-corners' source={newsData.image} />
           <View styleName='vertical stretch space-between'>
