@@ -38,6 +38,7 @@
     "@shoutem/ui": "^0.23.9",
     "autobind-decorator": "^2.1.0",
     "expo": "^30.0.0",
+    "moment": "^2.22.2",
     "react": "16.3.1",
     "react-apollo": "^2.1.9",
     "react-apollo-decorators": "^2.0.1",
