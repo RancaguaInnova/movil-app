@@ -1,9 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Login from './Main'
-import { client, getSession } from 'App/Root/client'
+import {
+  client,
+  getSession,
+  getIntroVisualization,
+  setIntroVisualization,
+  resetIntroVisualization,
+} from 'App/Root/client'
 import autobind from 'autobind-decorator'
 import SessionContext from 'App/helpers/auth/SessionContext'
+import Intro from 'App/Views/Intro'
 
 export default class Auth extends React.Component {
   static propTypes = {
@@ -13,8 +20,10 @@ export default class Auth extends React.Component {
   constructor(props) {
     super(props)
     const session = getSession() || {}
-    this.state = { session }
+    const introVisualization = getIntroVisualization() || false
+    this.state = { session, introVisualization }
     this.initialUserId = session.userId
+    this.skipIntro = this.skipIntro.bind(this)
   }
 
   componentDidMount() {
@@ -25,9 +34,26 @@ export default class Auth extends React.Component {
   onResetStore() {
     try {
       const session = getSession() || {}
-      this.setState({ session })
+      const introVisualization = session.user.userId
+        ? getIntroVisualization()
+        : resetIntroVisualization()
+      this.setState({ session, introVisualization })
     } catch (error) {
       console.log('Error getting user session:', error)
+    }
+  }
+
+  publicKey() {
+    return this.state.session.userId ? this.state.session.publicKey : 'public'
+  }
+
+  async skipIntro() {
+    try {
+      await setIntroVisualization('false')
+      const introVisualization = await getIntroVisualization()
+      this.setState({ introVisualization })
+    } catch (error) {
+      console.log('[skipIntro]:', error)
     }
   }
 
@@ -35,10 +61,10 @@ export default class Auth extends React.Component {
     const App = this.props.app
     return (
       <SessionContext.Provider value={this.state.session}>
-        {this.state.session.userId ? (
-          <App key={this.state.session.publicKey || 'loggedout'} />
+        {this.state.introVisualization ? (
+          <App key={this.publicKey} />
         ) : (
-          <Login />
+          <Intro skip={this.skipIntro} />
         )}
       </SessionContext.Provider>
     )

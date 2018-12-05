@@ -5,17 +5,17 @@ import App from './Views'
 import Auth from './Auth'
 
 export default class AppRoot extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     Font.loadAsync({
       'Rubik-Regular': require('./assets/fonts/Rubik-Regular.ttf'),
-      'rubicon-icon-font': require('./assets/fonts/rubicon-icon-font.ttf')
+      'rubicon-icon-font': require('./assets/fonts/rubicon-icon-font.ttf'),
     })
   }
 
-  render () {
+  render() {
     return (
       <Root>
-        <Auth forceLogin app={App} />
+        <Auth app={App} />
       </Root>
     )
   }
