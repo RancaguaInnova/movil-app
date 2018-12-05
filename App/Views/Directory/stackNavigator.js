@@ -1,6 +1,9 @@
-import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig';
-import { createStackNavigator } from 'react-navigation';
-import Directory from './index';
+import {
+  defaultNavigationConfig,
+  defaultRightMenu,
+} from 'App/components/CustomHeader/defaultNavigationConfig'
+import { createStackNavigator } from 'react-navigation'
+import Directory from './index'
 
 const DirectoryStack = createStackNavigator(
   {
@@ -8,13 +11,14 @@ const DirectoryStack = createStackNavigator(
       screen: Directory,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Directorio'
-      }
-    }
+        headerTitle: 'Directorio',
+        headerRight: defaultRightMenu.rightHeader,
+      },
+    },
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
   }
-);
+)
 
-export { DirectoryStack };
+export { DirectoryStack }

@@ -1,6 +1,9 @@
-import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig';
-import { createStackNavigator } from 'react-navigation';
-import Profile from './index';
+import {
+  defaultNavigationConfig,
+  defaultRightMenu,
+} from 'App/components/CustomHeader/defaultNavigationConfig'
+import { createStackNavigator } from 'react-navigation'
+import Profile from './index'
 
 const ProfileStack = createStackNavigator(
   {
@@ -8,13 +11,14 @@ const ProfileStack = createStackNavigator(
       screen: Profile,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Perfil'
-      }
-    }
+        headerTitle: 'Perfil',
+        headerRight: defaultRightMenu.rightHeader,
+      },
+    },
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
   }
-);
+)
 
-export { ProfileStack };
+export { ProfileStack }
