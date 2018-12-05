@@ -9,14 +9,6 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { Row, Image, Subtitle, Divider, TouchableOpacity, View, Caption } from '@shoutem/ui'
 
-@withGraphQL(gql`
-  query getMe {
-    me {
-      _id
-      email
-    }
-  }
-`)
 export default class Directory extends React.Component {
   static propTypes = {
     me: PropTypes.object,
