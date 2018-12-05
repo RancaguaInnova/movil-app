@@ -1,6 +1,9 @@
-import { defaultNavigationConfig } from 'App/components/CustomHeader/defaultNavigationConfig';
-import { createStackNavigator } from 'react-navigation';
-import Calendar from './index';
+import {
+  defaultNavigationConfig,
+  defaultRightMenu,
+} from 'App/components/CustomHeader/defaultNavigationConfig'
+import { createStackNavigator } from 'react-navigation'
+import Calendar from './index'
 
 const CalendarStack = createStackNavigator(
   {
@@ -8,13 +11,14 @@ const CalendarStack = createStackNavigator(
       screen: Calendar,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Calendario'
-      }
-    }
+        headerTitle: 'Calendario',
+        headerRight: defaultRightMenu.rightHeader,
+      },
+    },
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
   }
-);
+)
 
-export { CalendarStack };
+export { CalendarStack }

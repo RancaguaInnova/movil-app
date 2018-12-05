@@ -12,7 +12,7 @@ const AppsStack = createStackNavigator(
       screen: Apps,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: 'Trámites',
+        headerTitle: 'Servicios',
         headerRight: defaultRightMenu.rightHeader,
       },
     },
