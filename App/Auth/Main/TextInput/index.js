@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, TextInput} from 'react-native'
+import { View, Text, TextInput } from '@shoutem/ui'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
 
@@ -15,20 +15,18 @@ export default class TextInputField extends React.Component {
     label: 'Input'
   }
 
-  focus() {
+  focus () {
     this.refs.input.focus()
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
-        <Text style={styles.label}>
-          {this.props.label.toUpperCase()}
-        </Text>
+        <Text style={styles.label}>{this.props.label.toUpperCase()}</Text>
         <TextInput
-          ref="input"
+          ref='input'
           style={styles.input}
-          autoCapitalize="none"
+          autoCapitalize='none'
           autoCorrect={false}
           blurOnSubmit
           onChangeText={this.props.onChange}

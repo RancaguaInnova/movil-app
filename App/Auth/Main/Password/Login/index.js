@@ -1,7 +1,7 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import { View, Text } from 'react-native'
 import styles from './styles.js'
-import {Form, Field} from 'simple-react-form'
+import { Form, Field } from 'simple-react-form'
 import TextInput from '../../TextInput'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
@@ -44,16 +44,19 @@ export default class Login extends React.Component {
 
   @autobind
   async submit() {
-    this.setState({loading: true, errorMessage: null})
+    this.setState({ loading: true, errorMessage: null })
     try {
-      const {email, password} = this.state
-      const {session} = await this.props.loginWithPassword({email, password})
+      const { email, password } = this.state
+      const { session } = await this.props.loginWithPassword({
+        email,
+        password
+      })
       await saveSession(session)
     } catch (error) {
       const errorMessage = error.message.replace('GraphQL error: ', '')
-      this.setState({errorMessage})
+      this.setState({ errorMessage })
       console.log('Error:', error)
-      this.setState({loading: false})
+      this.setState({ loading: false })
     }
   }
 
@@ -91,7 +94,10 @@ export default class Login extends React.Component {
           </View>
         </Form>
         {this.renderErrorMessage()}
-        <LightButton onPress={() => this.props.open(0)} title="Olvidé mi contraseña" />
+        <LightButton
+          onPress={() => this.props.open(0)}
+          title="Olvidé mi contraseña"
+        />
         <Button
           disabled={!this.isFormReady()}
           loading={this.state.loading}
@@ -99,7 +105,7 @@ export default class Login extends React.Component {
           title="Entrar"
         />
         <Button
-          buttonStyle={{marginTop: 20}}
+          buttonStyle={{ marginTop: 20 }}
           onPress={() => this.props.open(2)}
           title="Registrarme"
         />

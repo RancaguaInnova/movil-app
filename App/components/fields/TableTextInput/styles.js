@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
@@ -21,7 +21,8 @@ export default StyleSheet.create({
     color: '#888',
     flex: 1,
     textAlign: 'right',
-    fontSize: 18
+    fontSize: 18,
+    height: 20
   },
   bottomLine: {
     backgroundColor: '#eee',

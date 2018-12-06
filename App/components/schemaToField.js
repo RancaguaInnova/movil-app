@@ -5,12 +5,14 @@ import isArray from 'lodash/isArray'
 const singleFieldMap = {
   string: TableTextInput,
   ID: TableTextInput,
-  plainObject: ObjectField
+  plainObject: ObjectField,
+  number: TableTextInput
 }
 
 const arrayFieldMap = {}
 
-export default function(type) {
+export default function (type) {
+  console.log('type:', type)
   const fieldMap = isArray(type) ? arrayFieldMap : singleFieldMap
   const typeId = isArray(type) ? type[0] : type
   const fieldType = fieldMap[type]
