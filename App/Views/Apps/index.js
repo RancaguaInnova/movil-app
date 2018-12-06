@@ -98,7 +98,7 @@ export default class Apps extends React.Component {
           }}
         >
           <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Seleccione el trámite que desea realizar
+            Seleccione el servicio
           </Subtitle>
         </View>
         <Divider styleName='line' />
