@@ -17,31 +17,31 @@ const AppTabRoutes = createBottomTabNavigator(
     Home: {
       screen: HomeStack,
       navigationOptions: {
-        tabBarLabel: 'INICIO',
+        tabBarLabel: 'Inicio',
       },
     },
     Calendar: {
       screen: CalendarStack,
       navigationOptions: {
-        tabBarLabel: 'CALENDARIO',
+        tabBarLabel: 'Calendario',
       },
     },
     Integrations: {
       screen: AppsStack,
       navigationOptions: {
-        tabBarLabel: 'SERVICIOS',
+        tabBarLabel: 'Servicios',
       },
     },
     Directory: {
       screen: DirectoryStack,
       navigationOptions: {
-        tabBarLabel: 'GUÍA',
+        tabBarLabel: 'Directorio',
       },
     },
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
-        tabBarLabel: 'PERFIL',
+        tabBarLabel: 'Perfil',
       },
     },
   },
