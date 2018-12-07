@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import DirectoryDetailOverlay from './DirectoryDetailOverlay'
-import DirectoryContactOfficer from './DirectoryContactOfficer'
+import DirectoryContactOfficer from './DirectoryContactOfficial'
 
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'

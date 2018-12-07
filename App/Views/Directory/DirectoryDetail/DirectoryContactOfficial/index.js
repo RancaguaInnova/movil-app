@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import email from 'react-native-email'
 import call from 'react-native-phone-call'
 
-export default class DirectoryDetailOfficer extends React.Component {
+export default class DirectoryDetailOfficial extends React.Component {
   static propTypes = {
     officer: PropTypes.object,
   }
