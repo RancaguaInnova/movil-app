@@ -7,80 +7,24 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+
+@withGraphQL(gql`
+  {
+    departments(limit: 100, page: 1) {
+      items {
+        _id
+        name
+        imageUrl
+        address
+        businessHours
+      }
+    }
+  }
+`)
 export default class DirectoryList extends React.Component {
   static propTypes = {
     showDetail: PropTypes.func,
-  }
-  componentDidMount() {
-    this.setState({
-      list: [
-        {
-          name: 'Alcaldía',
-          _id: 1,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 2,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 3,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 4,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 5,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 6,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 7,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía 8',
-          _id: 8,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 9,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 10,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía11',
-          _id: 11,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía',
-          _id: 12,
-          icon: 'ios-contact',
-        },
-        {
-          name: 'Alcaldía 13',
-          _id: 13,
-          icon: 'ios-contact',
-        },
-      ],
-    })
+    departments: PropTypes.object,
   }
 
   renderDirectoryItem(item) {
@@ -100,7 +44,8 @@ export default class DirectoryList extends React.Component {
   }
 
   render() {
-    const list = this.state && this.state.list ? this.state.list : []
+    const list =
+      this.props.departments && this.props.departments.items ? this.props.departments.items : []
     return (
       <ScrollView>
         <View

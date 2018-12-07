@@ -6,9 +6,43 @@ import { ScrollView } from 'react-native'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import DirectoryDetailOverlay from './DirectoryDetailOverlay'
 import DirectoryContactOfficer from './DirectoryContactOfficer'
+
+import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
+import gql from 'graphql-tag'
+
+@withGraphQL(
+  gql`
+    query officialsByDepartment($department: ID!) {
+      officialsByDepartment(department: $department) {
+        _id
+        firstname
+        lastname
+        contactInformation {
+          phone {
+            areaCode
+            number
+            mobilePhone
+          }
+          email
+        }
+        position
+        imageUrl
+      }
+    }
+  `,
+  {
+    options: ownProps => ({
+      variables: {
+        department: ownProps.directory._id,
+      },
+    }),
+  }
+)
 export default class DirectoryDetail extends React.Component {
   static propTypes = {
     closeDetail: PropTypes.func,
+    directory: PropTypes.object,
+    officialsByDepartment: PropTypes.array,
   }
 
   renderBackButton() {
@@ -26,6 +60,7 @@ export default class DirectoryDetail extends React.Component {
   }
 
   render() {
+    const officials = this.props.officialsByDepartment || []
     return (
       <View
         styleName='content'
@@ -36,22 +71,10 @@ export default class DirectoryDetail extends React.Component {
       >
         {this.renderBackButton()}
         <ScrollView style={{ flex: 1 }}>
-          <DirectoryDetailOverlay />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
-          <DirectoryContactOfficer />
+          <DirectoryDetailOverlay directory={this.props.directory} />
+          {officials.map(officer => (
+            <DirectoryContactOfficer officer={officer} key={officer._id} />
+          ))}
         </ScrollView>
       </View>
     )
