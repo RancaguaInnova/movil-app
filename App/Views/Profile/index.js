@@ -1,8 +1,10 @@
 import React from 'react'
 import { View, Text } from '@shoutem/ui'
-import TableTextInput from 'App/components/fields/TableTextInput'
+import TextInput from 'App/components/fields/TextInput'
+// import Rut from 'orionsoft-parts/lib/components/fields/Rut'
 import { Form, Field } from 'simple-react-form'
-import Button from 'App/components/Button'
+// import Button from 'App/components/Button'
+import Button from 'App/components/ShoutemButton'
 import LightButton from 'App/components/LightButton'
 import autobind from 'autobind-decorator'
 import styles from './styles.js'
@@ -11,40 +13,39 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
+import UserFragments from 'App/fragments/User'
+import forceRegistration from 'App/helpers/auth/forceRegistration'
 
+@forceRegistration
 @withGraphQL(gql`
   query getMe {
     me {
-      _id
-      email
-      profile {
-        firstName
-        lastName
-        identifier
-        address {
-          streetName
-          streetNumber
-          departmentNumber
-          postalCode
-          city
-        }
-        phone {
-          areaCode
-          number
-          mobilePhone
-        }
-        educationalLevel
-      }
-      active
+      ...FullUser
     }
   }
+  ${UserFragments.FullUser}
+`)
+@withMutation(gql`
+  mutation updateUser($user: User!) {
+    updateUser(user: $user) {
+      ...FullUser
+    }
+  }
+  ${UserFragments.FullUser}
 `)
 export default class Profile extends React.Component {
   static propTypes = {
     me: PropTypes.object
   }
 
-  state = { ...(this.props.me || { profile: {} }) }
+  state = {
+    errorMessage: ''
+  }
+
+  componentDidMount() {
+    let me = this.props.me || {}
+    this.state = { me, errorMessage: '' }
+  }
 
   renderLogoutButton() {
     if (this.props.me) {
@@ -60,19 +61,26 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TableTextInput
-          value={this.state.profile.firstName || 'Ingresa tu nombre'}
-          onChangeText={change => this.setState}
-          label="Nombre:"
-        />
+      <View styleNames="fill-container" style={styles.container}>
+        <Form state={this.state} onChange={changes => this.setState(changes)}>
+          <Field
+            fieldName="profile.firstname"
+            type={TextInput}
+            label="Nombre:"
+            placeHolder="Ingrese su nombre"
+          />
+          <Field
+            fieldName="profile.lastName"
+            type={TextInput}
+            label="Apellido:"
+          />
+        </Form>
         {this.renderErrorMessage()}
         <Button
           loading={this.state.loading}
           onPress={this.submit}
-          height={30}
-          textStyle={{ fontSize: 15 }}
-          title="Guardar"
+          label="Guardar"
+          iconName="save"
         />
       </View>
     )

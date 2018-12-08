@@ -1,10 +1,12 @@
 import {
   defaultNavigationConfig,
-  defaultRightMenu,
+  defaultRightMenu
 } from 'App/components/CustomHeader/defaultNavigationConfig'
 import { createStackNavigator } from 'react-navigation'
 import Profile from './index'
+import AuthStack from './Auth/stackNavigator'
 
+console.log('AuthStack:', AuthStack)
 const ProfileStack = createStackNavigator(
   {
     Profile: {
@@ -12,12 +14,20 @@ const ProfileStack = createStackNavigator(
       navigationOptions: {
         headerLeft: null,
         headerTitle: 'Perfil',
-        headerRight: defaultRightMenu.rightHeader,
-      },
+        headerRight: defaultRightMenu.rightHeader
+      }
     },
+    Auth: {
+      screen: AuthStack,
+      navigationOptions: {
+        headerLeft: null,
+        headerTitle: 'Administración de cuenta',
+        headerRight: defaultRightMenu.rightHeader
+      }
+    }
   },
   {
-    navigationOptions: defaultNavigationConfig,
+    navigationOptions: defaultNavigationConfig
   }
 )
 

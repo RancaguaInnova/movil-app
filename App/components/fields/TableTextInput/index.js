@@ -51,7 +51,6 @@ export default class TableTextInput extends React.Component {
               onChangeText={this.props.onChange}
               value={this.props.value}
               {...this.props.passProps}
-              style={{ flex: 1 }}
             />
           </View>
         </TouchableWithoutFeedback>

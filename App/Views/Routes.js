@@ -10,6 +10,8 @@ import { CalendarStack } from './Calendar/stackNavigator'
 import { AppsStack } from './Apps/stackNavigator'
 import { ProfileStack } from './Profile/stackNavigator'
 import { DirectoryStack } from './Directory/stackNavigator'
+import Register from 'App/Auth/Main/Password/Register'
+import Login from 'App/Auth/Main/Password/Login'
 
 // Main tab navigation config
 const AppTabRoutes = createBottomTabNavigator(
@@ -17,33 +19,33 @@ const AppTabRoutes = createBottomTabNavigator(
     Home: {
       screen: HomeStack,
       navigationOptions: {
-        tabBarLabel: 'INICIO',
-      },
+        tabBarLabel: 'Inicio'
+      }
     },
     Calendar: {
       screen: CalendarStack,
       navigationOptions: {
-        tabBarLabel: 'CALENDARIO',
-      },
+        tabBarLabel: 'Calendario'
+      }
     },
     Integrations: {
       screen: AppsStack,
       navigationOptions: {
-        tabBarLabel: 'SERVICIOS',
-      },
+        tabBarLabel: 'Servicios'
+      }
     },
     Directory: {
       screen: DirectoryStack,
       navigationOptions: {
-        tabBarLabel: 'GUÍA',
-      },
+        tabBarLabel: 'Guía'
+      }
     },
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
-        tabBarLabel: 'PERFIL',
-      },
-    },
+        tabBarLabel: 'Perfil'
+      }
+    }
   },
   {
     initialRouteName: 'Home',
@@ -52,11 +54,11 @@ const AppTabRoutes = createBottomTabNavigator(
         const { routeName } = navigation.state
         const iconName = sectionIcon(routeName, focused)
         return <Ionicons name={iconName} size={28} color={tintColor} />
-      },
+      }
     }),
     tabBarOptions: tabBarStyle,
     animationEnabled: true,
-    swipeEnabled: true,
+    swipeEnabled: true
   }
 )
 export default AppTabRoutes
