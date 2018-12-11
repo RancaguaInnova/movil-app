@@ -29,6 +29,12 @@ export default class Apps extends React.Component {
           externalUrl: '',
         },
         {
+          name: 'Tránsito',
+          description: 'Reserva de hora Licencia de Conducir',
+          icon: 'ios-car',
+          externalUrl: 'https://rancagua.licenciaconducir.cl/access/12345',
+        },
+        {
           name: 'Salud',
           description: 'Reserva de horas en Cesfam',
           icon: 'md-medkit',
@@ -45,12 +51,6 @@ export default class Apps extends React.Component {
           description: 'Plano Regulador',
           icon: 'ios-hammer',
           externalUrl: '',
-        },
-        {
-          name: 'Tránsito',
-          description: 'Reserva de hora Licencia de Conducir',
-          icon: 'ios-car',
-          externalUrl: 'https://rancagua.licenciaconducir.cl',
         },
       ],
       result: null,

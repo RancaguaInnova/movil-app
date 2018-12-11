@@ -2,7 +2,6 @@ import React from 'react'
 //import { View, Text, Button } from 'react-native'
 import styles from './styles.js'
 import gql from 'graphql-tag'
-import PropTypes from 'prop-types'
 import moment from 'App/helpers/date/moment'
 import { Agenda } from 'react-native-calendars'
 import { LocaleConfig } from 'react-native-calendars'
@@ -14,7 +13,7 @@ import { client } from 'App/Root/client'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import autobind from 'autobind-decorator'
 import Item from './Item'
-import Day from './day'
+//import Day from './day'
 import EmptyDate from './emptyDate'
 
 LocaleConfig.locales['es'] = locales
@@ -99,12 +98,7 @@ export default class Home extends React.Component {
             return <Item item={item} firstItemInDay={firstItemInDay} />
           }}
           // specify how each date should be rendered. day can be undefined if the item is not first in that day.
-          renderDay={(day, item) => <Day day={day} />}
-          /*  onDayChange={day => {
-            console.log('day changed', day)
-          }} */
-          // specify how empty date content with no items should be rendered
-          /* renderEmptyDate={() => <EmptyDate />} */
+          renderDay={(day, item) => <View />}
           firstDay={1}
           futureScrollRange={300}
           pastScrollRange={300}
