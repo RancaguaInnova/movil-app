@@ -29,7 +29,7 @@ export default class Intro extends React.Component {
           style={{ height: '100%' }}
         />
         <LinearGradient
-          colors={['rgba(3,153,240,1)', 'transparent', 'transparent', 'transparent', 'transparent']}
+          colors={['black', 'transparent', 'transparent', 'transparent', 'transparent']}
           style={{
             position: 'absolute',
             top: 0,
