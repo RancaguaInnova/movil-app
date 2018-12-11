@@ -23,7 +23,7 @@ export default class DirectoryDetailOverlay extends React.Component {
       name: this.props.directory.name || '',
       imageUrl: this.props.directory.imageUrl
         ? this.props.directory.imageUrl
-        : 'http://smart.rancagua.cl/wp-content/uploads/2018/09/Logo-Desarrollo-Innovaci%C3%B3n-Rancagua-web.png',
+        : 'https://img2.eltipografo.cl/media/2017/12/Plaza-1-1024x642.jpg',
     }
     return (
       <View>
@@ -31,8 +31,10 @@ export default class DirectoryDetailOverlay extends React.Component {
           <Tile>
             <Overlay styleName='image-overlay'>
               <Title styleName='sm-gutter-horizontal'>{directory.name}</Title>
-              <Subtitle>{directory.address}</Subtitle>
-              <Text numberOfLines={2}>{directory.businessHours} </Text>
+              <Subtitle style={{ fontSize: 14 }}>{directory.address}</Subtitle>
+              <Text numberOfLines={2} style={{ fontSize: 12 }}>
+                {directory.businessHours}{' '}
+              </Text>
             </Overlay>
           </Tile>
         </ImageBackground>

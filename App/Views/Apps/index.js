@@ -78,8 +78,10 @@ export default class Apps extends React.Component {
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle>{app.name}</Subtitle>
-            <Text numberOfLines={2}>{app.description}</Text>
+            <Subtitle style={{ fontSize: 14 }}>{app.name}</Subtitle>
+            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+              {app.description}
+            </Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </Row>

@@ -51,7 +51,7 @@ export default class DirectoryDetail extends React.Component {
         <Row styleName='small'>
           <Ionicons name='ios-arrow-back' size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle>Volver al directorio</Subtitle>
+            <Subtitle style={{ fontSize: 12 }}>Volver al directorio</Subtitle>
           </View>
         </Row>
         <Divider styleName='line' />

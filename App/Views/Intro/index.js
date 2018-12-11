@@ -19,7 +19,7 @@ export default class Intro extends React.Component {
   render() {
     const { width } = Dimensions.get('window')
     return (
-      <View styles={{ paddingTop: 30 }}>
+      <View styles={{ paddingTop: 20 }}>
         <Video
           source={require('App/assets/rgua_video.mp4')}
           shouldPlay
@@ -29,7 +29,7 @@ export default class Intro extends React.Component {
           style={{ height: '100%' }}
         />
         <LinearGradient
-          colors={['rgba(43,43,43,0.5)', 'transparent']}
+          colors={['rgba(3,153,240,1)', 'transparent', 'transparent', 'transparent', 'transparent']}
           style={{
             position: 'absolute',
             top: 0,
@@ -40,14 +40,21 @@ export default class Intro extends React.Component {
           }}
         >
           <Title
-            style={{ top: 35, padding: 10, position: 'absolute', color: 'white', fontSize: 15 }}
+            style={{
+              top: 35,
+              padding: 10,
+              position: 'absolute',
+              color: 'white',
+              fontSize: 15,
+              fontWeight: '800',
+            }}
           >
             Rancagua Digital
           </Title>
           <View style={styles.bottomBar} onPress={this.props.skip}>
             <Button
               styleName='full-width'
-              style={{ backgroundColor: 'rgba(243,112,33,0.5)', height: '100%' }}
+              style={{ backgroundColor: 'rgba(243,112,33,0.7)', height: '100%' }}
               onPress={this.props.skip}
             >
               <Text style={{ color: 'white', fontSize: 25 }}> ENTRAR </Text>

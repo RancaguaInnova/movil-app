@@ -28,9 +28,11 @@ export default class NewsListItem extends React.Component {
         <Row>
           <Image styleName='small rounded-corners' source={newsData.image} />
           <View styleName='vertical stretch space-between'>
-            <Subtitle>{newsData.title}</Subtitle>
-            <Text numberOfLines={4}>{newsData.subtitle}</Text>
-            <Caption>{newsData.date}</Caption>
+            <Subtitle style={{ fontSize: 14 }}>{newsData.title}</Subtitle>
+            <Text numberOfLines={4} style={{ fontSize: 12 }}>
+              {newsData.subtitle}
+            </Text>
+            <Caption style={{ fontSize: 10 }}>{newsData.date}</Caption>
           </View>
         </Row>
         <Divider styleName='line' />

@@ -41,8 +41,10 @@ export default class Item extends React.Component {
         >
           <Row styleName='small' style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
             <View styleName='vertical'>
-              <Subtitle>{item.name}</Subtitle>
-              <Text numberOfLines={3}>{item.address}</Text>
+              <Subtitle style={{ fontSize: 14 }}>{item.name}</Subtitle>
+              <Text numberOfLines={3} style={{ fontSize: 12 }}>
+                {item.address}
+              </Text>
             </View>
             {item.externalUrl ? (
               <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />

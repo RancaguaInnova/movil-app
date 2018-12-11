@@ -54,7 +54,7 @@ export default class InformationCard extends React.Component {
           <Title styleName='bold' style={{ color: 'white' }}>
             {card.title}
           </Title>
-          <Subtitle multiline={3} style={{ fontSize: 12 }}>
+          <Subtitle multiline={3} style={{ fontSize: 10 }}>
             {card.subtitle}
           </Subtitle>
         </View>

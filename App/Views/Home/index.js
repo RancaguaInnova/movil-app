@@ -28,7 +28,7 @@ export default class Home extends React.Component {
     return (
       <View styleName='content' style={{ justifyContent: 'center', flex: 1 }}>
         <View style={{ paddingTop: 25, backgroundColor: '#0399f0' }}>{this.renderOverlay()}</View>
-        <Divider styleName='section-header'>
+        <Divider styleName='section-header' style={{ paddingTop: 0 }}>
           <Caption>Noticias</Caption>
         </Divider>
         <ScrollView>
