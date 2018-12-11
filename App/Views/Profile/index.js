@@ -1,9 +1,7 @@
 import React from 'react'
 import { View, Text } from '@shoutem/ui'
 import TextInput from 'App/components/fields/TextInput'
-// import Rut from 'orionsoft-parts/lib/components/fields/Rut'
 import { Form, Field } from 'simple-react-form'
-// import Button from 'App/components/Button'
 import Button from 'App/components/ShoutemButton'
 import LightButton from 'App/components/LightButton'
 import autobind from 'autobind-decorator'
@@ -14,9 +12,9 @@ import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import UserFragments from 'App/fragments/User'
-import forceRegistration from 'App/helpers/auth/forceRegistration'
+import forceLogin from 'App/helpers/auth/forceLogin'
 
-@forceRegistration
+@forceLogin
 @withGraphQL(gql`
   query getMe {
     me {
@@ -47,11 +45,19 @@ export default class Profile extends React.Component {
     this.state = { me, errorMessage: '' }
   }
 
+  @autobind
+  async signOut() {
+    this.setState({ loading: true })
+    await logout()
+    console.log('logged out:')
+    this.props.navigation.navigate('Home')
+    console.log('redirected!')
+  }
+
   renderLogoutButton() {
     if (this.props.me) {
-      return <LightButton onPress={() => logout()} title="Logout" />
+      return <LightButton onPress={this.signOut} title="Logout" />
     }
-    return null
   }
 
   renderErrorMessage() {
@@ -82,6 +88,7 @@ export default class Profile extends React.Component {
           label="Guardar"
           iconName="save"
         />
+        {this.renderLogoutButton()}
       </View>
     )
   }

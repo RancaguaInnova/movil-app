@@ -9,6 +9,7 @@ import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
+import LightButton from 'App/components/LightButton'
 
 @withMutation(gql`
   mutation forgotPassword($email: String) {
@@ -47,7 +48,7 @@ export default class Forgot extends React.Component {
   }
 
   renderMessage() {
-    if (!this.state.success) return
+    if (!this.state.success) return null
     return (
       <Text style={styles.successMessage}>Revisa tu email para continuar</Text>
     )
@@ -85,6 +86,10 @@ export default class Forgot extends React.Component {
         </Form>
         {this.renderErrorMessage()}
         {this.renderButton()}
+        <LightButton
+          onPress={() => this.props.navigation.goBack()}
+          title="Volver"
+        />
         {this.renderMessage()}
       </View>
     )

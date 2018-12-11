@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withUserId from './withUserId'
+import { NavigationActions } from 'react-navigation'
 
 export default function (ComposedComponent) {
   @withUserId
@@ -11,11 +12,17 @@ export default function (ComposedComponent) {
     }
 
     awaitLogin () {
-      this.props.navigation.navigate('Login')
+      this.props.navigation.navigate(
+        'Auth',
+        {},
+        NavigationActions.navigate({ routeName: 'Login' })
+      )
+    }
+    componentWillMount () {
+      if (!this.props.userId) return this.awaitLogin()
     }
 
     render () {
-      if (!this.props.userId) return this.awaitLogin()
       return <ComposedComponent {...this.props} />
     }
   }

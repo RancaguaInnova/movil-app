@@ -28,6 +28,7 @@ export default {
   `,
   Profile: gql`
     fragment Profile on User {
+      _id
       profile {
         firstName
         lastName

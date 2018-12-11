@@ -1,12 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text } from '@shoutem/ui'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'App/components/fields/TextInput'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
-import Button from 'App/components/Button'
+import Button from 'App/components/ShoutemButton'
 import Logo from 'App/components/Logo'
+import LightButton from 'App/components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import saveSession from 'App/helpers/auth/saveSession'
 import gql from 'graphql-tag'
@@ -33,6 +34,9 @@ import {
       locale
       roles
       emailVerified
+      user {
+        _id
+      }
     }
   }
 `)

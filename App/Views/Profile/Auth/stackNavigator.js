@@ -7,7 +7,7 @@ import Register from './Register'
 import Login from './Login'
 import Forgot from './Forgot'
 
-const AuthStack = createStackNavigator(
+export default AuthStack = createStackNavigator(
   {
     Register: {
       screen: Register,
@@ -35,8 +35,6 @@ const AuthStack = createStackNavigator(
     }
   },
   {
-    navigationOptions: defaultNavigationConfig
+    navigationOptions: defaultNavigationConfig,
   }
 )
-
-export { AuthStack }

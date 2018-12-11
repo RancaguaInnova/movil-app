@@ -1,14 +1,18 @@
 import React from 'react'
-import {View, Image} from 'react-native'
+import { View, Image } from '@shoutem/ui'
 import styles from './styles.js'
 
 export default class Logo extends React.Component {
   static propTypes = {}
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
-        <Image resizeMode="contain" style={styles.image} source={require('App/assets/logo.png')} />
+        <Image
+          style={styles.image}
+          resizeMode='contain'
+          source={require('App/assets/logo.png')}
+        />
       </View>
     )
   }

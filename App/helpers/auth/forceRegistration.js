@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withUserId from './withUserId'
+import { withNavigation, NavigationActions } from 'react-navigation'
 
 export default function (ComposedComponent) {
   @withUserId
+  @withNavigation
   class ForceRegistration extends React.Component {
     static propTypes = {
       navigation: PropTypes.object,
@@ -11,7 +13,14 @@ export default function (ComposedComponent) {
     }
 
     redirect () {
-      this.props.navigation.navigate('Registration')
+      this.props.navigation.navigate(
+        'Auth',
+        {},
+        NavigationActions.navigate({
+          routeName: 'Register'
+        })
+      )
+      return null
     }
 
     render () {

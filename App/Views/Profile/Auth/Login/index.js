@@ -1,17 +1,18 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Title, Subtitle, Text, Caption } from '@shoutem/ui'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'App/components/fields/TextInput'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
-import Button from 'App/components/Button'
-import Logo from 'App/components/Logo'
+import Button from 'App/components/ShoutemButton'
 import LightButton from 'App/components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
+import { withNavigation, NavigationActions } from 'react-navigation'
 import saveSession from 'App/helpers/auth/saveSession'
 import gql from 'graphql-tag'
 
+@withNavigation
 @withMutation(gql`
   mutation loginWithPassword($email: String, $password: String) {
     session: loginWithPassword(email: $email, password: $password) {
@@ -22,6 +23,9 @@ import gql from 'graphql-tag'
       locale
       roles
       emailVerified
+      user {
+        _id
+      }
     }
   }
 `)
@@ -31,7 +35,7 @@ export default class Login extends React.Component {
     loginWithPassword: PropTypes.func
   }
 
-  state = {}
+  state = { email: '', password: '' }
 
   @autobind
   focusPassword() {
@@ -39,7 +43,8 @@ export default class Login extends React.Component {
   }
 
   isFormReady() {
-    return this.state.email && this.state.password
+    if (this.state.email && this.state.password) return true
+    return false
   }
 
   @autobind
@@ -52,26 +57,32 @@ export default class Login extends React.Component {
         password
       })
       await saveSession(session)
+      this.props.navigation.navigate(
+        'Profile',
+        {},
+        NavigationActions.navigate({ routeName: 'Profile' })
+      )
     } catch (error) {
       const errorMessage = error.message.replace('GraphQL error: ', '')
-      this.setState({ errorMessage })
+      this.setState({ errorMessage: 'Email o contraseña incorrecta' })
       console.log('Error:', error)
       this.setState({ loading: false })
     }
   }
 
   renderErrorMessage() {
-    if (!this.state.errorMessage) return
-    return <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+    if (!this.state.errorMessage) return null
+    return (
+      <Caption style={styles.errorMessage}>{this.state.errorMessage}</Caption>
+    )
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Entrar</Text>
+        <Title style={styles.title}>Inicia sesión en tu cuenta:</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View>
-            <Logo />
             <Field
               enablesReturnKeyAutomatically
               returnKeyType="next"
@@ -95,20 +106,21 @@ export default class Login extends React.Component {
         </Form>
         {this.renderErrorMessage()}
         <LightButton
-          onPress={() => this.props.open(0)}
+          onPress={() => this.props.navigation.navigate('Forgot')}
           title="Olvidé mi contraseña"
         />
-        <Button
-          disabled={!this.isFormReady()}
-          loading={this.state.loading}
-          onPress={this.submit}
-          title="Entrar"
-        />
-        <Button
-          buttonStyle={{ marginTop: 20 }}
-          onPress={() => this.props.open(2)}
-          title="Registrarme"
-        />
+        <View>
+          <Button
+            disabled={!this.isFormReady()}
+            loading={this.state.loading}
+            onPress={this.submit}
+            label="Entrar"
+          />
+          <Button
+            onPress={() => this.props.navigation.navigate('Register')}
+            label="Registrarme"
+          />
+        </View>
       </View>
     )
   }
