@@ -24,8 +24,8 @@ export default class Intro extends React.Component {
           source={require('App/assets/rgua_video.mp4')}
           shouldPlay
           resizeMode='cover'
-          isMuted={true}
-          isLooping={true}
+          isMuted
+          isLooping
           style={{ height: '100%' }}
         />
         <LinearGradient
