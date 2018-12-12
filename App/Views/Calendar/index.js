@@ -1,34 +1,27 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
 import styles from './styles.js'
-//import logout from 'App/helpers/auth/logout'
-import LightButton from 'App/components/LightButton'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import gql from 'graphql-tag'
-import PropTypes from 'prop-types'
-import { resetIntroVisualization } from 'App/Root/client'
-export default class Home extends React.Component {
-  /* static propTypes = {
-    me: PropTypes.object,
-  } */
+import { LocaleConfig } from 'react-native-calendars'
+import { locales } from 'App/helpers/date/calendarLocales'
+import { View, Subtitle } from '@shoutem/ui'
+import Agenda from './Agenda'
 
-  async showIntro() {
-    console.log('Show!')
-    await resetIntroVisualization()
-  }
+LocaleConfig.locales['es'] = locales
+LocaleConfig.defaultLocale = 'es'
 
+export default class Calendar extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Calendario ;)</Text>
-        <Button
-          onPress={() => {
-            this.showIntro()
+      <View style={{ flex: 1 }} styleName='content'>
+        <View
+          style={{
+            minHeight: 80,
           }}
-          title='show Intro'
-          color='#841584'
-          accessibilityLabel='Learn more about this purple button'
-        />
+        >
+          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
+            Eventos y actividades comunales
+          </Subtitle>
+        </View>
+        <Agenda />
       </View>
     )
   }

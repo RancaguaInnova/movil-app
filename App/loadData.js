@@ -1,10 +1,10 @@
-import {Asset, Font} from 'expo'
-import {Ionicons} from '@expo/vector-icons'
+import { Asset, Font } from 'expo'
+import { Ionicons } from '@expo/vector-icons'
 
 export default async function() {
   const images = [require('App/assets/background.png'), require('App/assets/logo.png')]
 
-  const imageAssets = images.map(image => {
+  const imageAssets = await images.map(async image => {
     return Asset.fromModule(image).downloadAsync()
   })
 

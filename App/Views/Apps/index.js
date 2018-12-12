@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+
 @withGraphQL(gql`
   query getMe {
     me {
@@ -29,6 +30,12 @@ export default class Apps extends React.Component {
           externalUrl: '',
         },
         {
+          name: 'Tránsito',
+          description: 'Reserva de hora Licencia de Conducir',
+          icon: 'ios-car',
+          externalUrl: 'https://rancagua.licenciaconducir.cl/access/12345',
+        },
+        {
           name: 'Salud',
           description: 'Reserva de horas en Cesfam',
           icon: 'md-medkit',
@@ -45,12 +52,6 @@ export default class Apps extends React.Component {
           description: 'Plano Regulador',
           icon: 'ios-hammer',
           externalUrl: '',
-        },
-        {
-          name: 'Tránsito',
-          description: 'Reserva de hora Licencia de Conducir',
-          icon: 'ios-car',
-          externalUrl: 'https://rancagua.licenciaconducir.cl',
         },
       ],
       result: null,
@@ -78,8 +79,10 @@ export default class Apps extends React.Component {
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle>{app.name}</Subtitle>
-            <Text numberOfLines={2}>{app.description}</Text>
+            <Subtitle style={{ fontSize: 14 }}>{app.name}</Subtitle>
+            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+              {app.description}
+            </Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </Row>

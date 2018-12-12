@@ -33,7 +33,7 @@ export default class DirectoryList extends React.Component {
         <Row styleName='small'>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle>{item.name}</Subtitle>
+            <Subtitle style={{ fontSize: 14 }}>{item.name}</Subtitle>
             {/* <Text numberOfLines={2}>{app.description}</Text> */}
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
