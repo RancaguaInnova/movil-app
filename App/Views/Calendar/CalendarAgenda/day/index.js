@@ -8,6 +8,6 @@ export default class Day extends React.Component {
     day: PropTypes.object,
   }
   render() {
-    return <View style={{ borderWidth: 1, borderColor: 'yellow' }} />
+    return <View />
   }
 }

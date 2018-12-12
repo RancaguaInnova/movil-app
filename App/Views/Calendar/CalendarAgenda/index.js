@@ -18,7 +18,7 @@ import EmptyDate from './emptyDate'
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
 
-export default class Agenda extends React.Component {
+export default class CalendarAgenda extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

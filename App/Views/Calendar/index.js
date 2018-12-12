@@ -3,7 +3,7 @@ import styles from './styles.js'
 import { LocaleConfig } from 'react-native-calendars'
 import { locales } from 'App/helpers/date/calendarLocales'
 import { View, Subtitle } from '@shoutem/ui'
-import Agenda from './Agenda'
+import CalendarAgenda from './CalendarAgenda'
 
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
@@ -21,7 +21,7 @@ export default class Calendar extends React.Component {
             Eventos y actividades comunales
           </Subtitle>
         </View>
-        <Agenda />
+        <CalendarAgenda />
       </View>
     )
   }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
@@ -79,8 +80,8 @@ export default class Apps extends React.Component {
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle style={{ fontSize: 14 }}>{app.name}</Subtitle>
-            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+            <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
               {app.description}
             </Text>
           </View>

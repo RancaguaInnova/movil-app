@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import { ScrollView } from 'react-native'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
@@ -33,7 +34,7 @@ export default class DirectoryList extends React.Component {
         <Row styleName='small'>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle style={{ fontSize: 14 }}>{item.name}</Subtitle>
+            <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
             {/* <Text numberOfLines={2}>{app.description}</Text> */}
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
