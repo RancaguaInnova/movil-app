@@ -8,9 +8,10 @@ import PropTypes from 'prop-types'
 import { ImageBackground, Tile, Overlay } from '@shoutem/ui'
 import TimerMixin from 'react-timer-mixin'
 import Loading from '/App/Root/Loading'
+import Retry from '/App/Root/Retry'
 import autobind from 'autobind-decorator'
 import { client } from '/App/Root/client'
-import Retry from '/App/Root/Retry'
+
 export default class HomeOverlay extends React.Component {
   constructor(props) {
     super(props)
