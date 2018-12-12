@@ -1,5 +1,4 @@
 import React from 'react'
-//import { View, Text, Button } from 'react-native'
 import styles from './styles.js'
 import gql from 'graphql-tag'
 import moment from 'App/helpers/date/moment'
@@ -10,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons'
 import unionWith from 'lodash/unionWith'
 import isEqual from 'lodash/isEqual'
 import { client } from 'App/Root/client'
-import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
+import { View } from '@shoutem/ui'
 import autobind from 'autobind-decorator'
 import Item from './Item'
 //import Day from './day'
@@ -19,7 +18,7 @@ import EmptyDate from './emptyDate'
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
 
-export default class Home extends React.Component {
+export default class Agenda extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
