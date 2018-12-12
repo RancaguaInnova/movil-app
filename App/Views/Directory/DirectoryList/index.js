@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
-
+import SubHeader from '/App/components/SubHeader'
 @withGraphQL(gql`
   {
     departments(limit: 100, page: 1) {
@@ -49,15 +49,7 @@ export default class DirectoryList extends React.Component {
       this.props.departments && this.props.departments.items ? this.props.departments.items : []
     return (
       <ScrollView>
-        <View
-          style={{
-            minHeight: 80,
-          }}
-        >
-          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Listado de departamentos municipales de Rancagua
-          </Subtitle>
-        </View>
+        <SubHeader view='directory' title='Listado de departamentos municipales de la Comuna' />
         {list.map(item => this.renderDirectoryItem(item))}
       </ScrollView>
     )

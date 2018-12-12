@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
-
+import SubHeader from '/App/components/SubHeader'
 @withGraphQL(gql`
   query getMe {
     me {
@@ -96,15 +96,7 @@ export default class Apps extends React.Component {
     const apps = this.state.apps
     return (
       <View styleName='content'>
-        <View
-          style={{
-            minHeight: 80,
-          }}
-        >
-          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Seleccione el servicio
-          </Subtitle>
-        </View>
+        <SubHeader view='apps' title='Seleccione el servicio' />
         <Divider styleName='line' />
         {apps.map(app => this.renderRow(app))}
       </View>
