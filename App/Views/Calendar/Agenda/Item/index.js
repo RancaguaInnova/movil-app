@@ -11,14 +11,14 @@ export default class Item extends React.Component {
     firstItemInDay: PropTypes.bool,
   }
 
-  onClicKitem = async item => {
+  onClickItem = async item => {
     try {
       if (item.externalUrl && item.externalUrl.trim() !== '') {
         let result = await WebBrowser.openBrowserAsync(item.externalUrl)
         this.setState({ result })
       }
     } catch (error) {
-      console.log('[onClicKitem]', error)
+      console.log('Error handling onClickItem', error)
       this.setState({ result: null })
     }
   }
@@ -37,7 +37,7 @@ export default class Item extends React.Component {
           <Caption>{item.time} HRS.</Caption>
         </Divider>
         <TouchableOpacity
-          onPress={() => this.onClicKitem(item)}
+          onPress={() => this.onClickItem(item)}
           style={{ flex: 1, flexDirection: 'column' /* borderWidth: 1, borderColor: 'red' */ }}
         >
           <Row styleName='small' style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
