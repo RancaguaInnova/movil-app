@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
+
 export default class Item extends React.Component {
   static propTypes = {
     item: PropTypes.object,
