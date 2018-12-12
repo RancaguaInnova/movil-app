@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
-import { View, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
+import { View, Subtitle } from '@shoutem/ui'
+
 export default class EmptyDate extends React.Component {
   static propTypes = {
     day: PropTypes.object,
