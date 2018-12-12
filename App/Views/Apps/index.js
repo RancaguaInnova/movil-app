@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+
 @withGraphQL(gql`
   query getMe {
     me {
