@@ -1,10 +1,10 @@
 import React from 'react'
-//import { View, Text, Button } from 'react-native'
 import styles from './styles.js'
 import { LocaleConfig } from 'react-native-calendars'
 import { locales } from 'App/helpers/date/calendarLocales'
-import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
+import { View, Subtitle } from '@shoutem/ui'
 import Agenda from './Agenda'
+
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
 
