@@ -29,7 +29,7 @@ export default class NewsList extends React.Component {
     result: null,
   }
 
-  onClicKNews = async news => {
+  onClickNews = async news => {
     try {
       if (news.externalUrl && news.externalUrl.trim() !== '') {
         let result = await WebBrowser.openBrowserAsync(news.externalUrl)
@@ -46,7 +46,7 @@ export default class NewsList extends React.Component {
     return (
       <View>
         {news.map(n => (
-          <NewsListItem key={n._id} data={n} onClickNews={this.onClicKNews} />
+          <NewsListItem key={n._id} data={n} onClickNews={this.onClickNews} />
         ))}
       </View>
     )
