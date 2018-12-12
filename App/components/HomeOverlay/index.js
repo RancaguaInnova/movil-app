@@ -6,40 +6,93 @@ import TopBar from './TopBar'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import { ImageBackground, Tile, Overlay } from '@shoutem/ui'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-
-@withGraphQL(gql`
-  query {
-    cardsList {
-      datum
-      measurementUnit
-      icon
-      color
-      title
-      subtitle
+import TimerMixin from 'react-timer-mixin'
+import Loading from '/App/Root/Loading'
+import autobind from 'autobind-decorator'
+import { client } from '/App/Root/client'
+import Retry from '/App/Root/Retry'
+export default class HomeOverlay extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cards: {
+        list: [],
+        status: 'loading',
+        currentInfoCard: 0,
+      },
     }
   }
-`)
-export default class HomeOverlay extends React.Component {
-  static propTypes = {
-    cardsList: PropTypes.array,
+
+  componentDidMount() {
+    this.loadCards()
+    TimerMixin.setInterval(() => {
+      const cards = this.state.cards || []
+      const index =
+        cards.list.length > 0 && cards.currentInfoCard < cards.list.length - 1
+          ? cards.currentInfoCard + 1
+          : 0
+
+      cards.currentInfoCard = index
+      this.setState({
+        ...cards,
+      })
+    }, 5000)
+  }
+
+  @autobind
+  async loadCards() {
+    try {
+      const cardsQry = gql`
+        {
+          cardsList {
+            datum
+            measurementUnit
+            icon
+            color
+            title
+            subtitle
+          }
+        }
+      `
+      const result = await client.query({
+        query: cardsQry,
+      })
+      const {
+        data: { cardsList },
+      } = result
+
+      const cards = this.state.cards
+      cards.list = cardsList
+      cards.status = ''
+
+      this.setState({
+        ...cards,
+      })
+    } catch (error) {
+      console.log('error', error)
+      const cards = this.state.cards
+      cards.list = []
+      cards.status = 'error'
+      this.setState({
+        ...cards,
+      })
+    }
   }
 
   renderInfoCard() {
-    const cards = this.props.cardsList || []
-
-    return <InformationCard card={cards[0]} />
+    const cards = this.state.cards
+    return cards.status === 'loading' ? (
+      <Loading />
+    ) : cards.status == 'error' ? (
+      <Retry callback={this.loadCards} />
+    ) : (
+      <InformationCard card={cards.list[this.state.cards.currentInfoCard]} />
+    )
   }
 
   render() {
     return (
-      <ImageBackground
-        styleName='large-banner'
-        source={{
-          uri:
-            'https://upload.wikimedia.org/wikipedia/commons/6/67/Plaza_de_los_H%C3%A9roes_de_Rancagua_01.JPG',
-        }}
-      >
+      <ImageBackground styleName='large-banner' source={require('App/assets/home_background.png')}>
         <View
           style={{
             flex: 1,

@@ -24,7 +24,7 @@ const container = {
 
 const text = {
   indicatorTitle: {
-    fontSize: 28,
+    fontSize: 22,
     paddingTop: 15,
     /* borderWidth: 1,
               borderColor: 'yellow', */
