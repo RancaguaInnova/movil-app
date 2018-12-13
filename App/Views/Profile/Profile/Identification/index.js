@@ -26,7 +26,12 @@ export default class IdentificationInformation extends React.Component {
             type={TextInput}
             label='Apellido:'
           />
-          <Field fieldName='profile.identifier' type={TextInput} label='Rut:' />
+          <Field
+            fieldName='profile.identifier'
+            type={TextInput}
+            label='Rut:'
+            rut
+          />
           <Field
             fieldName='profile.educationalLevel'
             type={SelectInput}

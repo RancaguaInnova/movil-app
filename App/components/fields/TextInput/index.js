@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TouchableWithoutFeedback } from 'react-native'
 import { View, Text, TextInput, Subtitle } from '@shoutem/ui'
+import autobind from 'autobind-decorator'
+import rut from 'rut.js'
 import styles from './styles'
 
 export default class TextInputField extends React.Component {
@@ -11,7 +13,8 @@ export default class TextInputField extends React.Component {
     label: PropTypes.string,
     passProps: PropTypes.object,
     bottom: PropTypes.bool,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    rut: PropTypes.bool
   }
 
   static defaultProps = {
@@ -21,6 +24,14 @@ export default class TextInputField extends React.Component {
   renderErrorMessage () {
     if (!this.props.errorMessage) return
     return <Text>{this.props.errorMessage}</Text>
+  }
+
+  @autobind
+  handleChange (change) {
+    if (this.props.rut) {
+      return this.props.onChange(rut.format(change))
+    }
+    return this.props.onChange(change)
   }
 
   render () {
@@ -34,7 +45,7 @@ export default class TextInputField extends React.Component {
             autoCapitalize='none'
             autoCorrect={false}
             blurOnSubmit
-            onChangeText={this.props.onChange}
+            onChangeText={this.handleChange}
             value={this.props.value}
             {...this.props.passProps}
             style={styles.input}
