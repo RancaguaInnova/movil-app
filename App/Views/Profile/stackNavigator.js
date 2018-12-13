@@ -26,8 +26,7 @@ const ProfileStack = createStackNavigator(
     }
   },
   {
-    navigationOptions: defaultNavigationConfig,
-    headerMode: 'none'
+    navigationOptions: defaultNavigationConfig
   }
 )
 

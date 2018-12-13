@@ -36,5 +36,6 @@ export default AuthStack = createStackNavigator(
   },
   {
     navigationOptions: defaultNavigationConfig,
+    headerMode: 'none'
   }
 )

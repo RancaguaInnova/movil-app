@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text } from '@shoutem/ui'
+import { ScrollView, View, Text, Title } from '@shoutem/ui'
 import TextInput from 'App/components/fields/TextInput'
+import SelectInput from 'App/components/fields/TableSelect'
 import { Form, Field } from 'simple-react-form'
 import Button from 'App/components/ShoutemButton'
 import LightButton from 'App/components/LightButton'
@@ -18,18 +19,26 @@ import forceLogin from 'App/helpers/auth/forceLogin'
 @withGraphQL(gql`
   query getMe {
     me {
-      ...FullUser
+      emails {
+        address
+        verified
+      }
+      ...Profile
     }
   }
-  ${UserFragments.FullUser}
+  ${UserFragments.Profile}
 `)
 @withMutation(gql`
-  mutation updateUser($user: User!) {
+  mutation updateUser($user: UserInput!) {
     updateUser(user: $user) {
-      ...FullUser
+      emails {
+        address
+        verified
+      }
+      ...Profile
     }
   }
-  ${UserFragments.FullUser}
+  ${UserFragments.Profile}
 `)
 export default class Profile extends React.Component {
   static propTypes = {
@@ -42,16 +51,14 @@ export default class Profile extends React.Component {
 
   componentDidMount() {
     let me = this.props.me || {}
-    this.state = { me, errorMessage: '' }
+    this.setState({ me })
   }
 
   @autobind
   async signOut() {
     this.setState({ loading: true })
     await logout()
-    console.log('logged out:')
     this.props.navigation.navigate('Home')
-    console.log('redirected!')
   }
 
   renderLogoutButton() {
@@ -65,12 +72,28 @@ export default class Profile extends React.Component {
     return <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
   }
 
+  @autobind
+  async submit() {
+    let user = Object.assign({}, this.state.me)
+    this.setState({ loading: true })
+    try {
+      await this.props.updateUser({ user })
+    } catch (error) {
+      console.log('Error updating user:', error)
+    }
+    this.setState({ loading: false })
+  }
+
   render() {
     return (
-      <View styleNames="fill-container" style={styles.container}>
-        <Form state={this.state} onChange={changes => this.setState(changes)}>
+      <ScrollView styleNames="fill-container" style={styles.container}>
+        <Form
+          state={this.state.me}
+          onChange={changes => this.setState(changes)}
+        >
+          <Title style={styles.title}>Indentificación:</Title>
           <Field
-            fieldName="profile.firstname"
+            fieldName="profile.firstName"
             type={TextInput}
             label="Nombre:"
             placeHolder="Ingrese su nombre"
@@ -79,6 +102,40 @@ export default class Profile extends React.Component {
             fieldName="profile.lastName"
             type={TextInput}
             label="Apellido:"
+          />
+          <Field fieldName="profile.identifier" type={TextInput} label="Rut:" />
+          <Field
+            fieldName="profile.educationalLevel"
+            type={SelectInput}
+            label="Nivel Educacional:"
+            placeHolder="Seleccione una opción"
+            options={[
+              { label: 'Básica', value: 'basica' },
+              { label: 'Media', value: 'media' },
+              { label: 'Superior', value: 'superior' },
+              { label: 'Postgrado', value: 'postgrado' }
+            ]}
+          />
+          <Title style={styles.title}>Contacto:</Title>
+          <Field
+            fieldName="profile.address.streetName"
+            type={TextInput}
+            label="Nombre de calle o avenida:"
+          />
+          <Field
+            fieldName="profile.address.streetNumber"
+            type={TextInput}
+            label="Número de calle:"
+          />
+          <Field
+            fieldName="profile.address.departmentNumber"
+            type={TextInput}
+            label="Número de casa o departamento:"
+          />
+          <Field
+            fieldName="profile.phone.mobilePhone"
+            type={TextInput}
+            label="Celular:"
           />
         </Form>
         {this.renderErrorMessage()}
@@ -89,7 +146,7 @@ export default class Profile extends React.Component {
           iconName="save"
         />
         {this.renderLogoutButton()}
-      </View>
+      </ScrollView>
     )
   }
 }

@@ -5,6 +5,10 @@ export default {
   container: {
     padding: 10
   },
+  title: {
+    marginTop: 10,
+    marginBottom: 10
+  },
   errorMessage: {
     color: 'red',
     marginBottom: 10,

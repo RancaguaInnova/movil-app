@@ -11,6 +11,7 @@ export default {
   errorMessage: {
     color: 'red',
     marginBottom: 10,
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'center'
   }
 }
