@@ -1,12 +1,10 @@
-import {StyleSheet} from 'react-native'
-
-export default StyleSheet.create({
+export default {
   container: {
     alignItems: 'center',
     marginBottom: 40,
     marginTop: -60
   },
   image: {
-    width: '100%',
+    width: '100%'
   }
-})
+}

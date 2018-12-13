@@ -1,6 +1,4 @@
-import {StyleSheet} from 'react-native'
-
-export default StyleSheet.create({
+export default {
   modal: {
     flexDirection: 'column'
   },
@@ -17,11 +15,19 @@ export default StyleSheet.create({
     padding: 10
   },
   container: {
-    backgroundColor: '#f5f5f5'
+    marginTop: 5
+  },
+  touchable: {
+    backgroundColor: '#fff',
+    margin: 5,
+    marginLeft: 10,
+    height: 36,
+    padding: 5,
+    borderRadius: 5
   },
   flex: {
     flexDirection: 'row',
-    padding: 10
+    padding: 2
   },
   labelContainer: {
     alignItems: 'center',
@@ -29,17 +35,21 @@ export default StyleSheet.create({
     paddingRight: 10
   },
   label: {
-    color: '#111',
-    fontSize: 18
+    fontSize: 15,
+    color: '#000'
+  },
+  placeHolder: {
+    color: '#888',
+    fontSize: 15
   },
   valueContainer: {
     flex: 1
   },
   value: {
     flex: 1,
-    color: '#888',
+    color: '#555',
     textAlign: 'right',
-    fontSize: 18
+    fontSize: 16
   },
   bottomLine: {
     backgroundColor: '#eee',
@@ -53,4 +63,4 @@ export default StyleSheet.create({
     color: 'red',
     textAlign: 'right'
   }
-})
+}

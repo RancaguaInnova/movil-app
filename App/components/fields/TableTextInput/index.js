@@ -1,5 +1,6 @@
 import React from 'react'
-import {View, Text, TextInput, TouchableWithoutFeedback} from 'react-native'
+import { TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TextInput } from '@shoutem/ui'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
@@ -19,21 +20,21 @@ export default class TableTextInput extends React.Component {
   }
 
   @autobind
-  focus() {
+  focus () {
     this.refs.input.focus()
   }
 
-  renderBottom() {
+  renderBottom () {
     if (this.props.bottom) return
     return <View style={styles.bottomLine} />
   }
 
-  renderErrorMessage() {
+  renderErrorMessage () {
     if (!this.props.errorMessage) return
     return <Text style={styles.errorMessage}>{this.props.errorMessage}</Text>
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.focus}>
@@ -42,9 +43,9 @@ export default class TableTextInput extends React.Component {
               <Text style={styles.label}>{this.props.label}</Text>
             </View>
             <TextInput
-              ref="input"
+              ref='input'
               style={styles.input}
-              autoCapitalize="none"
+              autoCapitalize='none'
               autoCorrect={false}
               blurOnSubmit
               onChangeText={this.props.onChange}

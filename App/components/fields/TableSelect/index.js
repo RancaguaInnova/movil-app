@@ -1,6 +1,7 @@
 import React from 'react'
-import {View, Text, TouchableOpacity, Dimensions, ScrollView} from 'react-native'
-import styles from './styles.js'
+import { View, Text, TouchableOpacity } from '@shoutem/ui'
+import { Dimensions, ScrollView } from 'react-native'
+import styles from './styles'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import Modal from 'react-native-modalbox'
@@ -10,6 +11,7 @@ export default class TableSelect extends React.Component {
     onChange: PropTypes.func,
     value: PropTypes.any,
     label: PropTypes.string,
+    placeHolder: PropTypes.string,
     passProps: PropTypes.object,
     bottom: PropTypes.bool,
     errorMessage: PropTypes.string,
@@ -23,22 +25,24 @@ export default class TableSelect extends React.Component {
   state = {}
 
   @autobind
-  focus() {
-    this.setState({open: true})
+  focus () {
+    this.setState({ open: true })
   }
 
-  getValue() {
+  getValue () {
     return this.props.value
   }
 
-  getText() {
+  getText () {
     if (!this.props.value) return
-    const item = this.props.options.find(option => option.value === this.props.value)
+    const item = this.props.options.find(
+      option => option.value === this.props.value
+    )
     if (!item) return
     return item.label
   }
 
-  getModalStyle() {
+  getModalStyle () {
     const height = Dimensions.get('window').height * 0.6
     return {
       height,
@@ -49,21 +53,21 @@ export default class TableSelect extends React.Component {
     }
   }
 
-  renderBottom() {
+  renderBottom () {
     if (this.props.bottom) return
     return <View style={styles.bottomLine} />
   }
 
-  renderErrorMessage() {
+  renderErrorMessage () {
     if (!this.props.errorMessage) return
     return <Text style={styles.errorMessage}>{this.props.errorMessage}</Text>
   }
 
-  renderValue() {
+  renderValue () {
     return <Text style={styles.value}>{this.getText()}</Text>
   }
 
-  renderOptions() {
+  renderOptions () {
     if (!this.state.open) return
     return this.props.options.map((option, index) => {
       const onPress = () => {
@@ -75,41 +79,49 @@ export default class TableSelect extends React.Component {
           <TouchableOpacity onPress={onPress}>
             <Text style={styles.itemLabel}>{option.label}</Text>
           </TouchableOpacity>
-          {this.props.options.length !== index + 1 ? <View style={styles.bottomLine} /> : null}
+          {this.props.options.length !== index + 1 ? (
+            <View style={styles.bottomLine} />
+          ) : null}
         </View>
       )
     })
   }
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.focus}>
-          <View style={styles.flex}>
-            <View style={styles.labelContainer}>
-              <Text style={styles.label}>{this.props.label}</Text>
+        <Text style={styles.label}>{this.props.label}</Text>
+        <View style={styles.touchable}>
+          <TouchableOpacity onPress={this.focus}>
+            <View style={styles.flex}>
+              <View style={styles.labelContainer}>
+                <Text style={styles.placeHolder}>{this.props.placeHolder}</Text>
+              </View>
+              <View style={styles.valueContainer}>{this.renderValue()}</View>
             </View>
-            <View style={styles.valueContainer}>{this.renderValue()}</View>
-          </View>
-        </TouchableOpacity>
-        {this.renderErrorMessage()}
-        {this.renderBottom()}
-        <Modal
-          ref="modal"
-          coverScreen
-          backButtonClose
-          swipeToClose={false}
-          style={this.getModalStyle()}
-          isOpen={this.state.open}
-          onClosed={() => this.setState({open: false})}
-          position="bottom">
-          <View style={{flex: 1}}>
-            <View style={styles.selectLabel}>
-              <Text style={styles.selectLabelText}>{this.props.label}</Text>
+          </TouchableOpacity>
+          {this.renderErrorMessage()}
+          {this.renderBottom()}
+          <Modal
+            ref='modal'
+            coverScreen
+            backButtonClose
+            swipeToClose={false}
+            style={this.getModalStyle()}
+            isOpen={this.state.open}
+            onClosed={() => this.setState({ open: false })}
+            position='bottom'
+          >
+            <View style={{ flex: 1 }}>
+              <View style={styles.selectLabel}>
+                <Text style={styles.selectLabelText}>{this.props.label}</Text>
+              </View>
+              <ScrollView style={styles.modalScrollView}>
+                {this.renderOptions()}
+              </ScrollView>
             </View>
-            <ScrollView style={styles.modalScrollView}>{this.renderOptions()}</ScrollView>
-          </View>
-        </Modal>
+          </Modal>
+        </View>
       </View>
     )
   }
