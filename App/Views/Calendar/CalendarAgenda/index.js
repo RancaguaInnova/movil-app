@@ -57,7 +57,11 @@ export default class CalendarAgenda extends React.Component {
             time
             date
             externalUrl
-            address
+            address {
+              streetName
+              streetNumber
+              city
+            }
           }
         }
         `
