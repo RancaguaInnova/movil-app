@@ -1,12 +1,11 @@
 import React from 'react'
-import { View, Text } from '@shoutem/ui'
+import { View, Title, Text } from '@shoutem/ui'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'App/components/fields/TextInput'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
 import Button from 'App/components/ShoutemButton'
-import Logo from 'App/components/Logo'
 import LightButton from 'App/components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import saveSession from 'App/helpers/auth/saveSession'
@@ -119,15 +118,16 @@ export default class Register extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Regístrate!</Text>
+        <Title style={styles.title}>
+          Crea tu cuenta y accede a los servicios municipales:
+        </Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View>
-            <Logo />
             <Field
               enablesReturnKeyAutomatically
               returnKeyType="next"
               fieldName="profile.identifier"
-              label="RUT: 11.222.333-k"
+              label="RUT: 11222333-k"
               onSubmitEditing={this.focusEmail}
               type={TextInput}
             />
@@ -168,7 +168,11 @@ export default class Register extends React.Component {
           disabled={!this.isFormReady()}
           loading={this.state.loading}
           onPress={this.submit}
-          title="Crear cuenta"
+          label="Crear cuenta"
+        />
+        <LightButton
+          onPress={() => this.props.navigation.goBack()}
+          title="Volver"
         />
       </View>
     )

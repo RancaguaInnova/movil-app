@@ -1,10 +1,9 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Title, Text } from '@shoutem/ui'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'App/components/fields/TextInput'
-import Button from 'App/components/Button'
-import Logo from 'App/components/Logo'
+import Button from 'App/components/ShoutemButton'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
@@ -54,25 +53,30 @@ export default class Forgot extends React.Component {
     )
   }
 
-  renderButton() {
-    if (this.state.success) return
+  renderButtons() {
+    if (this.state.success) return null
     return (
-      <Button
-        disabled={!this.isFormReady()}
-        loading={this.state.loading}
-        onPress={this.submit}
-        title="Cambiar contraseña"
-      />
+      <View>
+        <Button
+          disabled={!this.isFormReady()}
+          loading={this.state.loading}
+          onPress={this.submit}
+          label="Cambiar contraseña"
+        />
+        <LightButton
+          onPress={() => this.props.navigation.goBack()}
+          title="Volver"
+        />
+      </View>
     )
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Recuperar cuenta</Text>
+        <Title style={styles.title}>Enviaremos instrucciones a tu correo</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View>
-            <Logo />
             <Field
               enablesReturnKeyAutomatically
               returnKeyType="next"
@@ -85,11 +89,7 @@ export default class Forgot extends React.Component {
           </View>
         </Form>
         {this.renderErrorMessage()}
-        {this.renderButton()}
-        <LightButton
-          onPress={() => this.props.navigation.goBack()}
-          title="Volver"
-        />
+        {this.renderButtons()}
         {this.renderMessage()}
       </View>
     )
