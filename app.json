@@ -2,6 +2,8 @@
   "expo": {
     "sdkVersion": "30.0.0",
     "orientation": "portrait",
+    "primaryColor": "#f68e44",
+    "icon": "./App/assets/icons/app-icon.png",
     "splash": {
       "image": "./App/assets/splash.png",
       "backgroundColor": "#f68e44",

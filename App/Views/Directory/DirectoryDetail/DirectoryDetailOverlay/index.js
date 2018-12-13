@@ -27,10 +27,16 @@ export default class DirectoryDetailOverlay extends React.Component {
     }
     return (
       <View>
-        <ImageBackground styleName='large-banner' source={{ uri: directory.imageUrl }}>
+        <ImageBackground
+          styleName='large-banner'
+          source={{ uri: directory.imageUrl }}
+          style={{ height: 180 }}
+        >
           <Tile>
             <Overlay styleName='image-overlay'>
-              <Title styleName='sm-gutter-horizontal'>{directory.name}</Title>
+              <Title styleName='sm-gutter-horizontal' numberOfLines={2}>
+                {directory.name}
+              </Title>
               <Subtitle style={{ fontSize: 14 }}>{directory.address}</Subtitle>
               <Text numberOfLines={2} style={{ fontSize: 12 }}>
                 {directory.businessHours}{' '}
