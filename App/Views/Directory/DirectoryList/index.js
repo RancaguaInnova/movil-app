@@ -49,7 +49,10 @@ export default class DirectoryList extends React.Component {
       this.props.departments && this.props.departments.items ? this.props.departments.items : []
     return (
       <ScrollView>
-        <SubHeader view='directory' title='Listado de departamentos municipales de la Comuna' />
+        <SubHeader
+          view='directory'
+          title='Contacto con los Departamentos municipales de la Comuna'
+        />
         {list.map(item => this.renderDirectoryItem(item))}
       </ScrollView>
     )

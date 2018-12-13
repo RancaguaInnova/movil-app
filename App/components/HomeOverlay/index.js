@@ -103,7 +103,7 @@ export default class HomeOverlay extends React.Component {
             borderColor: 'blue', */
           }}
         >
-          <LinearGradient colors={['#0399f0', 'transparent']} style={{ height: '100%' }}>
+          <LinearGradient colors={['#4fb2e3', 'transparent']} style={{ height: '100%' }}>
             <TopBar />
 
             <View
