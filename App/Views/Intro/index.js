@@ -39,7 +39,7 @@ export default class Intro extends React.Component {
             alignItems: 'center',
           }}
         >
-          <Title
+          {/* <Title
             style={{
               top: 35,
               padding: 10,
@@ -50,11 +50,11 @@ export default class Intro extends React.Component {
             }}
           >
             Rancagua Digital
-          </Title>
+          </Title> */}
           <View style={styles.bottomBar} onPress={this.props.skip}>
             <Button
               styleName='full-width'
-              style={{ backgroundColor: 'rgba(243,112,33,0.7)', height: '100%' }}
+              style={{ backgroundColor: 'rgba(243,112,33,0.5)', height: '100%' }}
               onPress={this.props.skip}
             >
               <Text style={{ color: 'white', fontSize: 25 }}> ENTRAR </Text>

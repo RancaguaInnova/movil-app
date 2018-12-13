@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import { ScrollView } from 'react-native'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
@@ -7,6 +8,7 @@ import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+import SubHeader from '/App/components/SubHeader'
 
 @withGraphQL(gql`
   {
@@ -33,7 +35,7 @@ export default class DirectoryList extends React.Component {
         <Row styleName='small'>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle style={{ fontSize: 14 }}>{item.name}</Subtitle>
+            <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
             {/* <Text numberOfLines={2}>{app.description}</Text> */}
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
@@ -48,15 +50,7 @@ export default class DirectoryList extends React.Component {
       this.props.departments && this.props.departments.items ? this.props.departments.items : []
     return (
       <ScrollView>
-        <View
-          style={{
-            minHeight: 80,
-          }}
-        >
-          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Listado de departamentos municipales de Rancagua
-          </Subtitle>
-        </View>
+        <SubHeader view='directory' title='Listado de departamentos municipales de la Comuna' />
         {list.map(item => this.renderDirectoryItem(item))}
       </ScrollView>
     )

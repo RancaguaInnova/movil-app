@@ -1,11 +1,13 @@
 import React from 'react'
 import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+import SubHeader from '/App/components/SubHeader'
 
 @withGraphQL(gql`
   query getMe {
@@ -79,8 +81,8 @@ export default class Apps extends React.Component {
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle style={{ fontSize: 14 }}>{app.name}</Subtitle>
-            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+            <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
               {app.description}
             </Text>
           </View>
@@ -95,15 +97,7 @@ export default class Apps extends React.Component {
     const apps = this.state.apps
     return (
       <View styleName='content'>
-        <View
-          style={{
-            minHeight: 80,
-          }}
-        >
-          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Seleccione el servicio
-          </Subtitle>
-        </View>
+        <SubHeader view='apps' title='Seleccione el servicio' />
         <Divider styleName='line' />
         {apps.map(app => this.renderRow(app))}
       </View>

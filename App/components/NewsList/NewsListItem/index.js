@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import textStyles from 'App/styles/texts'
 import moment from 'App/helpers/date/moment'
 import { Image, View, Row, Subtitle, Caption, TouchableOpacity, Text, Divider } from '@shoutem/ui'
+
 export default class NewsListItem extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -28,11 +30,11 @@ export default class NewsListItem extends React.Component {
         <Row>
           <Image styleName='small rounded-corners' source={newsData.image} />
           <View styleName='vertical stretch space-between'>
-            <Subtitle style={{ fontSize: 14 }}>{newsData.title}</Subtitle>
-            <Text numberOfLines={4} style={{ fontSize: 12 }}>
+            <Subtitle style={textStyles.rowSubtitle}>{newsData.title}</Subtitle>
+            <Text numberOfLines={4} style={textStyles.rowText}>
               {newsData.subtitle}
             </Text>
-            <Caption style={{ fontSize: 10 }}>{newsData.date}</Caption>
+            <Caption style={textStyles.rowCaption}>{newsData.date}</Caption>
           </View>
         </Row>
         <Divider styleName='line' />

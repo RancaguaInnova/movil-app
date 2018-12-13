@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import PropTypes from 'prop-types'
 import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
@@ -42,8 +42,8 @@ export default class Item extends React.Component {
         >
           <Row styleName='small' style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
             <View styleName='vertical'>
-              <Subtitle style={{ fontSize: 14 }}>{item.name}</Subtitle>
-              <Text numberOfLines={3} style={{ fontSize: 12 }}>
+              <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
+              <Text numberOfLines={3} style={textStyles.rowText}>
                 {item.address}
               </Text>
             </View>

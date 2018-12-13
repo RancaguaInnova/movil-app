@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from './styles.js'
+import styles, { touchableIcons } from './styles.js'
+import textStyles from '/App/styles/texts'
 import PropTypes from 'prop-types'
 import { Alert } from 'react-native'
 import { View, Text, TouchableOpacity, Row, Subtitle, Divider, Image } from '@shoutem/ui'
@@ -43,6 +44,22 @@ export default class DirectoryDetailOfficial extends React.Component {
     }
   }
 
+  renderPhoneIcon(phone) {
+    return (
+      <TouchableOpacity style={touchableIcons} onPress={() => (phone ? this.makeACall(phone) : '')}>
+        {phone ? <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} /> : ''}
+      </TouchableOpacity>
+    )
+  }
+
+  renderEmailIcon(email) {
+    return (
+      <TouchableOpacity style={touchableIcons} onPress={() => (email ? this.sendEmail(email) : '')}>
+        {email ? <Ionicons styleName='disclosure' name='ios-mail' size={28} /> : ''}
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     const contact = this.props.officer.contactInformation || {}
 
@@ -67,44 +84,15 @@ export default class DirectoryDetailOfficial extends React.Component {
           )}
 
           <View styleName='vertical'>
-            <Subtitle style={{ fontSize: 14 }}>{officer.position}</Subtitle>
-            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+            <Subtitle style={textStyles.rowSubtitle}>{officer.position}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
               {officer.name}
             </Text>
           </View>
 
-          {officer.email ? (
-            <TouchableOpacity
-              style={{
-                width: 50,
-                height: 50,
-                /* borderColor: 'red',
-                borderWidth: 1, */
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => this.sendEmail(officer.email)}
-            >
-              <Ionicons styleName='disclosure' name='ios-mail' size={28} />
-            </TouchableOpacity>
-          ) : null}
-          {officer.phone ? (
-            <TouchableOpacity
-              style={{
-                width: 50,
-                height: 50,
-                /* borderColor: 'green',
-                borderWidth: 1, */
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              onPress={() => this.makeACall(officer.phone)}
-            >
-              <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} />
-            </TouchableOpacity>
-          ) : null}
+          {this.renderEmailIcon(officer.email)}
+
+          {this.renderPhoneIcon(officer.phone)}
         </Row>
         <Divider styleName='line' />
       </View>
