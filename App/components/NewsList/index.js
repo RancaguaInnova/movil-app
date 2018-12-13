@@ -28,7 +28,6 @@ export default class NewsList extends React.Component {
 
   @autobind
   async loadNews() {
-    console.log('load news')
     try {
       const newsQry = gql`
         {
@@ -58,7 +57,7 @@ export default class NewsList extends React.Component {
         ...news,
       })
     } catch (error) {
-      console.log('error', error)
+      console.log('error loadingNews', error)
       const news = this.state.news
       news.list = []
       news.status = 'error'
