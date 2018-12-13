@@ -42,12 +42,18 @@ export default class Item extends React.Component {
         >
           <Row styleName='small' style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
             <View styleName='vertical'>
-              <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
-              <Text numberOfLines={3} style={textStyles.rowText}>
-                {item.address}
-              </Text>
+              <Subtitle numberOfLines={2} style={textStyles.rowSubtitle}>
+                {item.name}
+              </Subtitle>
+              {item.address ? (
+                <Text numberOfLines={3} style={textStyles.rowText}>
+                  {`${item.address.streetName} ${item.address.streetNumber}, ${item.address.city}`}
+                </Text>
+              ) : (
+                <Text />
+              )}
             </View>
-            {item.externalUrl ? (
+            {item.externalUrl && item.externalUrl.trim() !== '' ? (
               <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
             ) : (
               <Text />

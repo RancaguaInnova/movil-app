@@ -18,7 +18,7 @@ export default class Auth extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor='#0069ff' barStyle='light-content' />
+        <StatusBar barStyle='light-content' />
         <Main open={this.open} />
         <Modal
           animationType='slide'
