@@ -1,6 +1,11 @@
-import getSession from './getSession'
+import { getSession } from 'App/Root/client'
 
-export default function() {
-  const {userId, publicKey, secretKey} = getSession()
-  return userId && publicKey && secretKey
+export default async function () {
+  try {
+    const { userId, publicKey, secretKey } = await getSession()
+    return userId && publicKey && secretKey
+  } catch (error) {
+    console.log('Error in isLoggedIn:', error)
+  }
+  return false
 }

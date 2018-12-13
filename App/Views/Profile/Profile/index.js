@@ -19,6 +19,7 @@ import LightButton from 'App/components/LightButton'
 import autobind from 'autobind-decorator'
 import styles from './styles.js'
 import logout from 'App/helpers/auth/logout'
+import saveSession from 'App/helpers/auth/saveSession'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
@@ -78,18 +79,21 @@ export default class Profile extends React.Component {
     }
   ]
 
-  componentDidMount() {
-    let me = this.props.me || {}
-    let { profile: { address: { streetNumber } } } = me
+  static getDerivedStateFromProps(props, state) {
+    let me = Object.assign({}, props.me)
+    let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
-    me.profile.address.streetNumber = streetNumber.toString()
-    this.setState({ me })
+    if (me.profile && me.profile.address) {
+      me.profile.address.streetNumber = streetNumber.toString()
+    }
+    return { me }
   }
 
   @autobind
   async signOut() {
     this.setState({ loading: true })
     await logout()
+    await saveSession({})
     this.props.navigation.navigate('Home')
   }
 
@@ -107,7 +111,6 @@ export default class Profile extends React.Component {
   @autobind
   async submit() {
     let user = Object.assign({}, this.state.me)
-    console.log('user:', user)
     this.setState({ loading: true })
     try {
       await this.props.updateUser({ user })
