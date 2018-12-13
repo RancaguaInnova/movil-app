@@ -7,7 +7,7 @@ import {
   Subtitle,
   Row,
   Divider,
-  TouchableOpacity
+  TouchableOpacity,
 } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import textStyles from '/App/styles/texts'
@@ -54,12 +54,12 @@ import forceLogin from 'App/helpers/auth/forceLogin'
 `)
 export default class Profile extends React.Component {
   static propTypes = {
-    me: PropTypes.object
+    me: PropTypes.object,
   }
 
   state = {
     section: 'identification',
-    errorMessage: ''
+    errorMessage: '',
   }
 
   sections = [
@@ -68,15 +68,15 @@ export default class Profile extends React.Component {
       name: 'Identificación',
       description: 'Datos de identificación',
       icon: 'ios-person',
-      component: Identification
+      component: Identification,
     },
     {
       key: 'contact',
       name: 'Contacto',
       description: 'Dirección y teléfono',
       icon: 'ios-contacts',
-      component: Contact
-    }
+      component: Contact,
+    },
   ]
 
   static getDerivedStateFromProps(props, state) {
@@ -99,7 +99,7 @@ export default class Profile extends React.Component {
 
   renderLogoutButton() {
     if (this.props.me) {
-      return <LightButton onPress={this.signOut} title="Cerrar Sesión" />
+      return <LightButton onPress={this.signOut} title='Cerrar Sesión' />
     }
   }
 
@@ -117,7 +117,7 @@ export default class Profile extends React.Component {
     } catch (error) {
       console.log('Error updating user:', error)
       this.setState({
-        errorMessage: error.message.replace('GraphQL error:', '')
+        errorMessage: error.message.replace('GraphQL error:', ''),
       })
     }
     this.setState({ loading: false })
@@ -125,32 +125,25 @@ export default class Profile extends React.Component {
 
   @autobind
   renderArrowIcon(sectionKey) {
-    if (this.state.section === sectionKey) return 'ios-arrow-back'
-    return 'ios-arrow-forward'
+    if (this.state.section === sectionKey) return 'ios-arrow-dropup'
+    return 'ios-arrow-dropdown'
   }
 
   @autobind
   renderRows(section) {
     return (
-      <TouchableOpacity
-        key={section.name}
-        onPress={() => this.setState({ section: section.key })}
-      >
-        <Row styleName="small">
+      <TouchableOpacity key={section.name} onPress={() => this.setState({ section: section.key })}>
+        <Row styleName='small'>
           <Ionicons name={section.icon} size={30} style={styles.leftIcon} />
-          <View styleName="vertical">
+          <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{section.name}</Subtitle>
             <Text numberOfLines={2} style={textStyles.rowText}>
               {section.description}
             </Text>
           </View>
-          <Ionicons
-            styleName="disclosure"
-            name={this.renderArrowIcon(section.key)}
-            size={28}
-          />
+          <Ionicons styleName='disclosure' name={this.renderArrowIcon(section.key)} size={28} />
         </Row>
-        <Divider styleName="line" />
+        <Divider styleName='line' />
         {<section.component active={this.state.section === section.key} />}
       </TouchableOpacity>
     )
@@ -158,19 +151,16 @@ export default class Profile extends React.Component {
 
   render() {
     return (
-      <ScrollView styleNames="fill-container" style={styles.container}>
-        <Form
-          state={this.state.me}
-          onChange={changes => this.setState({ me: changes })}
-        >
+      <ScrollView styleNames='fill-container' style={styles.container}>
+        <Form state={this.state.me} onChange={changes => this.setState({ me: changes })}>
           {this.sections.map(this.renderRows)}
         </Form>
         {this.renderErrorMessage()}
         <Button
           loading={this.state.loading}
           onPress={this.submit}
-          label="Guardar"
-          iconName="save"
+          label='Guardar'
+          iconName='save'
           style={{ marginTop: this.state.errorMessage ? 5 : 40 }}
         />
         {this.renderLogoutButton()}
