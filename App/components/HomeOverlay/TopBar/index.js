@@ -31,7 +31,7 @@ export default class TopBar extends React.Component {
           <Title styleName='bold' style={{ color: 'white' }}>
             RANCAGUA
           </Title>
-          <Caption style={{ color: 'white' }}>{today}</Caption>
+          <Caption style={{ color: 'white', fontSize: 10 }}>{today}</Caption>
         </View>
         <View
           style={{

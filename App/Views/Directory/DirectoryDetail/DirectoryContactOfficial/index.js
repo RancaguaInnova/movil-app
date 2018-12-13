@@ -1,6 +1,8 @@
 import React from 'react'
-import styles from './styles.js'
+import styles, { touchableIcons } from './styles.js'
+import textStyles from '/App/styles/texts'
 import PropTypes from 'prop-types'
+import { Alert } from 'react-native'
 import { View, Text, TouchableOpacity, Row, Subtitle, Divider, Image } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import email from 'react-native-email'
@@ -12,20 +14,50 @@ export default class DirectoryDetailOfficial extends React.Component {
   }
 
   sendEmail(emailTo) {
-    const to = [emailTo]
-    email(to, {
-      cc: [],
-      bcc: '',
-      subject: 'Contacto desde APP',
-      body: '',
-    }).catch(console.error)
+    try {
+      const to = [emailTo]
+      email(to, {
+        cc: [],
+        bcc: '',
+        subject: 'Contacto desde APP',
+        body: '',
+      }).catch(error => {
+        Alert.alert('Email de contacto: ' + to)
+      })
+    } catch (error) {
+      Alert.alert('Email de contacto: ' + to)
+      console.log('[sendEmail]:', error)
+    }
   }
 
   makeACall(phone) {
-    call({
-      number: phone,
-      prompt: true,
-    }).catch(console.error)
+    try {
+      call({
+        number: phone,
+        prompt: true,
+      }).catch(error => {
+        Alert.alert(`Número telefónico: ${phone}`)
+      })
+    } catch (error) {
+      Alert.alert(`Número telefónico: ${phone}`)
+      console.log('[makeACall]:', error)
+    }
+  }
+
+  renderPhoneIcon(phone) {
+    return (
+      <TouchableOpacity style={touchableIcons} onPress={() => (phone ? this.makeACall(phone) : '')}>
+        {phone ? <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} /> : ''}
+      </TouchableOpacity>
+    )
+  }
+
+  renderEmailIcon(email) {
+    return (
+      <TouchableOpacity style={touchableIcons} onPress={() => (email ? this.sendEmail(email) : '')}>
+        {email ? <Ionicons styleName='disclosure' name='ios-mail' size={28} /> : ''}
+      </TouchableOpacity>
+    )
   }
 
   render() {
@@ -43,7 +75,7 @@ export default class DirectoryDetailOfficial extends React.Component {
       email: contact.email,
     }
     return (
-      <TouchableOpacity>
+      <View>
         <Row styleName='small'>
           {officer.image ? (
             <Image styleName='small rounded-corners' source={{ uri: officer.image }} />
@@ -52,31 +84,18 @@ export default class DirectoryDetailOfficial extends React.Component {
           )}
 
           <View styleName='vertical'>
-            <Subtitle>{officer.position}</Subtitle>
-            <Text numberOfLines={2}>{officer.name}</Text>
+            <Subtitle style={textStyles.rowSubtitle}>{officer.position}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
+              {officer.name}
+            </Text>
           </View>
 
-          {officer.email ? (
-            <Ionicons
-              styleName='disclosure'
-              name='ios-mail'
-              size={28}
-              onPress={() => this.sendEmail(officer.email)}
-              style={{ paddingRight: 25 }}
-            />
-          ) : null}
-          {officer.phone ? (
-            <Ionicons
-              styleName='disclosure'
-              onPress={() => this.makeACall(officer.phone)}
-              name='ios-call'
-              color='green'
-              size={28}
-            />
-          ) : null}
+          {this.renderEmailIcon(officer.email)}
+
+          {this.renderPhoneIcon(officer.phone)}
         </Row>
         <Divider styleName='line' />
-      </TouchableOpacity>
+      </View>
     )
   }
 }

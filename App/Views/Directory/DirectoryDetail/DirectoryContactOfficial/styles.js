@@ -5,3 +5,13 @@ export default StyleSheet.create({
     paddingRight: 10,
   },
 })
+
+export const touchableIcons = {
+  width: 50,
+  height: 50,
+  /* borderColor: 'red',
+  borderWidth: 1, */
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+}

@@ -1,11 +1,14 @@
 import React from 'react'
 import styles from './styles.js'
+import textStyles from '/App/styles/texts'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
+import SubHeader from '/App/components/SubHeader'
+
 @withGraphQL(gql`
   query getMe {
     me {
@@ -29,6 +32,12 @@ export default class Apps extends React.Component {
           externalUrl: '',
         },
         {
+          name: 'Tránsito',
+          description: 'Reserva de hora Licencia de Conducir',
+          icon: 'ios-car',
+          externalUrl: 'https://rancagua.licenciaconducir.cl/access/12345',
+        },
+        {
           name: 'Salud',
           description: 'Reserva de horas en Cesfam',
           icon: 'md-medkit',
@@ -45,12 +54,6 @@ export default class Apps extends React.Component {
           description: 'Plano Regulador',
           icon: 'ios-hammer',
           externalUrl: '',
-        },
-        {
-          name: 'Tránsito',
-          description: 'Reserva de hora Licencia de Conducir',
-          icon: 'ios-car',
-          externalUrl: 'https://rancagua.licenciaconducir.cl',
         },
       ],
       result: null,
@@ -78,8 +81,10 @@ export default class Apps extends React.Component {
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle>{app.name}</Subtitle>
-            <Text numberOfLines={2}>{app.description}</Text>
+            <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
+              {app.description}
+            </Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </Row>
@@ -92,15 +97,7 @@ export default class Apps extends React.Component {
     const apps = this.state.apps
     return (
       <View styleName='content'>
-        <View
-          style={{
-            minHeight: 80,
-          }}
-        >
-          <Subtitle styleName='h-center' style={{ paddingTop: 30 }} numberOfLines={4}>
-            Seleccione el servicio
-          </Subtitle>
-        </View>
+        <SubHeader view='apps' title='Seleccione el servicio' />
         <Divider styleName='line' />
         {apps.map(app => this.renderRow(app))}
       </View>
