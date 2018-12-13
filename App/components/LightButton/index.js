@@ -1,9 +1,10 @@
 import React from 'react'
-import {View, TouchableWithoutFeedback, Text} from 'react-native'
+import { View, Text, Caption } from '@shoutem/ui'
+import { TouchableWithoutFeedback } from 'react-native'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
-import {Circle} from 'react-native-progress'
+import { Circle } from 'react-native-progress'
 
 export default class AppButton extends React.Component {
   static propTypes = {
@@ -21,30 +22,30 @@ export default class AppButton extends React.Component {
     textColor: '#505759',
     height: 40,
     fontSize: 18,
-    loadingColor: '#111',
+    loadingColor: '#111'
   }
 
   state = {}
 
   @autobind
-  onPressIn() {
+  onPressIn () {
     if (this.props.loading || this.props.disabled) return
-    this.setState({active: true})
+    this.setState({ active: true })
   }
 
   @autobind
-  onPressOut() {
+  onPressOut () {
     if (this.props.loading || this.props.disabled) return
-    this.setState({active: false})
+    this.setState({ active: false })
   }
 
   @autobind
-  onPress() {
+  onPress () {
     if (this.props.loading || this.props.disabled) return
     this.props.onPress()
   }
 
-  getContainerStyles() {
+  getContainerStyles () {
     return {
       height: this.props.height,
       alignItems: 'center',
@@ -52,41 +53,45 @@ export default class AppButton extends React.Component {
     }
   }
 
-  getTextStyles() {
+  getTextStyles () {
     const color = this.props.disabled ? '#ddd' : this.props.textColor
     const opacity = this.state.active ? 0.5 : 1
     return {
       textAlign: 'center',
-      fontSize: this.props.fontSize,
       color,
       opacity
     }
   }
 
-  renderLoading() {
+  renderLoading () {
     if (!this.props.loading) return
     const style = {}
     return (
       <View style={style}>
-        <Circle size={this.props.height} indeterminate color={this.props.loadingColor} />
+        <Circle
+          size={this.props.height}
+          indeterminate
+          color={this.props.loadingColor}
+        />
       </View>
     )
   }
 
-  renderText() {
+  renderText () {
     if (this.props.loading) return
     const textStyles = this.getTextStyles()
-    return <Text style={textStyles}>{this.props.title}</Text>
+    return <Caption style={textStyles}>{this.props.title}</Caption>
   }
 
-  render() {
+  render () {
     const containerStyles = this.getContainerStyles()
     return (
       <TouchableWithoutFeedback
         onPressIn={this.onPressIn}
         onPressOut={this.onPressOut}
         onPress={this.onPress}
-        style={styles.touchable}>
+        style={styles.touchable}
+      >
         <View style={containerStyles}>
           {this.renderText()}
           {this.renderLoading()}

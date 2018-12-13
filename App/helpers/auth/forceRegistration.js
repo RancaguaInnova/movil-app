@@ -1,31 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withUserId from './withUserId'
-import { NavigationActions } from 'react-navigation'
+import { withNavigation, NavigationActions } from 'react-navigation'
 
 export default function (ComposedComponent) {
   @withUserId
-  class ForceLogin extends React.Component {
+  @withNavigation
+  class ForceRegistration extends React.Component {
     static propTypes = {
       navigation: PropTypes.object,
       userId: PropTypes.string
     }
 
-    awaitLogin () {
+    redirect () {
       this.props.navigation.navigate(
         'Auth',
         {},
-        NavigationActions.navigate({ routeName: 'Login' })
+        NavigationActions.navigate({
+          routeName: 'Register'
+        })
       )
-    }
-    componentWillMount () {
-      if (!this.props.userId) return this.awaitLogin()
+      return null
     }
 
     render () {
+      if (!this.props.userId) return this.redirect()
       return <ComposedComponent {...this.props} />
     }
   }
 
-  return ForceLogin
+  return ForceRegistration
 }

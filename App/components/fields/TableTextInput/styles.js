@@ -1,6 +1,4 @@
-import {StyleSheet} from 'react-native'
-
-export default StyleSheet.create({
+export default {
   container: {
     backgroundColor: '#f5f5f5'
   },
@@ -11,17 +9,20 @@ export default StyleSheet.create({
   labelContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingRight: 10
+    paddingRight: 10,
+    width: '30%'
   },
   label: {
     color: '#111',
-    fontSize: 18
+    fontSize: 16
   },
   input: {
     color: '#888',
     flex: 1,
     textAlign: 'right',
-    fontSize: 18
+    fontSize: 18,
+    height: 20,
+    borderRadius: 5
   },
   bottomLine: {
     backgroundColor: '#eee',
@@ -35,4 +36,4 @@ export default StyleSheet.create({
     color: 'red',
     textAlign: 'right'
   }
-})
+}
