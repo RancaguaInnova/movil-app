@@ -1,8 +1,19 @@
 import React from 'react'
-import { ScrollView, View, Text, Title } from '@shoutem/ui'
-import TextInput from 'App/components/fields/TextInput'
-import SelectInput from 'App/components/fields/TableSelect'
-import { Form, Field } from 'simple-react-form'
+import {
+  ScrollView,
+  View,
+  Text,
+  Title,
+  Subtitle,
+  Row,
+  Divider,
+  TouchableOpacity
+} from '@shoutem/ui'
+import { Ionicons } from '@expo/vector-icons'
+import textStyles from '/App/styles/texts'
+import Identification from './Identification'
+import Contact from './Contact'
+import { Form } from 'simple-react-form'
 import Button from 'App/components/ShoutemButton'
 import LightButton from 'App/components/LightButton'
 import autobind from 'autobind-decorator'
@@ -46,8 +57,26 @@ export default class Profile extends React.Component {
   }
 
   state = {
+    section: '',
     errorMessage: ''
   }
+
+  sections = [
+    {
+      key: 'identification',
+      name: 'Identificación',
+      description: 'Datos de identificación',
+      icon: 'ios-person',
+      component: Identification
+    },
+    {
+      key: 'contact',
+      name: 'Contacto',
+      description: 'Dirección y teléfono',
+      icon: 'ios-contacts',
+      component: Contact
+    }
+  ]
 
   componentDidMount() {
     let me = this.props.me || {}
@@ -63,7 +92,7 @@ export default class Profile extends React.Component {
 
   renderLogoutButton() {
     if (this.props.me) {
-      return <LightButton onPress={this.signOut} title="Logout" />
+      return <LightButton onPress={this.signOut} title="Cerrar Sesión" />
     }
   }
 
@@ -84,6 +113,39 @@ export default class Profile extends React.Component {
     this.setState({ loading: false })
   }
 
+  @autobind
+  renderArrowIcon(sectionKey) {
+    if (this.state.section === sectionKey) return 'ios-arrow-back'
+    return 'ios-arrow-forward'
+  }
+
+  @autobind
+  renderRows(section) {
+    return (
+      <TouchableOpacity
+        key={section.name}
+        onPress={() => this.setState({ section: section.key })}
+      >
+        <Row styleName="small">
+          <Ionicons name={section.icon} size={30} style={styles.leftIcon} />
+          <View styleName="vertical">
+            <Subtitle style={textStyles.rowSubtitle}>{section.name}</Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
+              {section.description}
+            </Text>
+          </View>
+          <Ionicons
+            styleName="disclosure"
+            name={this.renderArrowIcon(section.key)}
+            size={28}
+          />
+        </Row>
+        <Divider styleName="line" />
+        {<section.component active={this.state.section === section.key} />}
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     return (
       <ScrollView styleNames="fill-container" style={styles.container}>
@@ -91,52 +153,7 @@ export default class Profile extends React.Component {
           state={this.state.me}
           onChange={changes => this.setState(changes)}
         >
-          <Title style={styles.title}>Indentificación:</Title>
-          <Field
-            fieldName="profile.firstName"
-            type={TextInput}
-            label="Nombre:"
-            placeHolder="Ingrese su nombre"
-          />
-          <Field
-            fieldName="profile.lastName"
-            type={TextInput}
-            label="Apellido:"
-          />
-          <Field fieldName="profile.identifier" type={TextInput} label="Rut:" />
-          <Field
-            fieldName="profile.educationalLevel"
-            type={SelectInput}
-            label="Nivel Educacional:"
-            placeHolder="Seleccione una opción"
-            options={[
-              { label: 'Básica', value: 'basica' },
-              { label: 'Media', value: 'media' },
-              { label: 'Superior', value: 'superior' },
-              { label: 'Postgrado', value: 'postgrado' }
-            ]}
-          />
-          <Title style={styles.title}>Contacto:</Title>
-          <Field
-            fieldName="profile.address.streetName"
-            type={TextInput}
-            label="Nombre de calle o avenida:"
-          />
-          <Field
-            fieldName="profile.address.streetNumber"
-            type={TextInput}
-            label="Número de calle:"
-          />
-          <Field
-            fieldName="profile.address.departmentNumber"
-            type={TextInput}
-            label="Número de casa o departamento:"
-          />
-          <Field
-            fieldName="profile.phone.mobilePhone"
-            type={TextInput}
-            label="Celular:"
-          />
+          {this.sections.map(this.renderRows)}
         </Form>
         {this.renderErrorMessage()}
         <Button
@@ -144,6 +161,7 @@ export default class Profile extends React.Component {
           onPress={this.submit}
           label="Guardar"
           iconName="save"
+          style={{ marginTop: 40 }}
         />
         {this.renderLogoutButton()}
       </ScrollView>

@@ -3,7 +3,7 @@ import {
   defaultRightMenu
 } from 'App/components/CustomHeader/defaultNavigationConfig'
 import { createStackNavigator } from 'react-navigation'
-import Profile from './index'
+import Profile from './Profile'
 import AuthStack from './Auth/stackNavigator'
 
 const ProfileStack = createStackNavigator(

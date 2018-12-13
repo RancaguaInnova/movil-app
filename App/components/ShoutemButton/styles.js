@@ -4,9 +4,15 @@ export default {
     width: '80%',
     height: 42,
     borderRadius: 5,
-    margin: 'auto'
+    margin: 'auto',
+    marginTop: 30
   },
   label: {
-    fontSize: 14
+    fontSize: 14,
+    color: '#fff'
+  },
+  icon: {
+    marginRight: 10,
+    color: '#eee'
   }
 }

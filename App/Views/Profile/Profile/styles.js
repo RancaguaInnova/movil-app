@@ -9,6 +9,9 @@ export default {
     marginTop: 10,
     marginBottom: 10
   },
+  leftIcon: {
+    paddingRight: 20
+  },
   errorMessage: {
     color: 'red',
     marginBottom: 10,

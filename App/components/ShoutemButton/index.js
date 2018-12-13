@@ -35,14 +35,15 @@ export default class ShoutemButton extends React.Component {
   }
 
   renderIcon () {
-    let { iconName } = this.props
-    if (iconName) return <Icon name={iconName} size={20} />
+    let { iconName, loading } = this.props
+    if (iconName && !loading) { return <Icon style={styles.icon} name={iconName} size={20} /> }
     return null
   }
 
-  renderTextOrLoading () {
-    if (this.props.loading) return <Spinner stlye={{ size: 'large' }} />
-    return <Text style={styles.label}>{this.props.label}</Text>
+  renderComponentsOrLoading () {
+    let { label, loading } = this.props
+    if (loading) return <Spinner style={{ size: 'small', color: '#fff' }} />
+    return <Text style={styles.label}>{label}</Text>
   }
 
   render () {
@@ -54,7 +55,7 @@ export default class ShoutemButton extends React.Component {
         loading
       >
         {this.renderIcon()}
-        {this.renderTextOrLoading()}
+        {this.renderComponentsOrLoading()}
       </Button>
     )
   }
