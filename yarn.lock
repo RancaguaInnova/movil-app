@@ -6605,6 +6605,10 @@ run-parallel@^1.1.2:
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.1.9.tgz#c9dd3a7cf9f4b2c4b6244e173a6ed866e61dd679"
 
+rut.js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/rut.js/-/rut.js-1.0.1.tgz#90186c01dcb8a657318b47e1d54d80c859a2a8e4"
+
 rx-lite-aggregates@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"

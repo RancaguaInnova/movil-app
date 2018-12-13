@@ -57,7 +57,7 @@ export default class Profile extends React.Component {
   }
 
   state = {
-    section: '',
+    section: 'identification',
     errorMessage: ''
   }
 
