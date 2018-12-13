@@ -12,6 +12,7 @@ import {
   NavigationBar,
   ImageBackground,
 } from '@shoutem/ui'
+
 export default class SubHeader extends React.Component {
   static propTypes = {
     view: PropTypes.string,
