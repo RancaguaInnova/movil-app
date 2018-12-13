@@ -1,6 +1,11 @@
 {
   "expo": {
     "sdkVersion": "30.0.0",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#f68e44",
+      "resizeMode": "cover"
+    }
   }
 }
