@@ -80,6 +80,9 @@ export default class Profile extends React.Component {
 
   componentDidMount() {
     let me = this.props.me || {}
+    let { profile: { address: { streetNumber } } } = me
+    // Horrible bypass to avoid invalid data type on text input
+    me.profile.address.streetNumber = streetNumber.toString()
     this.setState({ me })
   }
 
@@ -104,11 +107,15 @@ export default class Profile extends React.Component {
   @autobind
   async submit() {
     let user = Object.assign({}, this.state.me)
+    console.log('user:', user)
     this.setState({ loading: true })
     try {
       await this.props.updateUser({ user })
     } catch (error) {
       console.log('Error updating user:', error)
+      this.setState({
+        errorMessage: error.message.replace('GraphQL error:', '')
+      })
     }
     this.setState({ loading: false })
   }
@@ -151,7 +158,7 @@ export default class Profile extends React.Component {
       <ScrollView styleNames="fill-container" style={styles.container}>
         <Form
           state={this.state.me}
-          onChange={changes => this.setState(changes)}
+          onChange={changes => this.setState({ me: changes })}
         >
           {this.sections.map(this.renderRows)}
         </Form>
@@ -161,7 +168,7 @@ export default class Profile extends React.Component {
           onPress={this.submit}
           label="Guardar"
           iconName="save"
-          style={{ marginTop: 40 }}
+          style={{ marginTop: this.state.errorMessage ? 5 : 40 }}
         />
         {this.renderLogoutButton()}
       </ScrollView>
