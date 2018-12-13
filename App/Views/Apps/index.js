@@ -18,6 +18,7 @@ import SubHeader from '/App/components/SubHeader'
           identifier
         }
         email
+        userToken
       }
     }
   `
@@ -45,7 +46,7 @@ export default class Apps extends React.Component {
   openApp = async app => {
     try {
       if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.me) {
-        const finalUrl = `${app.applicationURL}?token=${this.props.me._id}`
+        const finalUrl = `${app.applicationURL}?token=${this.props.me.userToken}`
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
       } else if (!this.props.me) {
