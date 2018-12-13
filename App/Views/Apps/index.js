@@ -8,67 +8,51 @@ import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
 import SubHeader from '/App/components/SubHeader'
-
-@withGraphQL(gql`
-  query getMe {
-    me {
-      _id
-      profile {
-        identifier
+import { client } from 'App/Root/client'
+import autobind from 'autobind-decorator'
+import Loading from '/App/Root/Loading'
+@withGraphQL(
+  gql`
+    query getMe {
+      me {
+        _id
+        profile {
+          identifier
+        }
+        email
       }
-      email
+    }
+  `
+)
+@withGraphQL(gql`
+  {
+    applications(page: 1, limit: 10) {
+      items {
+        _id
+        name
+        description
+        departmentId
+        approved
+        applicationURL
+      }
     }
   }
 `)
 export default class Apps extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      apps: [
-        {
-          name: 'Desarrollo Social',
-          description: 'Dideco',
-          icon: 'ios-contacts',
-          externalUrl: '',
-        },
-        {
-          name: 'Tránsito',
-          description: 'Reserva de hora Licencia de Conducir',
-          icon: 'ios-car',
-          externalUrl: 'https://rancagua.licenciaconducir.cl/access/12345',
-        },
-        {
-          name: 'Salud',
-          description: 'Reserva de horas en Cesfam',
-          icon: 'md-medkit',
-          externalUrl: '',
-        },
-        {
-          name: 'Educación',
-          description: 'App Libreta educativa',
-          icon: 'ios-school',
-          externalUrl: '',
-        },
-        {
-          name: 'Dirección Obras',
-          description: 'Plano Regulador',
-          icon: 'ios-hammer',
-          externalUrl: '',
-        },
-      ],
-      result: null,
-    }
-  }
-
   static propTypes = {
     me: PropTypes.object,
+    applications: PropTypes.object,
   }
 
-  _openApp = async app => {
+  openApp = async app => {
     try {
-      if (app.externalUrl && app.externalUrl.trim() !== '') {
-        let result = await WebBrowser.openBrowserAsync(app.externalUrl)
+      if (app.externalUrl && app.externalUrl.trim() !== '' && this.props.getMe) {
+        const finalUrl = `${app.applicationURL}?token=${this.props.getMe.me.profile.identifier}`
+        console.log('finalUrl', finalUrl)
+        let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
+      } else if (!this.props.getMe) {
+        alert('Debes iniciar sesión para continuar')
       }
     } catch (error) {
       this.setState({ result: null })
@@ -77,7 +61,7 @@ export default class Apps extends React.Component {
 
   renderRow(app) {
     return (
-      <TouchableOpacity key={app.name} onPress={() => this._openApp(app)}>
+      <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
         <Row styleName='small'>
           <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
@@ -94,12 +78,14 @@ export default class Apps extends React.Component {
   }
 
   render() {
-    const apps = this.state.apps
+    const {
+      applications: { items },
+    } = this.props
     return (
       <View styleName='content'>
         <SubHeader view='apps' title='Seleccione el servicio' />
         <Divider styleName='line' />
-        {apps.map(app => this.renderRow(app))}
+        {items.map(app => this.renderRow(app))}
       </View>
     )
   }
