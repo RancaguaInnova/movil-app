@@ -75,9 +75,9 @@ export default class Apps extends React.Component {
   }
 
   render() {
-    const {
-      applications: { items },
-    } = this.props
+    const items =
+      this.props.applications && this.props.applications.items ? this.props.applications.items : []
+
     return (
       <View styleName='content'>
         <SubHeader view='apps' title='Seleccione el servicio' />
