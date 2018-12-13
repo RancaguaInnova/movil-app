@@ -1,18 +1,7 @@
 import React from 'react'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
-import { Ionicons } from '@expo/vector-icons'
-import {
-  View,
-  Title,
-  Tile,
-  Text,
-  Subtitle,
-  Overlay,
-  NavigationBar,
-  ImageBackground,
-} from '@shoutem/ui'
-
+import { View, Tile, Subtitle, Overlay, ImageBackground } from '@shoutem/ui'
 export default class SubHeader extends React.Component {
   static propTypes = {
     view: PropTypes.string,
@@ -25,7 +14,7 @@ export default class SubHeader extends React.Component {
   }
 
   render() {
-    const view = this.props.view // `App/assets/views/${this.props.view}.png`
+    const view = this.props.view
     const img =
       view === 'calendar'
         ? require('App/assets/views/calendar.png')
@@ -35,10 +24,10 @@ export default class SubHeader extends React.Component {
 
     return (
       <View>
-        <ImageBackground styleName='large-banner' source={img} style={{ height: 150 }}>
-          <Tile style={{ padding: 0 }}>
+        <ImageBackground styleName='large-banner' source={img} style={styles.image}>
+          <Tile style={styles.tile}>
             <Overlay styleName='image-overlay'>
-              <Subtitle numberOfLines={2} style={{ fontSize: 18 }}>
+              <Subtitle numberOfLines={2} style={styles.subTitle}>
                 {this.props.title}
               </Subtitle>
             </Overlay>

@@ -1,11 +1,7 @@
-import { StyleSheet } from 'react-native'
-
-export default StyleSheet.create({
-  container: {
-    backgroundColor: 'transparent',
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+export default {
+  image: {
+    height: 150,
   },
-})
+  subTitle: { fontSize: 18 },
+  tile: { padding: 0 },
+}

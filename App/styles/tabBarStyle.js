@@ -3,7 +3,7 @@ export default {
   inactiveTintColor: 'rgba(0, 0, 0, 0.5)',
   style: {
     paddingTop: 10,
-    backgroundColor: '#F37021',
+    backgroundColor: '#f68e44',
     height: 60,
   },
   labelStyle: {
