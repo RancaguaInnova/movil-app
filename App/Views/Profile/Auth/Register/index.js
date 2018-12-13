@@ -127,9 +127,10 @@ export default class Register extends React.Component {
               enablesReturnKeyAutomatically
               returnKeyType="next"
               fieldName="profile.identifier"
-              label="RUT: 11222333-k"
+              label="Rut:"
               onSubmitEditing={this.focusEmail}
               type={TextInput}
+              rut
             />
             <Field
               enablesReturnKeyAutomatically
