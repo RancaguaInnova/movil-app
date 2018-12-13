@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
 import SubHeader from '/App/components/SubHeader'
+
 @withGraphQL(gql`
   {
     departments(limit: 100, page: 1) {
