@@ -1,5 +1,5 @@
-import {saveSession} from 'App/Root/client'
+import { saveSession } from 'App/Root/client'
 
-export default async function(session) {
+export default async function (session) {
   return await saveSession(session)
 }

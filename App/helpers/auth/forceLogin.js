@@ -2,13 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import withUserId from './withUserId'
 import { NavigationActions } from 'react-navigation'
+import isLoggedIn from 'App/helpers/auth/isLoggedIn'
 
 export default function (ComposedComponent) {
-  @withUserId
   class ForceLogin extends React.Component {
     static propTypes = {
-      navigation: PropTypes.object,
-      userId: PropTypes.string
+      navigation: PropTypes.object
+    }
+
+    async componentWillMount () {
+      try {
+        let userIsLoggedIn = await isLoggedIn()
+        if (!userIsLoggedIn) return this.awaitLogin()
+      } catch (error) {
+        console.log('Error on componentWillMount:', error)
+      }
     }
 
     awaitLogin () {
@@ -17,9 +25,6 @@ export default function (ComposedComponent) {
         {},
         NavigationActions.navigate({ routeName: 'Login' })
       )
-    }
-    componentWillMount () {
-      if (!this.props.userId) return this.awaitLogin()
     }
 
     render () {

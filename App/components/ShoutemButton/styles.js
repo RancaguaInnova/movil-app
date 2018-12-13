@@ -5,7 +5,14 @@ export default {
     height: 42,
     borderRadius: 5,
     margin: 'auto',
-    marginTop: 30
+    marginTop: 30,
+    shadowColor: '#ccc',
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    }
   },
   label: {
     fontSize: 14,
