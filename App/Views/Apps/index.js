@@ -3,14 +3,12 @@ import styles from './styles.js'
 import textStyles from '/App/styles/texts'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
+import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity } from '@shoutem/ui'
 import { WebBrowser } from 'expo'
 import SubHeader from '/App/components/SubHeader'
-import { client } from 'App/Root/client'
-import autobind from 'autobind-decorator'
-import Loading from '/App/Root/Loading'
 @withGraphQL(
   gql`
     query getMe {
@@ -46,13 +44,12 @@ export default class Apps extends React.Component {
 
   openApp = async app => {
     try {
-      if (app.externalUrl && app.externalUrl.trim() !== '' && this.props.getMe) {
-        const finalUrl = `${app.applicationURL}?token=${this.props.getMe.me.profile.identifier}`
-        console.log('finalUrl', finalUrl)
+      if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.me) {
+        const finalUrl = `${app.applicationURL}?token=${this.props.me._id}`
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
-      } else if (!this.props.getMe) {
-        alert('Debes iniciar sesión para continuar')
+      } else if (!this.props.me) {
+        Alert.alert('Debe iniciar sesión para iniciar el servicio')
       }
     } catch (error) {
       this.setState({ result: null })
