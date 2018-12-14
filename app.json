@@ -1,5 +1,7 @@
 {
   "expo": {
+    "name": "Rancagua Digital",
+    "version": "0.1.0",
     "sdkVersion": "30.0.0",
     "orientation": "portrait",
     "primaryColor": "#f68e44",
@@ -8,6 +10,9 @@
       "image": "./App/assets/splash.png",
       "backgroundColor": "#f68e44",
       "resizeMode": "cover"
+    },
+    "android": {
+      "package": "com.rancagua.digital"
     }
   }
 }
