@@ -1,9 +1,9 @@
 const urls = {
   local: `http://localhost:3000`,
   dev: '',
-  prod: ''
+  prod: 'https://api.smartrancagua.cl'
 }
 
-const env = 'local'
+const env = 'prod'
 
 export default urls[env]
