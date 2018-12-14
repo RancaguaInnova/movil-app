@@ -3,6 +3,7 @@
     "name": "Rancagua Digital",
     "version": "0.1.0",
     "sdkVersion": "30.0.0",
+    "slug": "https://expo.io/@jjgumuciol/rancagua-digital",
     "orientation": "portrait",
     "primaryColor": "#f68e44",
     "icon": "./App/assets/icons/app-icon.png",
