@@ -94,7 +94,9 @@ export default class HomeOverlay extends React.Component {
         <View style={styles.informationRow}>
           {this.renderIcon(card)}
           <View styleName='vertical' style={styles.rightColumn}>
-            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{card.title}</Text>
+            <Text style={{ color: 'rgb(68,78,82)', fontSize: 20, fontWeight: 'bold' }}>
+              {card.title}
+            </Text>
           </View>
         </View>
         <View style={styles.informationRow}>
@@ -111,7 +113,7 @@ export default class HomeOverlay extends React.Component {
             </Text>
           </View>
           <View styleName='vertical' style={styles.rightColumn}>
-            <Text styleName='h-center' style={{ color: 'white', fontSize: 14 }}>
+            <Text styleName='h-center' style={{ color: 'rgb(68,78,82)', fontSize: 14 }}>
               {card.subtitle}
             </Text>
           </View>
@@ -125,9 +127,11 @@ export default class HomeOverlay extends React.Component {
       return (
         <CardSilder
           autoplay
-          interval={3000}
+          interval={5000}
           showsHorizontalScrollIndicator
-          style={{ /* borderColor: 'green', borderWidth: 1, */ width: '100%', padding: 0 }}
+          style={{
+            /* borderColor: 'green', borderWidth: 1,  width: '100%', */ padding: 0,
+          }}
         >
           {list.map(card => this.renderCard(card))}
         </CardSilder>
