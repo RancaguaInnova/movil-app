@@ -1,18 +1,33 @@
 {
   "expo": {
-    "name": "Rancagua Digital",
-    "version": "0.1.0",
-    "sdkVersion": "30.0.0",
+    "name": "app-movil-v2",
+    "slug": "app-movil-v2",
+    "privacy": "public",
+    "sdkVersion": "31.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#f68e44",
-    "icon": "./App/assets/icons/app-icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./App/assets/splash.png",
-      "backgroundColor": "#f68e44",
-      "resizeMode": "cover"
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f68e44"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
     },
     "android": {
       "package": "com.rancagua.digital"
-    }
+    },
+    "description": ""
   }
 }
