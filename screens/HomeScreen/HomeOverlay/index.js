@@ -2,8 +2,7 @@ import React from 'react'
 import CardSilder from 'react-native-cards-slider'
 import { ImageBackground, View, Text, Image as Img } from '@shoutem/ui'
 import Image from 'react-native-remote-svg'
-
-import gql from 'graphql-tag'
+import { cardListQry } from '../../../queries'
 import styles from './styles'
 import { client } from '../../../providers/ApolloProvider'
 import Loading from '../../../providers/ApolloProvider/Loading'
@@ -27,20 +26,8 @@ export default class HomeOverlay extends React.Component {
   @autobind
   async loadCards() {
     try {
-      const cardsQry = gql`
-        {
-          cardsList {
-            datum
-            measurementUnit
-            icon
-            color
-            title
-            subtitle
-          }
-        }
-      `
       const result = await client.query({
-        query: cardsQry,
+        query: cardListQry,
       })
       const {
         data: { cardsList },
@@ -65,7 +52,7 @@ export default class HomeOverlay extends React.Component {
 
   renderIcon(card) {
     const type =
-      !card.iconUrl || (card.iconUrl && card.iconUrl.trim() !== '')
+      !card.iconUrl || (card.iconUrl && card.iconUrl.trim() == '')
         ? 'icon'
         : card.iconUrl && card.iconUrl.indexOf('.svg') !== -1
         ? 'svg'
