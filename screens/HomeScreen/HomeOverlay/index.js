@@ -1,28 +1,140 @@
 import React from 'react'
-import { Text, View } from 'react-native'
 import CardSilder from 'react-native-cards-slider'
-import { ImageBackground } from '@shoutem/ui'
+import { ImageBackground, View, Text, Image as Img } from '@shoutem/ui'
+import Image from 'react-native-remote-svg'
+
+import gql from 'graphql-tag'
 import styles from './styles'
+import { client } from '../../../providers/ApolloProvider'
+import Loading from '../../../providers/ApolloProvider/Loading'
+import Retry from '../../../providers/ApolloProvider/Retry'
+import autobind from 'autobind-decorator'
+import { ApolloProvider } from 'react-apollo'
+import { Ionicons } from '@expo/vector-icons'
+//import { WebView } from 'react-native'
 export default class HomeOverlay extends React.Component {
-  renderSlider() {
+  state = {
+    cards: {
+      list: [],
+      status: 'loading',
+    },
+  }
+
+  componentDidMount() {
+    this.loadCards()
+  }
+
+  @autobind
+  async loadCards() {
+    try {
+      const cardsQry = gql`
+        {
+          cardsList {
+            datum
+            measurementUnit
+            icon
+            color
+            title
+            subtitle
+          }
+        }
+      `
+      const result = await client.query({
+        query: cardsQry,
+      })
+      const {
+        data: { cardsList },
+      } = result
+      const cards = this.state.cards
+      cards.list = cardsList
+      cards.status = ''
+
+      this.setState({
+        ...cards,
+      })
+    } catch (error) {
+      console.log('error', error)
+      const cards = this.state.cards
+      cards.list = []
+      cards.status = 'error'
+      this.setState({
+        ...cards,
+      })
+    }
+  }
+
+  renderIcon(card) {
+    const type =
+      !card.iconUrl || (card.iconUrl && card.iconUrl.trim() !== '')
+        ? 'icon'
+        : card.iconUrl && card.iconUrl.indexOf('.svg') !== -1
+        ? 'svg'
+        : 'image'
     return (
-      <CardSilder
-        autoplay
-        interval={3000}
-        showsHorizontalScrollIndicator
-        style={{ /* borderColor: 'green', borderWidth: 1, */ width: '100%', padding: 0 }}
-      >
-        <View style={styles.informationCard}>
-          <Text style={{ color: 'green', fontSize: 24, fontWeight: 'bold' }}>uno</Text>
-        </View>
-        <View style={styles.informationCard}>
-          <Text style={{ color: 'black', fontSize: 24, fontWeight: 'bold' }}>dos</Text>
-        </View>
-        <View style={styles.informationCard}>
-          <Text style={{ color: 'red', fontSize: 24, fontWeight: 'bold' }}>tres</Text>
-        </View>
-      </CardSilder>
+      <View styleName='vertical' style={styles.leftColumn}>
+        {type === 'icon' ? (
+          <Ionicons name={card.icon} color={card.color} size={50} />
+        ) : type === 'svg' ? (
+          <Image source={{ uri: card.iconUrl }} style={{ width: 50, height: 50 }} />
+        ) : (
+          <Img
+            styleName='small'
+            source={{
+              uri: card.iconUrl,
+            }}
+          />
+        )}
+      </View>
     )
+  }
+
+  renderCard(card) {
+    return (
+      <View style={styles.informationCard} key={card.title}>
+        <View style={styles.informationRow}>
+          {this.renderIcon(card)}
+          <View styleName='vertical' style={styles.rightColumn}>
+            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{card.title}</Text>
+          </View>
+        </View>
+        <View style={styles.informationRow}>
+          <View style={styles.leftColumn}>
+            <Text
+              style={{
+                color: card.color ? card.color : 'rgb(68,78,82)',
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}
+            >
+              {card.datum}
+              {card.measurementUnit}
+            </Text>
+          </View>
+          <View styleName='vertical' style={styles.rightColumn}>
+            <Text styleName='h-center' style={{ color: 'white', fontSize: 14 }}>
+              {card.subtitle}
+            </Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  renderSlider(list) {
+    if (list && list.length > 0) {
+      return (
+        <CardSilder
+          autoplay
+          interval={3000}
+          showsHorizontalScrollIndicator
+          style={{ /* borderColor: 'green', borderWidth: 1, */ width: '100%', padding: 0 }}
+        >
+          {list.map(card => this.renderCard(card))}
+        </CardSilder>
+      )
+    } else {
+      return <View />
+    }
   }
 
   render() {
@@ -40,7 +152,13 @@ export default class HomeOverlay extends React.Component {
               backgroundColor: 'rgba(0,0,1, 0.2)',
             }}
           >
-            {this.renderSlider()}
+            {this.state.cards.status === 'loading' ? (
+              <Loading />
+            ) : this.state.cards.status === 'error' ? (
+              <Retry callback={this.loadCards} />
+            ) : (
+              this.renderSlider(this.state.cards.list)
+            )}
           </View>
         </ImageBackground>
       </View>
