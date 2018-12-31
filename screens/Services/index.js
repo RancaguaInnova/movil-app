@@ -31,18 +31,21 @@ class ServicesScreen extends React.Component {
         let finalUrl
         if (includes(applicationURL, 'libretaeducativa')) {
           // Check that the user has an account on Libreta Educativa
-          console.log('this.props.data.me:', this.props.data.me)
-          const authResponse = fetch('https://www.libretaeducativa.com/api/rcga/magic_link', {
-            method: 'POST',
-            headers: {
-              Authorization: 'Basic <app-token-here>',
-            },
-            body: JSON.stringify({
-              email: this.props.data.me.email
+          try {
+            const authResponse = await fetch('https://www.libretaeducativa.com/api/rcga/magic_link', {
+              method: 'POST',
+              headers: {
+                Authorization: 'Basic <app-token-here>',
+              },
+              body: JSON.stringify({
+                email: this.props.data.me.email
+              })
             })
-          })
-          const jsonResponse = authResponse.json()
-          finalUrl = jsonResponse.attributes.magicLink
+            const jsonResponse = authResponse.json()
+            finalUrl = jsonResponse.attributes.magicLink
+          } catch (error) {
+            console.log('Error on Libreta Educativa Auth process')
+          }
         } else {
           finalUrl = `${applicationURL}?token=${this.props.data.me.userToken}`
         }
