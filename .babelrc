@@ -11,7 +11,9 @@
       {
         "root": ["./"],
         "alias": {
-          "App": "./App"
+          "App": "./App",
+          "queries": "./queries",
+          "providers": "./providers"
         }
       }
     ]
