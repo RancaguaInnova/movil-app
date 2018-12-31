@@ -10,7 +10,7 @@ import Retry from 'providers/ApolloProvider/Retry'
 import autobind from 'autobind-decorator'
 import { ApolloProvider } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
-//import { WebView } from 'react-native'
+
 export default class HomeOverlay extends React.Component {
   state = {
     cards: {
