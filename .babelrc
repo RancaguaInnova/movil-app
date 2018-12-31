@@ -11,7 +11,13 @@
       {
         "root": ["./"],
         "alias": {
-          "App": "./App"
+          "App": "./App",
+          "queries": "./queries",
+          "providers": "./providers",
+          "components": "./components",
+          "screens:": "./screens",
+          "styles": "./styles",
+          "constants": "./constants"
         }
       }
     ]

@@ -4,15 +4,15 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarOptions from './TabBarOptions'
 
-import TabBarIcon from '../components/TabBarIcon'
-import HomeScreen from '../screens/HomeScreen'
-import CalendarScreen from '../screens/CalendarScreen'
-import ServicesScreen from '../screens/ServicesScreen'
-import DirectoryScreen from '../screens/DirectoryScreen'
-import ProfileScreen from '../screens/ProfileScreen'
+import TabBarIcon from 'components/TabBarIcon'
+import Home from 'screens/Home'
+import Calendar from 'screens/Calendar'
+import Services from 'screens/Services'
+import Directory from 'screens/Directory'
+import Profile from 'screens/Profile'
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: Home,
 })
 
 HomeStack.navigationOptions = {
@@ -22,7 +22,7 @@ HomeStack.navigationOptions = {
 }
 
 const CalendarStack = createStackNavigator({
-  Calendar: CalendarScreen,
+  Calendar: Calendar,
 })
 
 CalendarStack.navigationOptions = {
@@ -34,7 +34,7 @@ CalendarStack.navigationOptions = {
 }
 
 const ServicesStack = createStackNavigator({
-  Services: ServicesScreen,
+  Services: Services,
 })
 
 ServicesStack.navigationOptions = {
@@ -46,8 +46,9 @@ ServicesStack.navigationOptions = {
 }
 
 const DirectoryStack = createStackNavigator({
-  Directory: DirectoryScreen,
+  Directory: Directory,
 })
+
 DirectoryStack.navigationOptions = {
   tabBarLabel: 'Directorio',
   tabBarIcon: ({ focused, tintColor }) => (
@@ -57,8 +58,9 @@ DirectoryStack.navigationOptions = {
 }
 
 const ProfileStack = createStackNavigator({
-  Profile: ProfileScreen,
+  Profile: Profile,
 })
+
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
   tabBarIcon: ({ focused, tintColor }) => (
