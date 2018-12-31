@@ -41,6 +41,8 @@ class ServicesScreen extends React.Component {
                 email: this.props.data.me.email
               })
             })
+            // If user does not exist on LE (status 404) prompt to create a user at LE?
+            if (authResponse.status !== 200) return
             const jsonResponse = authResponse.json()
             finalUrl = jsonResponse.attributes.magicLink
           } catch (error) {
