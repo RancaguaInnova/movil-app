@@ -13,7 +13,11 @@
         "alias": {
           "App": "./App",
           "queries": "./queries",
-          "providers": "./providers"
+          "providers": "./providers",
+          "components": "./components",
+          "screens:": "./screens",
+          "styles": "./styles",
+          "constants": "./constants"
         }
       }
     ]
