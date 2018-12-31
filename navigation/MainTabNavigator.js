@@ -48,6 +48,7 @@ ServicesStack.navigationOptions = {
 const DirectoryStack = createStackNavigator({
   Directory: Directory,
 })
+
 DirectoryStack.navigationOptions = {
   tabBarLabel: 'Directorio',
   tabBarIcon: ({ focused, tintColor }) => (
@@ -59,6 +60,7 @@ DirectoryStack.navigationOptions = {
 const ProfileStack = createStackNavigator({
   Profile: Profile,
 })
+
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
   tabBarIcon: ({ focused, tintColor }) => (
