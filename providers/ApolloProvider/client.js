@@ -23,6 +23,10 @@ const getSession = () => {
   return session
 }
 
+const removeSession = async () => {
+  await saveSession(null)
+}
+
 const saveSession = async newSession => {
   session = newSession
   await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
@@ -53,6 +57,7 @@ client = createClient({
   useSubscriptions: false,
   saveSession,
   getSession,
+  removeSession,
   cache,
 })
 
@@ -60,6 +65,7 @@ export {
   getSession,
   saveSession,
   recoverSession,
+  removeSession,
   client,
   /*   getIntroVisualization,
   setIntroVisualization,

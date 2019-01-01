@@ -4,10 +4,12 @@ import { View, Text, Divider, Caption } from '@shoutem/ui'
 import styles from './styles'
 import moment from '../../helpers/date/moment'
 import { getMeQry } from '../../queries'
+import { getSession, removeSession } from '../../providers/ApolloProvider'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import Login from './Login'
 import Profile from './Profile'
+import autobind from 'autobind-decorator'
 
 class ProfileScreen extends React.Component {
   static navigationOptions = {
@@ -24,16 +26,28 @@ class ProfileScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ profile: this.props.data.me })
+    console.log('getSession()', getSession())
+    this.setState({ profile: getSession() })
   }
 
-  onLoginSuccess() {}
+  @autobind
+  onLoginSuccess(session) {
+    this.setState({ profile: session })
+  }
+
+  @autobind
+  onLogout() {
+    this.setState({ profile: null })
+  }
 
   render() {
-    console.log('me', this.state.profile)
     return (
       <View style={styles.container}>
-        {this.state.profile ? <Profile /> : <Login onLoginSuccess={this.onLoginSuccess} />}
+        {this.state.profile ? (
+          <Profile data={this.state.profile} onLogout={this.onLogout} />
+        ) : (
+          <Login onLoginSuccess={this.onLoginSuccess} />
+        )}
       </View>
     )
   }

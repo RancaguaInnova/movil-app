@@ -1,2 +1,2 @@
-import { getSession, saveSession, recoverSession, client } from './client';
-export { getSession, saveSession, recoverSession, client };
+import { getSession, saveSession, recoverSession, removeSession, client } from './client'
+export { getSession, saveSession, recoverSession, removeSession, client }

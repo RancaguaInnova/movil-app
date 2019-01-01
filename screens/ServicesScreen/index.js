@@ -10,7 +10,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
 import { getMeQry, servicesListQry } from './../../queries'
 import { graphql, compose } from 'react-apollo'
-import includes from 'lodash/includes'
 
 class ServicesScreen extends React.Component {
   static navigationOptions = {
@@ -26,31 +25,8 @@ class ServicesScreen extends React.Component {
 
   async openApp(app) {
     try {
-      const applicationURL = app.applicationURL
-      if (applicationURL && applicationURL.trim() !== '' && this.props.data.me) {
-        let finalUrl
-        if (includes(applicationURL, 'libretaeducativa')) {
-          // Check that the user has an account on Libreta Educativa
-          try {
-            const authResponse = await fetch('https://www.libretaeducativa.com/api/rcga/magic_link', {
-              method: 'POST',
-              headers: {
-                Authorization: 'Basic <app-token-here>',
-              },
-              body: JSON.stringify({
-                email: this.props.data.me.email
-              })
-            })
-            // If user does not exist on LE (status 404) prompt to create a user at LE?
-            if (authResponse.status !== 200) return
-            const jsonResponse = authResponse.json()
-            finalUrl = jsonResponse.attributes.magicLink
-          } catch (error) {
-            console.log('Error on Libreta Educativa Auth process')
-          }
-        } else {
-          finalUrl = `${applicationURL}?token=${this.props.data.me.userToken}`
-        }
+      if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.data.me) {
+        const finalUrl = `${app.applicationURL}?token=${this.props.data.me.userToken}`
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
       } else if (!this.props.data.me) {

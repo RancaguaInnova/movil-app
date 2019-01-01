@@ -2,15 +2,15 @@ import React from 'react'
 import CardSilder from 'react-native-cards-slider'
 import { ImageBackground, View, Text, Image as Img } from '@shoutem/ui'
 import Image from 'react-native-remote-svg'
-import { cardListQry } from 'queries'
+import { cardListQry } from '../../../queries'
 import styles from './styles'
-import { client } from 'providers/ApolloProvider'
-import Loading from 'providers/ApolloProvider/Loading'
-import Retry from 'providers/ApolloProvider/Retry'
+import { client } from '../../../providers/ApolloProvider'
+import Loading from '../../../providers/ApolloProvider/Loading'
+import Retry from '../../../providers/ApolloProvider/Retry'
 import autobind from 'autobind-decorator'
 import { ApolloProvider } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
-
+//import { WebView } from 'react-native'
 export default class HomeOverlay extends React.Component {
   state = {
     cards: {
