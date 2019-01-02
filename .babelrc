@@ -17,7 +17,8 @@
           "components": "./components",
           "screens:": "./screens",
           "styles": "./styles",
-          "constants": "./constants"
+          "constants": "./constants",
+          "helpers": "./helpers"
         }
       }
     ]
