@@ -1,9 +1,11 @@
 import React from 'react'
+import { Alert } from 'react-native'
 import textStyles from '../../../../styles/texts'
 import PropTypes from 'prop-types'
 import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
+import { getSession } from '../../../../providers/ApolloProvider'
 
 export default class Item extends React.Component {
   static propTypes = {
@@ -11,11 +13,26 @@ export default class Item extends React.Component {
     firstItemInDay: PropTypes.bool,
   }
 
+  state = {
+    profile: null,
+  }
+
+  componentDidMount() {
+    this.setState({
+      profile: getSession(),
+    })
+  }
+
   onClickItem = async item => {
     try {
-      if (item.externalUrl && item.externalUrl.trim() !== '') {
-        let result = await WebBrowser.openBrowserAsync(item.externalUrl)
+      if (item.externalUrl && item.externalUrl.trim() !== '' && this.state.profile) {
+        let url =
+          item.externalUrl.indexOf('?') !== -1 ? `${item.externalUrl}&` : `${item.externalUrl}?`
+        url += `event=${item._id}&token=${this.state.profile.userToken}`
+        let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
+      } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.state.profile) {
+        Alert.alert('Debe iniciar sesión para acceder al Evento')
       }
     } catch (error) {
       console.log('Error handling onClickItem', error)
