@@ -62,7 +62,7 @@ export default class HomeOverlay extends React.Component {
         {type === 'icon' ? (
           <Ionicons name={card.icon} color={card.color} size={50} />
         ) : type === 'svg' ? (
-          <Image source={{ uri: card.iconUrl }} style={{ width: 50, height: 50 }} />
+          <Image source={{ uri: card.iconUrl }} style={{ marginTop: 20 }} />
         ) : (
           <Img
             styleName='small'
@@ -99,7 +99,7 @@ export default class HomeOverlay extends React.Component {
               {card.measurementUnit}
             </Text>
           </View>
-          <View styleName='vertical' style={styles.rightColumn}>
+          <View styleName='vertical' style={styles.subtitle}>
             <Text styleName='h-center' style={{ color: 'rgb(68,78,82)', fontSize: 14 }}>
               {card.subtitle}
             </Text>
