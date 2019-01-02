@@ -4,12 +4,13 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarOptions from './TabBarOptions'
 
-import TabBarIcon from '../components/TabBarIcon'
-import Home from '../screens/Home'
-import Calendar from '../screens/Calendar'
-import Services from '../screens/Services'
-import Directory from '../screens/Directory'
-import Profile from '../screens/Profile'
+import TabBarIcon from 'components/TabBarIcon'
+import Home from 'screens/Home'
+import Calendar from 'screens/Calendar'
+import Services from 'screens/Services'
+import Directory from 'screens/Directory'
+import Profile from 'screens/Profile'
+import Register from 'screens/Profile/Register'
 
 const HomeStack = createStackNavigator({
   Home: Home,
@@ -58,6 +59,7 @@ DirectoryStack.navigationOptions = {
 
 const ProfileStack = createStackNavigator({
   Profile: Profile,
+  Register: Register,
 })
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
