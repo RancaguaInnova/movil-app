@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from '@shoutem/ui'
 import { Field } from 'simple-react-form'
-import { TextInput } from '../../../../components/fields'
+import { TextInput } from 'components/fields'
 import PropTypes from 'prop-types'
 import styles from './styles'
 

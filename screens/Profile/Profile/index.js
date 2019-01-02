@@ -17,6 +17,8 @@ import textStyles from 'styles/texts'
 //import moment from '../../helpers/date/moment'
 import PropTypes from 'prop-types'
 import { Form } from 'simple-react-form'
+import Loading from 'providers/ApolloProvider/Loading'
+import Error from 'providers/ApolloProvider/ApolloError'
 import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
@@ -28,7 +30,19 @@ import gql from 'graphql-tag'
 import { UserFragments } from 'queries/User'
 import SectionDivider from 'components/SectionDivider'
 
-/* @withMutation(gql`
+@withGraphQL(gql`
+  query getMe {
+    me {
+      emails {
+        address
+        verified
+      }
+      ...Profile
+    }
+  }
+  ${UserFragments.Profile}
+`, {loading: <Loading />, errorComponent: Error})
+@withMutation(gql`
   mutation updateUser($user: UserInput!) {
     updateUser(user: $user) {
       emails {
@@ -39,7 +53,7 @@ import SectionDivider from 'components/SectionDivider'
     }
   }
   ${UserFragments.Profile}
-`) */
+`)
 export default class Profile extends React.Component {
   static propTypes = {
     profile: PropTypes.object,
@@ -57,8 +71,8 @@ export default class Profile extends React.Component {
     let me = Object.assign({}, props.me)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
-    if (me.profile && me.profile.address) {
-      me.profile.address.streetNumber = streetNumber.toString()
+    if (me.profile && me.profile.address && me.profile.address.streetNumber) {
+      me.profile.address.streetNumber = props.me.profile.address.streetNumber.toString()
     }
     return { me }
   }
@@ -85,11 +99,6 @@ export default class Profile extends React.Component {
       component: Contact,
     },
   ]
-
-  componentDidMount() {
-    console.log('ME:', this.props.me)
-    //this.setState({ profile: this.props.data.me })
-  }
 
   @autobind
   setCurrentSection(index) {
@@ -118,7 +127,7 @@ export default class Profile extends React.Component {
 
   @autobind
   async submit() {
-    /* let user = Object.assign({}, this.state.me)
+    let user = Object.assign({}, this.state.me)
     this.setState({ loading: true })
     try {
       await this.props.updateUser({ user })
@@ -128,7 +137,7 @@ export default class Profile extends React.Component {
         errorMessage: error.message.replace('GraphQL error:', ''),
       })
     }
-    this.setState({ loading: false }) */
+    this.setState({ loading: false })
   }
 
   @autobind
@@ -162,7 +171,6 @@ export default class Profile extends React.Component {
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
-    //console.log('me', this.state.profile)
     return (
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
