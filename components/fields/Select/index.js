@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import Modal from 'react-native-modalbox'
 
-export default class TableSelect extends React.Component {
+export default class Select extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.any,
