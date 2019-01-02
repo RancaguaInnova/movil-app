@@ -11,7 +11,7 @@ import { WebBrowser } from 'expo'
 import { getMeQry, servicesListQry } from './../../queries'
 import { graphql, compose } from 'react-apollo'
 
-class ServicesScreen extends React.Component {
+class Services extends React.Component {
   static navigationOptions = {
     title: 'Servicios',
   }
@@ -73,4 +73,4 @@ class ServicesScreen extends React.Component {
 export default compose(
   graphql(getMeQry),
   graphql(servicesListQry)
-)(ServicesScreen)
+)(Services)

@@ -6,7 +6,8 @@ import HomeOverlay from './HomeOverlay'
 import NewsList from './NewsList'
 import moment from '../../helpers/date/moment'
 import SectionDivider from '../../components/SectionDivider'
-export default class HomeScreen extends React.Component {
+
+export default class Home extends React.Component {
   static navigationOptions = {
     header: null,
     /* title: `RANCAGUA, ${moment()

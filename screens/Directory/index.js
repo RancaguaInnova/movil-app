@@ -13,7 +13,7 @@ import autobind from 'autobind-decorator'
 import { graphql } from 'react-apollo'
 import { directoryListQry } from './../../queries/'
 
-class DirectoryScreen extends React.Component {
+class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
     if (navigation.getParam('header')) {
       return {
@@ -103,4 +103,4 @@ class DirectoryScreen extends React.Component {
   }
 }
 
-export default graphql(directoryListQry)(DirectoryScreen)
+export default graphql(directoryListQry)(Directory)
