@@ -119,10 +119,10 @@ export default class Register extends React.Component {
     return (
       <View style={styles.container}>
         <Title style={styles.title}>
-          Crea tu cuenta y accede a los servicios municipales:
+          Crea tu cuenta:
         </Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
-          <View>
+          <View style={styles.fieldsContainer}>
             <Field
               enablesReturnKeyAutomatically
               returnKeyType="next"

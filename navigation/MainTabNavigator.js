@@ -11,9 +11,10 @@ import Services from 'screens/Services'
 import Directory from 'screens/Directory'
 import Profile from 'screens/Profile'
 import Register from 'screens/Profile/Register'
+import Forgot from 'screens/Profile/Forgot'
 
 const HomeStack = createStackNavigator({
-  Home: Home,
+  Home,
 })
 
 HomeStack.navigationOptions = {
@@ -23,7 +24,7 @@ HomeStack.navigationOptions = {
 }
 
 const CalendarStack = createStackNavigator({
-  Calendar: Calendar,
+  Calendar,
 })
 
 CalendarStack.navigationOptions = {
@@ -35,7 +36,7 @@ CalendarStack.navigationOptions = {
 }
 
 const ServicesStack = createStackNavigator({
-  Services: Services,
+  Services,
 })
 
 ServicesStack.navigationOptions = {
@@ -47,8 +48,9 @@ ServicesStack.navigationOptions = {
 }
 
 const DirectoryStack = createStackNavigator({
-  Directory: Directory,
+  Directory,
 })
+
 DirectoryStack.navigationOptions = {
   tabBarLabel: 'Directorio',
   tabBarIcon: ({ focused, tintColor }) => (
@@ -58,9 +60,11 @@ DirectoryStack.navigationOptions = {
 }
 
 const ProfileStack = createStackNavigator({
-  Profile: Profile,
-  Register: Register,
+  Profile,
+  Register,
+  Forgot,
 })
+
 ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
   tabBarIcon: ({ focused, tintColor }) => (
