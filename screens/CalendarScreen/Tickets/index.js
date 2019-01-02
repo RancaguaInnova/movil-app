@@ -11,7 +11,7 @@ import autobind from 'autobind-decorator'
 export default class Tickets extends React.Component {
   state = {
     tickets: [
-      {
+      /* {
         _id: 'sadadadasad',
         eventName: 'Chile vs Dinamarca',
         eventDate: '15-03-2018',
@@ -23,7 +23,7 @@ export default class Tickets extends React.Component {
           },
         },
         externalUrl: 'https://google.cl',
-      },
+      }, */
     ],
   }
 
