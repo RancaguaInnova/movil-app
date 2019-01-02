@@ -2,26 +2,29 @@ import React from 'react'
 import { View, Text, Divider, Caption, Subtitle, TouchableOpacity, Row } from '@shoutem/ui'
 import { Alert, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
-import textStyles from './../../styles/texts'
+import textStyles from 'styles/texts'
 import styles from './styles'
-import SubHeader from './../../components/SubHeader'
+import SubHeader from 'components/SubHeader'
+import Loading from 'providers/ApolloProvider/Loading'
+import Error from 'providers/ApolloProvider/ApolloError'
 import SectionDivider from '../../components/SectionDivider'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
-import { getMeQry, servicesListQry } from './../../queries'
-import { getSession } from './../../providers/ApolloProvider'
-import { graphql, compose } from 'react-apollo'
+import { getMeQry, servicesListQry } from 'queries'
+import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
+// import { graphql, compose } from 'react-apollo'
 
-class Services extends React.Component {
+
+@withGraphQL(getMeQry, {loading: <Loading />, errorComponent: <Error />})
+@withGraphQL(servicesListQry, {loading: <Loading />, errorComponent: <Error />})
+export default class Services extends React.Component {
   static navigationOptions = {
     title: 'Servicios',
   }
 
   static propTypes = {
-    data: PropTypes.shape({
-      me: PropTypes.object,
-      applications: PropTypes.object,
-    }),
+    me: PropTypes.object,
+    applications: PropTypes.object,
   }
 
   state = {
@@ -30,18 +33,18 @@ class Services extends React.Component {
 
   componentDidMount() {
     this.setState({
-      profile: getSession(),
+      me: this.props.me,
     })
   }
 
   async openApp(app) {
     try {
-      if (app.applicationURL && app.applicationURL.trim() !== '' && this.state.profile) {
-        const finalUrl = `${app.applicationURL}?token=${this.state.profile.userToken}`
+      if (app.applicationURL && app.applicationURL.trim() !== '' && this.state.me.profile) {
+        const finalUrl = `${app.applicationURL}?token=${this.state.me.userToken}`
         console.log('finalUrl', finalUrl)
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
-      } else if (!this.state.profile) {
+      } else if (!this.state.me.profile) {
         Alert.alert('Debe iniciar sesión para acceder al servicio')
       }
     } catch (error) {
@@ -69,8 +72,8 @@ class Services extends React.Component {
 
   render() {
     const items =
-      this.props.data.applications && this.props.data.applications.items
-        ? this.props.data.applications.items
+      this.props.applications && this.props.applications.items
+        ? this.props.applications.items
         : []
     return (
       <View style={styles.container}>
@@ -82,7 +85,6 @@ class Services extends React.Component {
   }
 }
 
-export default compose(
-  graphql(getMeQry),
-  graphql(servicesListQry)
-)(Services)
+//   graphql(getMeQry),
+//   graphql(servicesListQry)
+// )(Services)
