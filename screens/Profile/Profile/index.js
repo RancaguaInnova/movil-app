@@ -67,14 +67,14 @@ export default class Profile extends React.Component {
     },
   } */
 
-  static getDerivedStateFromProps(props, state) {
-    let me = Object.assign({}, props.me)
+  componentDidMount() {
+    let me = Object.assign({}, this.props.me)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
     if (me.profile && me.profile.address && me.profile.address.streetNumber) {
-      me.profile.address.streetNumber = props.me.profile.address.streetNumber.toString()
+      me.profile.address.streetNumber = this.props.me.profile.address.streetNumber.toString()
     }
-    return { me }
+    this.setState({ me })
   }
 
   state = {
@@ -130,7 +130,7 @@ export default class Profile extends React.Component {
     let user = Object.assign({}, this.state.me)
     this.setState({ loading: true })
     try {
-      await this.props.updateUser({ user })
+      const response = await this.props.updateUser({ user })
     } catch (error) {
       console.log('Error updating user:', error)
       this.setState({
@@ -165,6 +165,11 @@ export default class Profile extends React.Component {
     )
   }
 
+  @autobind
+  onChange(change) {
+    this.setState({ me: change })
+  }
+
   render() {
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
@@ -175,7 +180,7 @@ export default class Profile extends React.Component {
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
         <ScrollView styleNames='fill-container' style={styles.container}>
-          <Form state={this.state.me} onChange={changes => this.setState({ me: changes })}>
+          <Form state={this.state.me} onChange={this.onChange}>
             {this.renderSection(defaultSection)}
           </Form>
           {this.renderErrorMessage()}
