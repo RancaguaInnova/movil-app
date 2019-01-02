@@ -1,13 +1,9 @@
 import React from 'react'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import gql from 'graphql-tag'
-import TableSelect from '../TableSelect'
+import Select from '../Select'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
-
-/*
-For Weeshing Only
-*/
 
 @withGraphQL(
   gql`
@@ -24,13 +20,13 @@ For Weeshing Only
 )
 class GraphQLSelect extends React.Component {
   render() {
-    return <TableSelect {...this.props} />
+    return <Select {...this.props} />
   }
 }
 
 GraphQLSelect.propTypes = {
   dataName: PropTypes.string,
-  ...TableSelect.propTypes
+  ...Select.propTypes
 }
 
 export default GraphQLSelect

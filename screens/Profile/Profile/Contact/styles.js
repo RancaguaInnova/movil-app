@@ -1,6 +1,7 @@
 export default {
   container: {
-    padding: 10,
-    backgroundColor: '#efefef'
+    padding: 30,
+    backgroundColor: '#fff',
+    height: '70%',
   }
 }
