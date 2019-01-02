@@ -1,11 +1,11 @@
 import React from 'react'
 import { Alert } from 'react-native'
-import textStyles from '../../../../styles/texts'
+import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
 import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
-import { getSession } from '../../../../providers/ApolloProvider'
+import { getSession } from 'providers/ApolloProvider'
 
 export default class Item extends React.Component {
   static propTypes = {
@@ -57,7 +57,7 @@ export default class Item extends React.Component {
           onPress={() => this.onClickItem(item)}
           style={{ flex: 1, flexDirection: 'column' /* borderWidth: 1, borderColor: 'red' */ }}
         >
-          <Row styleName='small' style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
+          <Row style={{ flex: 1 /* borderWidth: 1, borderColor: 'blue'  */ }}>
             <View styleName='vertical'>
               <Subtitle numberOfLines={2} style={textStyles.rowSubtitle}>
                 {item.name}
