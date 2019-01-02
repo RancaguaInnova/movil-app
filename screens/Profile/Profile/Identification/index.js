@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from '@shoutem/ui'
 import { Field } from 'simple-react-form'
-import { TextInput, SelectInput } from '../../../../components/fields'
+import { TextInput, SelectInput } from 'components/fields'
 import PropTypes from 'prop-types'
 import styles from './styles'
 
@@ -22,7 +22,7 @@ export default class IdentificationInformation extends React.Component {
           />
           <Field fieldName='profile.lastName' type={TextInput} label='Apellido:' />
           <Field fieldName='profile.identifier' type={TextInput} label='Rut:' rut />
-          {/* <Field
+          <Field
             fieldName='profile.educationalLevel'
             type={SelectInput}
             label='Nivel Educacional:'
@@ -33,7 +33,7 @@ export default class IdentificationInformation extends React.Component {
               { label: 'Superior', value: 'superior' },
               { label: 'Postgrado', value: 'postgrado' },
             ]}
-          /> */}
+          />
         </View>
       )
     }
