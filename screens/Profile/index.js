@@ -26,7 +26,6 @@ class ProfileScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log('getSession()', getSession())
     this.setState({ profile: getSession() })
   }
 

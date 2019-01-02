@@ -9,6 +9,7 @@ import SectionDivider from '../../components/SectionDivider'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
 import { getMeQry, servicesListQry } from './../../queries'
+import { getSession } from './../../providers/ApolloProvider'
 import { graphql, compose } from 'react-apollo'
 
 class Services extends React.Component {
@@ -23,13 +24,24 @@ class Services extends React.Component {
     }),
   }
 
+  state = {
+    profile: null,
+  }
+
+  componentDidMount() {
+    this.setState({
+      profile: getSession(),
+    })
+  }
+
   async openApp(app) {
     try {
-      if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.data.me) {
-        const finalUrl = `${app.applicationURL}?token=${this.props.data.me.userToken}`
+      if (app.applicationURL && app.applicationURL.trim() !== '' && this.state.profile) {
+        const finalUrl = `${app.applicationURL}?token=${this.state.profile.userToken}`
+        console.log('finalUrl', finalUrl)
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
-      } else if (!this.props.data.me) {
+      } else if (!this.state.profile) {
         Alert.alert('Debe iniciar sesión para acceder al servicio')
       }
     } catch (error) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, Alert } from 'react-native'
 import { View, TouchableOpacity, Row, Subtitle, Text, Divider, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import textStyles from '../../../styles/texts'
@@ -7,9 +7,11 @@ import styles from './styles'
 import moment from '../../../helpers/date/moment'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
+import { getSession } from '../../../providers/ApolloProvider'
 
 export default class Tickets extends React.Component {
   state = {
+    profile: null,
     tickets: [
       /* {
         _id: 'sadadadasad',
@@ -27,10 +29,19 @@ export default class Tickets extends React.Component {
     ],
   }
 
+  componentDidMount() {
+    this.setState({ profile: getSession() })
+  }
+
   onClickTicket = async ticket => {
     try {
       if (ticket.externalUrl && ticket.externalUrl.trim() !== '') {
-        let result = await WebBrowser.openBrowserAsync(ticket.externalUrl)
+        let url =
+          ticket.externalUrl.indexOf('?') !== -1
+            ? `${ticket.externalUrl}&`
+            : `${ticket.externalUrl}?`
+        url += `ticket=${ticket._id}`
+        let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
       }
     } catch (error) {
@@ -65,11 +76,15 @@ export default class Tickets extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          {this.state.tickets.length === 0 ? (
-            <Text styleName='h-center'>No posee entradas vigentes</Text>
-          ) : (
-            this.state.tickets.map(ticket => this.renderTicket(ticket))
+          {!this.state.profile && (
+            <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
           )}
+
+          {this.state.tickets.length === 0 && this.state.profile ? (
+            <Text styleName='h-center'>No posee entradas vigentes</Text>
+          ) : this.state.profile ? (
+            this.state.tickets.map(ticket => this.renderTicket(ticket))
+          ) : null}
         </ScrollView>
       </View>
     )
