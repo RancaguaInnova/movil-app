@@ -49,7 +49,7 @@ export default class ShoutemButton extends React.Component {
   render () {
     return (
       <Button
-        style={styles.container}
+        style={this.props.disabled ? styles.disabled : styles.container}
         onPress={this.onPress}
         disabled={this.props.disabled}
         loading

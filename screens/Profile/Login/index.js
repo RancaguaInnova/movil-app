@@ -3,16 +3,17 @@ import { ScrollView } from 'react-native'
 import { View, Title, Subtitle, Text, Caption } from '@shoutem/ui'
 import styles from './styles'
 import { Form, Field } from 'simple-react-form'
-import { TextInput } from '../../../components/fields'
-import Button from '../../../components/ShoutemButton'
-import LightButton from '../../../components/LightButton'
+import { TextInput } from 'components/fields'
+import Button from 'components/ShoutemButton'
+import LightButton from 'components/LightButton'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import { withNavigation, NavigationActions } from 'react-navigation'
-import saveSession from '../../../helpers/auth/saveSession'
+import saveSession from 'helpers/auth/saveSession'
 import gql from 'graphql-tag'
 
+@withNavigation
 @withMutation(gql`
   mutation loginWithPassword($email: String, $password: String) {
     session: loginWithPassword(email: $email, password: $password) {
@@ -83,7 +84,7 @@ export default class Login extends React.Component {
       <View style={styles.container}>
         <Title style={styles.title}>Inicia sesión en tu cuenta:</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
-          <View>
+          <View style={styles.fieldsContainer}>
             <Field
               enablesReturnKeyAutomatically
               returnKeyType='next'
