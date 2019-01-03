@@ -4,6 +4,7 @@ import { servicesListQry } from './Services'
 import { directoryListQry, officialsByDepartmentQry } from './Directory'
 import { eventsByMonth } from './Calendar'
 import { cardListQry } from './Cards'
+import { ticketsQry } from './Tickets'
 export {
   newsListQry,
   getMeQry,
@@ -13,4 +14,5 @@ export {
   eventsByMonth,
   cardListQry,
   UserFragments,
+  ticketsQry,
 }

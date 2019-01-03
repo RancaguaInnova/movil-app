@@ -6,6 +6,7 @@ import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import { getSession } from 'providers/ApolloProvider'
+import moment from 'helpers/date/moment'
 
 export default class Item extends React.Component {
   static propTypes = {
@@ -42,6 +43,7 @@ export default class Item extends React.Component {
 
   render() {
     const item = this.props.item || {}
+    const date = moment(item.date).format('DD-MM-YYYY')
     return (
       <View
         style={{
@@ -51,7 +53,9 @@ export default class Item extends React.Component {
         }}
       >
         <Divider styleName='section-header'>
-          <Caption>{item.time} HRS.</Caption>
+          <Caption>
+            {item.time} HRS. {date}
+          </Caption>
         </Divider>
         <TouchableOpacity
           onPress={() => this.onClickItem(item)}
