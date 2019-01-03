@@ -8,48 +8,12 @@ import { client } from 'providers/ApolloProvider'
 import Loading from 'providers/ApolloProvider/Loading'
 import Retry from 'providers/ApolloProvider/Retry'
 import autobind from 'autobind-decorator'
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider, Query } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
+import TimerMixin from 'react-timer-mixin'
+
 //
 export default class HomeOverlay extends React.Component {
-  state = {
-    cards: {
-      list: [],
-      status: 'loading',
-    },
-  }
-
-  componentDidMount() {
-    this.loadCards()
-  }
-
-  @autobind
-  async loadCards() {
-    try {
-      const result = await client.query({
-        query: cardListQry,
-      })
-      const {
-        data: { cardsList },
-      } = result
-      const cards = this.state.cards
-      cards.list = cardsList
-      cards.status = ''
-
-      this.setState({
-        ...cards,
-      })
-    } catch (error) {
-      console.log('error', error)
-      const cards = this.state.cards
-      cards.list = []
-      cards.status = 'error'
-      this.setState({
-        ...cards,
-      })
-    }
-  }
-
   renderIcon(card) {
     const type =
       !card.iconUrl || (card.iconUrl && card.iconUrl.trim() == '')
@@ -128,6 +92,19 @@ export default class HomeOverlay extends React.Component {
     }
   }
 
+  renderCards() {
+    const pollInterval = 100 * 60 * 60 // 1hr
+    return (
+      <Query query={cardListQry} pollInterval={pollInterval}>
+        {({ loading, error, data, refetch }) => {
+          if (loading) return <Loading />
+          if (error) return <Retry callback={refetch} />
+          return this.renderSlider(data.cardsList)
+        }}
+      </Query>
+    )
+  }
+
   render() {
     return (
       <View style={{ flex: 0.4 /*  borderColor: 'red', borderWidth: 1 */ }}>
@@ -143,13 +120,7 @@ export default class HomeOverlay extends React.Component {
               backgroundColor: 'rgba(0,0,1, 0.2)',
             }}
           >
-            {this.state.cards.status === 'loading' ? (
-              <Loading />
-            ) : this.state.cards.status === 'error' ? (
-              <Retry callback={this.loadCards} />
-            ) : (
-              this.renderSlider(this.state.cards.list)
-            )}
+            {this.renderCards()}
           </View>
         </ImageBackground>
       </View>
