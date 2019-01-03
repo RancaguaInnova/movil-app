@@ -81,7 +81,7 @@ export default class Login extends React.Component {
   render() {
     //console.log('me', this.state.profile)
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Title style={styles.title}>Inicia sesión en tu cuenta:</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View style={styles.fieldsContainer}>
@@ -120,7 +120,7 @@ export default class Login extends React.Component {
           />
           <Button onPress={() => this.props.navigation.navigate('Register')} label='Registrarme' />
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

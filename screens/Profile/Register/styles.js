@@ -1,19 +1,21 @@
 export default {
   container: {
     flex: 1,
-    padding: 50,
+    padding: 5,
     backgroundColor: '#fff',
   },
   title: {
     textAlign: 'center',
-    fontSize: 22
+    fontSize: 22,
   },
   fieldsContainer: {
-    marginTop: 30,
+    /* marginTop: 0,
+    borderWidth: 1,
+    borderColor: 'red', */
   },
   errorMessage: {
     color: 'red',
     marginBottom: 10,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 }

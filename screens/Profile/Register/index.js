@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Title, Text } from '@shoutem/ui'
+import { View, Title, Text, ScrollView } from '@shoutem/ui'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'components/fields/TextInput'
@@ -16,15 +16,11 @@ import {
   validateMinLength,
   validatePresenceOfFields,
   validateCoincidence,
-  combineValidators
+  combineValidators,
 } from 'helpers/validators'
 
 @withMutation(gql`
-  mutation createUser(
-    $email: String
-    $password: String
-    $profile: UserProfileInput
-  ) {
+  mutation createUser($email: String, $password: String, $profile: UserProfileInput) {
     session: createUser(email: $email, password: $password, profile: $profile) {
       _id
       publicKey
@@ -42,7 +38,7 @@ import {
 export default class Register extends React.Component {
   static propTypes = {
     createUser: PropTypes.func,
-    open: PropTypes.func
+    open: PropTypes.func,
   }
 
   state = {}
@@ -79,7 +75,7 @@ export default class Register extends React.Component {
         { name: 'profile.identifier', label: 'RUT' },
         { name: 'email', label: 'Email' },
         { name: 'password', label: 'Contraseña' },
-        { name: 'confirm', label: 'Confirmar Contraseña' }
+        { name: 'confirm', label: 'Confirmar Contraseña' },
       ])
     )
     return validateForm(this.state)
@@ -98,7 +94,7 @@ export default class Register extends React.Component {
       const { session } = await this.props.createUser({
         email,
         password,
-        profile
+        profile,
       })
       await saveSession(session)
     } catch (error) {
@@ -117,65 +113,67 @@ export default class Register extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Title style={styles.title}>
-          Crea tu cuenta:
-        </Title>
-        <Form state={this.state} onChange={changes => this.setState(changes)}>
+      <ScrollView style={styles.container}>
+        <Title style={styles.title}>Crea tu cuenta:</Title>
+        <Form state={this.state} onChange={changes => this.setState(changes)} style={{ flex: 1 }}>
           <View style={styles.fieldsContainer}>
             <Field
               enablesReturnKeyAutomatically
-              returnKeyType="next"
-              fieldName="profile.identifier"
-              label="Rut"
+              returnKeyType='next'
+              fieldName='profile.identifier'
+              label='Rut'
               onSubmitEditing={this.focusEmail}
               type={TextInput}
               rut
             />
             <Field
               enablesReturnKeyAutomatically
-              ref="email"
-              returnKeyType="next"
-              keyboardType="email-address"
-              fieldName="email"
-              label="Email"
+              ref='email'
+              returnKeyType='next'
+              keyboardType='email-address'
+              fieldName='email'
+              label='Email'
               onSubmitEditing={this.focusPassword}
               type={TextInput}
             />
             <Field
               enablesReturnKeyAutomatically
-              ref="password"
+              ref='password'
               secureTextEntry
-              fieldName="password"
-              label="Contraseña"
-              returnKeyType="next"
+              fieldName='password'
+              label='Contraseña'
+              returnKeyType='next'
               onSubmitEditing={this.focusConfirm}
               type={TextInput}
             />
             <Field
               enablesReturnKeyAutomatically
-              ref="confirm"
+              ref='confirm'
               secureTextEntry
-              fieldName="confirm"
-              label="Confirmar contraseña"
-              returnKeyType="done"
+              fieldName='confirm'
+              label='Confirmar contraseña'
+              returnKeyType='done'
               onSubmitEditing={this.submit}
               type={TextInput}
             />
           </View>
         </Form>
-        {this.renderErrorMessage()}
-        <Button
-          disabled={!this.isFormReady()}
-          loading={this.state.loading}
-          onPress={this.submit}
-          label="Crear cuenta"
-        />
-        <LightButton
-          onPress={() => this.props.navigation.goBack()}
-          title="Volver"
-        />
-      </View>
+        <View style={{ flex: 1 }}>
+          {this.renderErrorMessage()}
+          <Button
+            disabled={!this.isFormReady()}
+            loading={this.state.loading}
+            onPress={this.submit}
+            label='Crear cuenta'
+          />
+          <Button onPress={() => this.props.navigation.goBack()} label='Volver' />
+          {/* <LightButton
+            style={{ position: 'relative' }}
+            onPress={() => this.props.navigation.goBack()}
+            title='Volver'
+          /> */}
+        </View>
+      </ScrollView>
     )
   }
 }
