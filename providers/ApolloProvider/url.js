@@ -1,5 +1,5 @@
 const urls = {
-  local: `https://api.smartrancagua.com/`,
+  local: `http://localhost:3000`,
   dev: '',
   prod: 'https://api.smartrancagua.com',
 }

@@ -8,6 +8,7 @@ const cardListQry = gql`
       color
       title
       subtitle
+      iconUrl
     }
   }
 `

@@ -30,5 +30,14 @@ export default {
     borderWidth: 1, */
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 50
+  },
+  subtitle: {
+    width: '60%',
+    /* borderColor: 'red',
+    borderWidth: 1, */
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBototm: '-60'
   },
 }
