@@ -6,8 +6,13 @@ import { Constants, WebBrowser } from 'expo'
 import { View, Subtitle, Text, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import { getSession } from 'providers/ApolloProvider'
+import { getMeQry } from 'queries'
+import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
+import Loading from 'providers/ApolloProvider/Loading'
+import Error from 'providers/ApolloProvider/ApolloError'
 import moment from 'helpers/date/moment'
 
+@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class Item extends React.Component {
   static propTypes = {
     item: PropTypes.object,
@@ -18,21 +23,17 @@ export default class Item extends React.Component {
     profile: null,
   }
 
-  componentDidMount() {
-    this.setState({
-      profile: getSession(),
-    })
-  }
+  componentDidMount() {}
 
   onClickItem = async item => {
     try {
-      if (item.externalUrl && item.externalUrl.trim() !== '' && this.state.profile) {
+      if (item.externalUrl && item.externalUrl.trim() !== '' && this.props.me) {
         let url =
           item.externalUrl.indexOf('?') !== -1 ? `${item.externalUrl}&` : `${item.externalUrl}?`
-        url += `event=${item._id}&token=${this.state.profile.userToken}`
+        url += `event=${item._id}&token=${this.props.me.userToken}`
         let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
-      } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.state.profile) {
+      } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder al Evento')
       }
     } catch (error) {

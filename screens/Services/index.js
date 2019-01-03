@@ -14,9 +14,8 @@ import { getMeQry, servicesListQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 // import { graphql, compose } from 'react-apollo'
 
-
-@withGraphQL(getMeQry, {loading: <Loading />, errorComponent: <Error />})
-@withGraphQL(servicesListQry, {loading: <Loading />, errorComponent: <Error />})
+@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
+@withGraphQL(servicesListQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class Services extends React.Component {
   static navigationOptions = {
     title: 'Servicios',
@@ -39,12 +38,12 @@ export default class Services extends React.Component {
 
   async openApp(app) {
     try {
-      if (app.applicationURL && app.applicationURL.trim() !== '' && this.state.me.profile) {
-        const finalUrl = `${app.applicationURL}?token=${this.state.me.userToken}`
+      if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.me) {
+        const finalUrl = `${app.applicationURL}?token=${this.props.me.userToken}`
         console.log('finalUrl', finalUrl)
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
-      } else if (!this.state.me.profile) {
+      } else if (!this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder al servicio')
       }
     } catch (error) {
@@ -72,9 +71,7 @@ export default class Services extends React.Component {
 
   render() {
     const items =
-      this.props.applications && this.props.applications.items
-        ? this.props.applications.items
-        : []
+      this.props.applications && this.props.applications.items ? this.props.applications.items : []
     return (
       <View style={styles.container}>
         <SubHeader view='apps' title='Seleccione el servicio' />
