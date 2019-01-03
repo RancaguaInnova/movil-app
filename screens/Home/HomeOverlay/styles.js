@@ -30,7 +30,7 @@ export default {
     borderWidth: 1, */
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 10,
   },
   subtitle: {
     width: '60%',
@@ -38,6 +38,6 @@ export default {
     borderWidth: 1, */
     justifyContent: 'center',
     alignItems: 'center',
-    marginBototm: '-60'
+    marginBototm: '-60',
   },
 }
