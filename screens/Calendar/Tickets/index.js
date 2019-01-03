@@ -27,7 +27,7 @@ export default class Tickets extends React.Component {
     if (profile) {
       this.loadTickets(profile)
     } else {
-      this.setState({ profile: null, tickets: { status: '' } })
+      this.setState({ profile: null, tickets: { status: '', list: [] } })
     }
   }
 
