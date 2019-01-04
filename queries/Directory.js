@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 
 const directoryListQry = gql`
   {
-    departments(limit: 100, page: 1) {
+    departmentsList(limit: 100, page: 1) {
       items {
         _id
         name
