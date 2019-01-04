@@ -115,7 +115,6 @@ class DepartmentDetail extends React.Component {
 
   render() {
     const department = this.props.department || {}
-    console.log('department', department)
     const address =
       department.contactInformation && department.contactInformation.address
         ? department.contactInformation.address

@@ -39,9 +39,26 @@ class Directory extends React.Component {
     this.setState({ selected: item })
     this.props.navigation.setParams({
       header: (
-        <View style={{ flex: 0.2, paddingTop: 0, backgroundColor: 'white' }}>
+        <View
+          style={{
+            flex: 0.2,
+            paddingTop: 25,
+            backgroundColor: 'white',
+            /* borderColor: 'green',
+            borderWidth: 1, */
+          }}
+        >
           <Row styleName='small'>
-            <TouchableOpacity style={{ width: 60 }} onPress={() => this.closeDetail()}>
+            <TouchableOpacity
+              style={{
+                width: 60,
+                /* borderColor: 'red',
+                borderWidth: 1, */
+                height: '100%',
+                paddingTop: 0,
+              }}
+              onPress={() => this.closeDetail()}
+            >
               <Ionicons name='ios-arrow-back' size={25} style={styles.leftIcon} />
             </TouchableOpacity>
             <View styleName='vertical'>
