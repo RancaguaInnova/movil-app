@@ -8,9 +8,8 @@ import { client } from 'providers/ApolloProvider'
 import Loading from 'providers/ApolloProvider/Loading'
 import Retry from 'providers/ApolloProvider/Retry'
 import autobind from 'autobind-decorator'
-import { ApolloProvider, Query } from 'react-apollo'
+import { Query } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
-import TimerMixin from 'react-timer-mixin'
 
 //
 export default class HomeOverlay extends React.Component {
@@ -93,7 +92,7 @@ export default class HomeOverlay extends React.Component {
   }
 
   renderCards() {
-    const pollInterval = 100 * 60 * 60 // 1hr
+    const pollInterval = 100 * 60 * 60 // 1 hr
     return (
       <Query query={cardListQry} pollInterval={pollInterval}>
         {({ loading, error, data, refetch }) => {

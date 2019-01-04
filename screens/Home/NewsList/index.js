@@ -7,48 +7,9 @@ import { client } from '../../../providers/ApolloProvider/client'
 import Retry from '../../../providers/ApolloProvider/Retry'
 import Loading from '../../../providers/ApolloProvider/Loading'
 import { newsListQry } from '../../../queries'
+import { Query } from 'react-apollo'
 
 export default class NewsList extends React.Component {
-  state = {
-    news: {
-      list: [],
-      status: 'loading',
-    },
-  }
-
-  componentDidMount() {
-    this.loadNews()
-  }
-
-  @autobind
-  async loadNews() {
-    try {
-      const result = await client.query({
-        query: newsListQry,
-      })
-
-      const {
-        data: { newsList },
-      } = result
-
-      const news = this.state.news
-      news.list = newsList
-      news.status = ''
-
-      this.setState({
-        ...news,
-      })
-    } catch (error) {
-      console.log('error loadingNews', error)
-      const news = this.state.news
-      news.list = []
-      news.status = 'error'
-      this.setState({
-        ...news,
-      })
-    }
-  }
-
   onClickNews = async news => {
     try {
       if (news.externalUrl && news.externalUrl.trim() !== '') {
@@ -60,19 +21,23 @@ export default class NewsList extends React.Component {
     }
   }
 
-  render() {
-    const news = this.state.news
-
+  renderNews() {
+    const pollInterval = 100 * 60 * 30 // 30 min
     return (
-      <View>
-        {news.status === 'loading' ? (
-          <Loading />
-        ) : news.status === 'error' ? (
-          <Retry callback={this.loadNews} color='gray' />
-        ) : (
-          news.list.map(n => <NewsListItem key={n._id} data={n} onClickNews={this.onClickNews} />)
-        )}
-      </View>
+      <Query query={newsListQry} pollInterval={pollInterval}>
+        {({ loading, error, data, refetch }) => {
+          if (loading) return <Loading />
+          if (error) return <Retry callback={refetch} />
+
+          return data.newsList.map(news => (
+            <NewsListItem key={news._id} data={news} onClickNews={this.onClickNews} />
+          ))
+        }}
+      </Query>
     )
+  }
+
+  render() {
+    return <View>{this.renderNews()}</View>
   }
 }
