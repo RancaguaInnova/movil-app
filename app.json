@@ -17,13 +17,17 @@
       "backgroundColor": "#f68e44"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 30000
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.rancagua.digital",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.rancagua.digital",
