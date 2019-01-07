@@ -105,8 +105,8 @@ class Directory extends React.Component {
 
   render() {
     const directory =
-      this.props.data.departments && this.props.data.departments.items
-        ? this.props.data.departments.items
+      this.props.data.departmentsList && this.props.data.departmentsList.items
+        ? this.props.data.departmentsList.items
         : []
     return (
       <View style={styles.container}>
