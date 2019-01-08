@@ -8,11 +8,15 @@ import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
+import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import { withNavigation, NavigationActions } from 'react-navigation'
+import Error from 'providers/ApolloProvider/ApolloError'
+import Loading from 'providers/ApolloProvider/Loading'
 import saveSession from 'helpers/auth/saveSession'
+import { getMeQry } from 'queries'
 import gql from 'graphql-tag'
-
+@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 @withNavigation
 @withMutation(gql`
   mutation loginWithPassword($email: String, $password: String) {
@@ -79,7 +83,7 @@ export default class Login extends React.Component {
   }
 
   render() {
-    //console.log('me', this.state.profile)
+    if (this.props.me) this.props.onLoginSuccess(this.props.me)
     return (
       <ScrollView style={styles.container}>
         <Title style={styles.title}>Inicia sesión en tu cuenta:</Title>

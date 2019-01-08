@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Title, Text, ScrollView } from '@shoutem/ui'
+import { Alert } from 'react-native'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'components/fields/TextInput'
@@ -10,6 +11,7 @@ import LightButton from 'components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import saveSession from 'helpers/auth/saveSession'
 import gql from 'graphql-tag'
+
 import {
   validateIdentifier,
   validateEmail,
@@ -91,17 +93,50 @@ export default class Register extends React.Component {
       if (errorMessage) {
         throw new Error(errorMessage)
       }
-      const { session } = await this.props.createUser({
-        email,
+      const cleanEmail = email.trim().toLowerCase()
+      const newUserData = {
+        email: cleanEmail,
         password,
         profile,
-      })
-      await saveSession(session)
+      }
+      const { session } = await this.props.createUser(newUserData)
+      const saveResult = await saveSession(session)
+      this.setState({ loading: false, errorMessage: null })
+      Alert.alert(
+        `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`
+      )
+      this.props.navigation.navigate('Profile')
     } catch (error) {
-      console.log(error)
-      const errorMessage = error.message.replace('GraphQL error: ', '')
+      let errorMessage = ''
+      const graphQLErrors = error.graphQLErrors || []
+      if (graphQLErrors && graphQLErrors.length > 0) {
+        const arrErrors = []
+        graphQLErrors.forEach(err => {
+          const errorKey = err.error
+          if (err.validationErrors) {
+            for (let field in err.validationErrors) {
+              switch (err.validationErrors[field]) {
+                case 'emailExists':
+                  arrErrors.push('El email ingresado ya se encuentra registrado')
+                  break
+                case 'notUnique':
+                  arrErrors.push('El RUT ingresado ya se encuentra registrado')
+                  break
+                default:
+                  arrErrors.push(`[error]:${err.validationErrors[field]}`)
+              }
+            }
+          } else {
+            arrErrors.push(`[error]:${errorKey}`)
+          }
+        })
+        errorMessage = arrErrors.join(', ')
+      } else {
+        errorMessage = error.message.replace('GraphQL error: ', '')
+      }
+
       this.setState({ errorMessage })
-      console.log('Error:', error)
+      console.log('Error:', JSON.stringify(error))
       this.setState({ loading: false })
     }
   }
