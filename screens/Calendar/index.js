@@ -20,13 +20,11 @@ export default class CalendarScreen extends React.Component {
 
   @autobind
   showCalendar() {
-    console.log('show calendar')
     this.setState({ current: 'calendar' })
   }
 
   @autobind
   showTickets() {
-    console.log('show tickets')
     this.setState({ current: 'tickets' })
   }
 
@@ -37,10 +35,18 @@ export default class CalendarScreen extends React.Component {
     ]
     return (
       <View style={styles.container}>
-        <SubHeader view='calendar' title='Eventos y actividades comunales' />
+        <SubHeader
+          view='calendar'
+          title='Eventos y actividades comunales'
+          navigation={this.props.navigation}
+        />
         <SectionDivider title='' menu={menu} />
 
-        {this.state.current === 'calendar' ? <Calendar /> : <Tickets />}
+        {this.state.current === 'calendar' ? (
+          <Calendar navigation={this.props.navigation} />
+        ) : (
+          <Tickets navigation={this.props.navigation} />
+        )}
       </View>
     )
   }

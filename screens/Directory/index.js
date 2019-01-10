@@ -3,6 +3,7 @@ import { ScrollView, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import styles from './styles'
+import Loading from 'providers/ApolloProvider/Loading'
 import textStyles from './../../styles/texts'
 import PropTypes from 'prop-types'
 import moment from '../../helpers/date/moment'
@@ -10,10 +11,10 @@ import SubHeader from './../../components/SubHeader'
 import SectionDivider from '../../components/SectionDivider'
 import DepartmentDetail from './DepartmentDetail'
 import autobind from 'autobind-decorator'
-import { graphql } from 'react-apollo'
 import { directoryListQry } from './../../queries/'
+import { Query } from 'react-apollo'
 
-class Directory extends React.Component {
+export default class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
     if (navigation.getParam('header')) {
       return {
@@ -24,12 +25,6 @@ class Directory extends React.Component {
         title: navigation.getParam('title') || 'Directorio',
       }
     }
-  }
-
-  static propTypes = {
-    data: PropTypes.shape({
-      departments: PropTypes.object,
-    }),
   }
 
   state = { selected: false }
@@ -96,7 +91,11 @@ class Directory extends React.Component {
   renderDirectoryList(list) {
     return (
       <View style={styles.container}>
-        <SubHeader view='directory' title='Contacto con los departamentos comunales' />
+        <SubHeader
+          view='directory'
+          title='Contacto con los departamentos comunales'
+          navigation={this.props.navigation}
+        />
         <SectionDivider title='Departamentos' />
         <ScrollView>{list.map(directory => this.renderDirectoryItem(directory))}</ScrollView>
       </View>
@@ -104,20 +103,25 @@ class Directory extends React.Component {
   }
 
   render() {
-    const directory =
-      this.props.data.departmentsList && this.props.data.departmentsList.items
-        ? this.props.data.departmentsList.items
-        : []
+    const pollInterval = 100 * 60 * 60 // 60 min
     return (
       <View style={styles.container}>
         {this.state.selected ? (
           <DepartmentDetail department={this.state.selected} close={this.closeDetail} />
         ) : (
-          this.renderDirectoryList(directory)
+          <Query query={directoryListQry} pollInterval={pollInterval}>
+            {({ loading, error, data, refetch }) => {
+              if (loading) return <Loading />
+              if (error) return <Retry callback={refetch} />
+              const directory =
+                data && data.departmentsList && data.departmentsList.items
+                  ? data.departmentsList.items
+                  : []
+              return this.renderDirectoryList(directory)
+            }}
+          </Query>
         )}
       </View>
     )
   }
 }
-
-export default graphql(directoryListQry)(Directory)
