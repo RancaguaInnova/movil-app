@@ -58,7 +58,7 @@ export default class SubHeader extends React.Component {
         : require('../../assets/images/views/directory.png')
     const pollInterval = 100 * 60 * 30 // 30 min
     return (
-      <View>
+      <View style={styles.container}>
         <Query query={bannerBySectionQry(view)} pollInterval={pollInterval}>
           {({ loading, error, data, refetch }) => {
             if (loading) return <Loading />
