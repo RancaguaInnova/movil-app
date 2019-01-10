@@ -13,4 +13,9 @@ export default StyleSheet.create({
   fieldsContainer: {
     marginTop: 30,
   },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
+    fontSize: 16,
+  },
 })
