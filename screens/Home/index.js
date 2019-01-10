@@ -28,7 +28,7 @@ export default class Home extends React.Component {
       .toUpperCase()}`
     return (
       <View style={styles.mainContainer}>
-        <HomeOverlay />
+        <HomeOverlay navigation={this.props.navigation} />
         <SectionDivider title={title} />
         <ScrollView style={styles.container}>
           <NewsList />

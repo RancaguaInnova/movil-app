@@ -18,6 +18,10 @@ export default {
     flex: 1,
     flexDirection: 'row',
   },
+  image: {
+    height: '100%',
+    width: '100%',
+  },
   leftColumn: {
     width: '40%',
     justifyContent: 'center',

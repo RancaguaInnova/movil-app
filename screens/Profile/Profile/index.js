@@ -23,6 +23,7 @@ import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
 import logout from 'helpers/auth/logout'
+import { Alert } from 'react-native'
 import saveSession from 'helpers/auth/saveSession'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
@@ -30,18 +31,21 @@ import gql from 'graphql-tag'
 import { UserFragments } from 'queries/User'
 import SectionDivider from 'components/SectionDivider'
 
-@withGraphQL(gql`
-  query getMe {
-    me {
-      emails {
-        address
-        verified
+@withGraphQL(
+  gql`
+    query getMe {
+      me {
+        emails {
+          address
+          verified
+        }
+        ...Profile
       }
-      ...Profile
     }
-  }
-  ${UserFragments.Profile}
-`, {loading: <Loading />, errorComponent: Error})
+    ${UserFragments.Profile}
+  `,
+  { loading: <Loading />, errorComponent: Error }
+)
 @withMutation(gql`
   mutation updateUser($user: UserInput!) {
     updateUser(user: $user) {
@@ -131,13 +135,47 @@ export default class Profile extends React.Component {
     this.setState({ loading: true })
     try {
       const response = await this.props.updateUser({ user })
-    } catch (error) {
-      console.log('Error updating user:', error)
       this.setState({
-        errorMessage: error.message.replace('GraphQL error:', ''),
+        errorMessage: '', //error.message.replace('GraphQL error:', ''),
+        loading: false,
+      })
+      Alert.alert('Datos actualizados con éxito')
+    } catch ({ response, operation, graphQLErrors, networkError }) {
+      const errMsj = []
+      const arrError = graphQLErrors || []
+      arrError.forEach(err => {
+        const NaNStr = 'Float cannot represent non numeric value'
+        if (err.validationErrors) {
+          for (let k in err.validationErrors) {
+            if (err.validationErrors[k] === 'required') {
+              switch (k) {
+                case 'user.profile.address.streetNumber':
+                  errMsj.push('Número de calle es requerido')
+                  break
+                case 'user.profile.address.streetName':
+                  errMsj.push('Nombre de calle es requerido')
+              }
+            } else {
+              errMsj.push('Ups!', JSON.stringify(err.validationErrors))
+            }
+          }
+        } else if (
+          err.message.indexOf(NaNStr) !== -1 &&
+          err.message.indexOf('value.profile.address.streetNumber') !== -1
+        ) {
+          errMsj.push('El número de calle ingresado no es válido')
+        } else {
+          errMsj.push(err.message)
+        }
+      })
+
+      const msj =
+        errMsj.length > 0 ? errMsj.join(', ') : 'Ups! Ocurrio un problema al guardar los datos'
+      this.setState({
+        errorMessage: msj,
+        loading: false,
       })
     }
-    this.setState({ loading: false })
   }
 
   @autobind

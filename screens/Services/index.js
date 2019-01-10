@@ -44,7 +44,10 @@ export default class Services extends React.Component {
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
       } else if (!this.props.me) {
-        Alert.alert('Debe iniciar sesión para acceder al servicio')
+        Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
+          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
+        ])
       }
     } catch (error) {
       this.setState({ result: null })
@@ -74,7 +77,7 @@ export default class Services extends React.Component {
       this.props.applications && this.props.applications.items ? this.props.applications.items : []
     return (
       <View style={styles.container}>
-        <SubHeader view='apps' title='Seleccione el servicio' />
+        <SubHeader view='apps' title='Seleccione el servicio' navigation={this.props.navigation} />
         <SectionDivider title='Servicios disponibles' />
         <ScrollView>{items.map(app => this.renderRow(app))}</ScrollView>
       </View>

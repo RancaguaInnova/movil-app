@@ -77,7 +77,13 @@ export default class Calendar extends React.Component {
           loadItemsForMonth={this.loadItemsForMonth}
           // specify how each item should be rendered in agenda
           renderItem={(item, firstItemInDay) => {
-            return <Item item={item} firstItemInDay={firstItemInDay} />
+            return (
+              <Item
+                item={item}
+                firstItemInDay={firstItemInDay}
+                navigation={this.props.navigation}
+              />
+            )
           }}
           // specify how each date should be rendered. day can be undefined if the item is not first in that day.
           renderDay={(day, item) => <View />}

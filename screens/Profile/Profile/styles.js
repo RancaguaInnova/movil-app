@@ -5,4 +5,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
+    fontSize: 16,
+  },
 })

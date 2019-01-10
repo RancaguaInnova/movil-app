@@ -34,7 +34,10 @@ export default class Item extends React.Component {
         let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
       } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.props.me) {
-        Alert.alert('Debe iniciar sesión para acceder al Evento')
+        Alert.alert('Debe iniciar sesión para acceder al Evento', null, [
+          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
+        ])
       }
     } catch (error) {
       console.log('Error handling onClickItem', error)

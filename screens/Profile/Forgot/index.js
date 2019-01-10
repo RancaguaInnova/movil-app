@@ -17,7 +17,7 @@ import LightButton from 'components/LightButton'
 `)
 export default class Forgot extends React.Component {
   static propTypes = {
-    forgotPassword: PropTypes.func
+    forgotPassword: PropTypes.func,
   }
 
   state = {}
@@ -32,13 +32,32 @@ export default class Forgot extends React.Component {
     try {
       const { email } = this.state
       await this.props.forgotPassword({ email })
-      this.setState({ success: true })
-    } catch (error) {
-      const errorMessage = error.message.replace('GraphQL error: ', '')
-      this.setState({ errorMessage })
-      console.log(error)
+      this.setState({ success: true, loading: false })
+    } catch ({ response, operation, graphQLErrors, networkError }) {
+      const arrError = graphQLErrors || []
+      const arrMsj = []
+      arrError.forEach(err => {
+        let txt = 'Ups, ocurrió un problema intente nuevamente'
+        if (err.validationErrors) {
+          for (let k in err.validationErrors) {
+            switch (err.validationErrors[k]) {
+              case 'notAnEmail':
+                txt = 'El email ingresado no es válido'
+                break
+              case 'userNotFound':
+                txt = 'El email ingresado no se encuentra registrado'
+                break
+            }
+          }
+        } else {
+          txt = err.message
+        }
+        arrMsj.push(txt)
+      })
+      const errorMessage =
+        arrMsj.length > 0 ? arrMsj.join(', ') : 'Ups, ocurrió un problema intente nuevamente' //response.message.replace('GraphQL error: ', '')
+      this.setState({ errorMessage, loading: false })
     }
-    this.setState({ loading: false })
   }
 
   renderErrorMessage() {
@@ -48,9 +67,7 @@ export default class Forgot extends React.Component {
 
   renderMessage() {
     if (!this.state.success) return null
-    return (
-      <Text style={styles.successMessage}>Revisa tu email para continuar</Text>
-    )
+    return <Text style={styles.successMessage}>Revisa tu email para continuar</Text>
   }
 
   renderButtons() {
@@ -61,12 +78,9 @@ export default class Forgot extends React.Component {
           disabled={!this.isFormReady()}
           loading={this.state.loading}
           onPress={this.submit}
-          label="Cambiar contraseña"
+          label='Cambiar contraseña'
         />
-        <LightButton
-          onPress={() => this.props.navigation.goBack()}
-          title="Volver"
-        />
+        <LightButton onPress={() => this.props.navigation.goBack()} title='Volver' />
       </View>
     )
   }
@@ -79,10 +93,10 @@ export default class Forgot extends React.Component {
           <View style={styles.fieldsContainer}>
             <Field
               enablesReturnKeyAutomatically
-              returnKeyType="next"
-              keyboardType="email-address"
-              fieldName="email"
-              label="Email"
+              returnKeyType='next'
+              keyboardType='email-address'
+              fieldName='email'
+              label='Email'
               onSubmitEditing={this.submit}
               type={TextInput}
             />
