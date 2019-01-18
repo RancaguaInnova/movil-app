@@ -19,7 +19,8 @@ export default class TableTextInput extends React.Component {
 
   static defaultProps = {
     label: 'Input',
-    dateFormat: 'L'
+    dateFormat: 'L',
+    passProps: {}
   }
 
   state = {}
