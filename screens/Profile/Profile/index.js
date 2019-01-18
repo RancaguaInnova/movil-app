@@ -65,12 +65,6 @@ export default class Profile extends React.Component {
     me: PropTypes.object,
   }
 
-  /* static defaultProps = {
-    me: {
-      educationalLevel: {},
-    },
-  } */
-
   componentDidMount() {
     let me = Object.assign({}, this.props.me)
     let streetNumber = ''

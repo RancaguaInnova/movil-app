@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text } from '@shoutem/ui'
+import { View, Text, Subtitle } from '@shoutem/ui'
 import { Field } from 'simple-react-form'
-import { TextInput, Select } from 'components/fields'
+import { TextInput, Select, DateInput } from 'components/fields'
 import PropTypes from 'prop-types'
 import styles from './styles'
 
@@ -14,6 +14,7 @@ export default class IdentificationInformation extends React.Component {
     if (this.props.active) {
       return (
         <View style={styles.container}>
+          <Field fieldName='profile.identifier' type={TextInput} label='Rut:' rut />
           <Field
             fieldName='profile.firstName'
             type={TextInput}
@@ -21,7 +22,18 @@ export default class IdentificationInformation extends React.Component {
             placeHolder='Ingrese su nombre'
           />
           <Field fieldName='profile.lastName' type={TextInput} label='Apellido:' />
-          <Field fieldName='profile.identifier' type={TextInput} label='Rut:' rut />
+          <Subtitle>Fecha de nacimiento</Subtitle>
+          <Field fieldName='profile.birthdate' type={DateInput} placeholder="Seleccione una fecha"/>
+          <Field
+            fieldName='profile.gender'
+            type={Select}
+            label='Género:'
+            placeHolder='Seleccione una opción'
+            options={[
+              { label: 'Mujer', value: 'mujer' },
+              { label: 'Hombre', value: 'hombre' }
+            ]}
+          />
           <Field
             fieldName='profile.educationalLevel'
             type={Select}

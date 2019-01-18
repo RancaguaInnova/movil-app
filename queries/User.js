@@ -46,6 +46,8 @@ const UserFragments = {
         firstName
         lastName
         identifier
+        gender
+        birthdate
         address {
           streetName
           streetNumber
