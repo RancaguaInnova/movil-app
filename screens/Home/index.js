@@ -24,7 +24,7 @@ export default class Home extends React.Component {
 
   render() {
     const title = `RANCAGUA, ${moment()
-      .format('DD [DE] MMMM[, DE ] YYYY')
+      .format('DD MMMM [DE] YYYY')
       .toUpperCase()}`
     return (
       <View style={styles.mainContainer}>

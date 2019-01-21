@@ -1,6 +1,6 @@
 export default {
   container: {
-    minHeight: 120,
+    //minHeight: 120,
   },
   image: {
     height: 120,

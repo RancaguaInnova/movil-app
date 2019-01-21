@@ -7,6 +7,7 @@ export const eventsByMonth = month => gql`
       name
       time
       date
+      description
       externalUrl
       address {
         streetName

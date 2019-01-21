@@ -12,7 +12,7 @@ import { getMeQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { Alert } from 'react-native'
 
-@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
+/* @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> }) */
 export default class SubHeader extends React.Component {
   static propTypes = {
     view: PropTypes.string,
@@ -46,42 +46,40 @@ export default class SubHeader extends React.Component {
   render() {
     const view = this.props.view
     const imageUrl = this.props.imageUrl
-    let img =
-      imageUrl && imageUrl.trim() !== ''
-        ? { uri: imageUrl }
-        : view === 'calendar'
-        ? require('../../assets/images/views/calendar.png')
-        : view === 'apps'
-        ? require('../../assets/images/views/apps.png')
-        : view === 'muni'
-        ? require('../../assets/images/views/muni.jpg')
-        : require('../../assets/images/views/directory.png')
+    let img = ''
     const pollInterval = 100 * 60 * 30 // 30 min
     return (
-      <View style={styles.container}>
+      <View>
         <Query query={bannerBySectionQry(view)} pollInterval={pollInterval}>
           {({ loading, error, data, refetch }) => {
-            if (loading) return <Loading />
-            if (error) return <Retry callback={refetch} />
+            if (loading) return <View /> //<Loading />
+            if (error) return <View /> //<Retry callback={refetch} />
 
             const { bannerBySection } = data
             img =
               bannerBySection && bannerBySection.imageUrl ? { uri: bannerBySection.imageUrl } : img
-            return (
-              <TouchableOpacity onPress={() => this.onPressBanner(bannerBySection)}>
-                <ImageBackground styleName='large-banner' source={img} style={styles.image}>
-                  {!bannerBySection && (
-                    <Tile style={styles.tile}>
-                      <Overlay styleName='image-overlay'>
-                        <Subtitle numberOfLines={2} style={styles.subTitle}>
-                          {this.props.title}
-                        </Subtitle>
-                      </Overlay>
-                    </Tile>
-                  )}
-                </ImageBackground>
-              </TouchableOpacity>
-            )
+            if (img.trim() !== '') {
+              return (
+                <TouchableOpacity
+                  onPress={() => this.onPressBanner(bannerBySection)}
+                  style={styles.container}
+                >
+                  <ImageBackground styleName='large-banner' source={img} style={styles.image}>
+                    {!bannerBySection && (
+                      <Tile style={styles.tile}>
+                        <Overlay styleName='image-overlay'>
+                          <Subtitle numberOfLines={2} style={styles.subTitle}>
+                            {this.props.title}
+                          </Subtitle>
+                        </Overlay>
+                      </Tile>
+                    )}
+                  </ImageBackground>
+                </TouchableOpacity>
+              )
+            } else {
+              return <View />
+            }
           }}
         </Query>
       </View>

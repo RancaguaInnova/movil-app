@@ -60,11 +60,7 @@ class DepartmentDetail extends React.Component {
         style={touchableIcons}
         onPress={() => (phone ? this.makeACall(phone) : <Text />)}
       >
-        {phone ? (
-          <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} />
-        ) : (
-          <Text />
-        )}
+        {phone && <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} />}
       </TouchableOpacity>
     )
   }
@@ -75,7 +71,7 @@ class DepartmentDetail extends React.Component {
         style={touchableIcons}
         onPress={() => (email ? this.sendEmail(email) : <Text />)}
       >
-        {email ? <Ionicons styleName='disclosure' name='ios-mail' size={28} /> : <Text />}
+        {email && <Ionicons styleName='disclosure' name='ios-mail' size={28} />}
       </TouchableOpacity>
     )
   }
