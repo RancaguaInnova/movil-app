@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, Text } from 'react-native'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
-import { Constants, WebBrowser } from 'expo'
+import { Constants, WebBrowser, Linking } from 'expo'
 import { View, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
 import { getSession } from 'providers/ApolloProvider'
@@ -25,13 +25,19 @@ export default class Item extends React.Component {
 
   componentDidMount() {}
 
+  _handleRedirect = event => {
+    console.log('event!!!', event)
+  }
+
   onClickItem = async item => {
     try {
       if (item.externalUrl && item.externalUrl.trim() !== '' && this.props.me) {
         let url =
           item.externalUrl.indexOf('?') !== -1 ? `${item.externalUrl}&` : `${item.externalUrl}?`
-        url += `event=${item._id}&token=${this.props.me.userToken}`
+        url += `token=${this.props.me.userToken}&v=${Math.random()}`
+        Linking.addEventListener('url', this._handleRedirect)
         let result = await WebBrowser.openBrowserAsync(url)
+        Linking.removeEventListener('url', this._handleRedirect)
         this.setState({ result })
       } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder al Evento', null, [

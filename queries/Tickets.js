@@ -4,7 +4,7 @@ const ticketsQry = userId => gql`
   {
   eventUserTicket(userId: "${userId}") {
     _id
-    eventId {
+    event {
       name
       date
       time
