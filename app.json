@@ -7,7 +7,7 @@
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
     "githubUrl": "https://github.com/RancaguaInnova/app-movil",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -24,7 +24,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.rancagua.digital",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.rancagua.digital",
