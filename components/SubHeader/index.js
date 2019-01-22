@@ -58,7 +58,7 @@ export default class SubHeader extends React.Component {
             const { bannerBySection } = data
             img =
               bannerBySection && bannerBySection.imageUrl ? { uri: bannerBySection.imageUrl } : img
-            if (img.trim() !== '') {
+            if (img !== '') {
               return (
                 <TouchableOpacity
                   onPress={() => this.onPressBanner(bannerBySection)}

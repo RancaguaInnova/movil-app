@@ -78,7 +78,9 @@ export default class Item extends React.Component {
 
               {item.address && (
                 <Text numberOfLines={3} style={{ ...textStyles.rowText, fontWeight: 'bold' }}>
-                  {`${item.address.streetName} ${item.address.streetNumber}, ${item.address.city}`}
+                  {`${item.address.streetName} ${item.address.streetNumber || ''}, ${
+                    item.address.city
+                  }`}
                 </Text>
               )}
             </View>
