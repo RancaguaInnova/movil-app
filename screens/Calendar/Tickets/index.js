@@ -6,6 +6,7 @@ import textStyles from '../../../styles/texts'
 import styles from './styles'
 import moment from '../../../helpers/date/moment'
 import { WebBrowser } from 'expo'
+import { Query } from 'react-apollo'
 import autobind from 'autobind-decorator'
 import { getSession } from '../../../providers/ApolloProvider'
 import { ticketsQry } from '../../../queries'
@@ -16,48 +17,6 @@ import Loading from '../../../providers/ApolloProvider/Loading'
 export default class Tickets extends React.Component {
   state = {
     profile: null,
-    tickets: {
-      list: [],
-      status: 'loading',
-    },
-  }
-
-  componentDidMount() {
-    const profile = getSession()
-    if (profile) {
-      this.loadTickets(profile)
-    } else {
-      this.setState({ profile: null, tickets: { status: '', list: [] } })
-    }
-  }
-
-  @autobind
-  async loadTickets(profile) {
-    try {
-      const result = await client.query({
-        query: ticketsQry(profile.userId),
-      })
-
-      const {
-        data: { eventUserTicket },
-      } = result
-      const tickets = this.state.tickets
-      tickets.list = eventUserTicket
-      tickets.status = ''
-      this.setState({
-        profile,
-        tickets,
-      })
-    } catch (error) {
-      console.log('error loadingTickets', error)
-      const tickets = this.state.tickets
-      tickets.list = []
-      tickets.status = 'error'
-      this.setState({
-        profile,
-        tickets,
-      })
-    }
   }
 
   onClickTicket = async ticket => {
@@ -99,24 +58,31 @@ export default class Tickets extends React.Component {
   }
 
   render() {
+    const profile = getSession()
+    const pollInterval = 100 * 30 // 30 seg
     return (
       <View style={styles.container}>
-        {this.state.tickets.status === 'loading' ? (
-          <Loading />
-        ) : this.state.tickets.status === 'error' ? (
-          <Retry callback={() => this.loadTickets(this.state.profile)} />
-        ) : (
-          <ScrollView>
-            {!this.state.profile && (
-              <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
-            )}
+        {!profile && (
+          <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
+        )}
+        {profile && profile.userId && (
+          <Query query={ticketsQry(profile.userId)} pollInterval={pollInterval}>
+            {({ loading, error, data, refetch }) => {
+              if (loading) return <Loading />
+              if (error) return <Retry callback={refetch} />
 
-            {this.state.tickets && this.state.tickets.list.length === 0 && this.state.profile ? (
-              <Text styleName='h-center'>No posee entradas vigentes</Text>
-            ) : this.state.profile ? (
-              this.state.tickets.list.map(ticket => this.renderTicket(ticket))
-            ) : null}
-          </ScrollView>
+              const { eventUserTicket } = data
+              return (
+                <ScrollView>
+                  {eventUserTicket && eventUserTicket.length === 0 && profile && profile.userId ? (
+                    <Text styleName='h-center'>No posee entradas vigentes</Text>
+                  ) : profile ? (
+                    eventUserTicket.map(ticket => this.renderTicket(ticket))
+                  ) : null}
+                </ScrollView>
+              )
+            }}
+          </Query>
         )}
       </View>
     )
