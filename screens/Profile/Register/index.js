@@ -201,7 +201,7 @@ export default class Register extends React.Component {
             onPress={this.submit}
             label='Crear cuenta'
           />
-          <Button onPress={() => this.props.navigation.goBack()} label='Volver' />
+          <Button onPress={() => this.props.navigation.goBack()} label='Volver' color='#b22d48' />
           {/* <LightButton
             style={{ position: 'relative' }}
             onPress={() => this.props.navigation.goBack()}

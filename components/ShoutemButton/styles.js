@@ -1,6 +1,6 @@
 export default {
   container: {
-    backgroundColor: '#62B5E5',
+    backgroundColor: '#fe0747',
     width: '80%',
     height: 42,
     borderRadius: 5,
@@ -11,16 +11,16 @@ export default {
     shadowRadius: 2,
     shadowOffset: {
       height: 1,
-      width: 1
-    }
+      width: 1,
+    },
   },
   label: {
     fontSize: 14,
-    color: '#fff'
+    color: '#fff',
   },
   icon: {
     marginRight: 10,
-    color: '#eee'
+    color: '#eee',
   },
   disabled: {
     color: '#333',
@@ -35,7 +35,7 @@ export default {
     shadowRadius: 2,
     shadowOffset: {
       height: 1,
-      width: 1
-    }
+      width: 1,
+    },
   },
 }

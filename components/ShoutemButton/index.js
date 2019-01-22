@@ -11,22 +11,27 @@ export default class ShoutemButton extends React.Component {
     label: PropTypes.string,
     onPress: PropTypes.func,
     disabled: PropTypes.bool,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    color: PropTypes.string,
+  }
+
+  static defaultProps = {
+    color: '#fe0747',
   }
 
   @autobind
-  onPress () {
+  onPress() {
     if (this.props.loading || this.props.disabled) return
     this.props.onPress()
   }
 
-  renderLoading () {
+  renderLoading() {
     if (!this.props.loading) return null
     return (
       <View
         style={{
           padding: 15,
-          height: 52
+          height: 52,
         }}
       >
         <Spinner />
@@ -34,26 +39,28 @@ export default class ShoutemButton extends React.Component {
     )
   }
 
-  renderIcon () {
+  renderIcon() {
     let { iconName, loading } = this.props
-    if (iconName && !loading) { return <Icon style={styles.icon} name={iconName} size={20} /> }
+    if (iconName && !loading) {
+      return <Icon style={styles.icon} name={iconName} size={20} />
+    }
     return null
   }
 
-  renderComponentsOrLoading () {
+  renderComponentsOrLoading() {
     let { label, loading } = this.props
     if (loading) return <Spinner style={{ size: 'small', color: '#fff' }} />
     return <Text style={styles.label}>{label}</Text>
   }
 
-  render () {
+  render() {
+    const btnStyle = this.props.disabled ? styles.disabled : styles.container
+    if (!this.props.disabledn && this.props.color) {
+      btnStyle.backgroundColor = this.props.color
+    }
+
     return (
-      <Button
-        style={this.props.disabled ? styles.disabled : styles.container}
-        onPress={this.onPress}
-        disabled={this.props.disabled}
-        loading
-      >
+      <Button style={btnStyle} onPress={this.onPress} disabled={this.props.disabled} loading>
         {this.renderIcon()}
         {this.renderComponentsOrLoading()}
       </Button>

@@ -38,7 +38,7 @@ export default class SectionDivider extends React.Component {
       <View>
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            <Caption style={styles.caption} numberOfLines={2}>
+            <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
               {title}
             </Caption>
           </Divider>
@@ -54,8 +54,7 @@ export default class SectionDivider extends React.Component {
                   alignSelf: 'center',
                   width: `${100 / menu.length}%`,
                   padding: 5,
-                  backgroundColor:
-                    this.state.current !== key ? 'rgba(68,78,82, 0.5)' : 'transparent',
+                  backgroundColor: this.state.current !== key ? '#6d2533' : 'transparent',
                 }}
               >
                 <TouchableOpacity
@@ -64,7 +63,7 @@ export default class SectionDivider extends React.Component {
                     this.setState({ current: key })
                   }}
                 >
-                  <Text styleName='h-center' style={{ color: 'white' }}>
+                  <Text styleName='h-center' style={{ color: 'white', fontSize: 16 }}>
                     {item.title}
                   </Text>
                 </TouchableOpacity>

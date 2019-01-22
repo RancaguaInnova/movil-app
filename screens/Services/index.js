@@ -10,9 +10,8 @@ import Error from 'providers/ApolloProvider/ApolloError'
 import SectionDivider from '../../components/SectionDivider'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
-import { getMeQry, servicesListQry } from 'queries'
+import { getMeQry, servicesListQry, bannerBySectionQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-// import { graphql, compose } from 'react-apollo'
 
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 @withGraphQL(servicesListQry, { loading: <Loading />, errorComponent: <Error /> })
@@ -77,14 +76,16 @@ export default class Services extends React.Component {
       this.props.applications && this.props.applications.items ? this.props.applications.items : []
     return (
       <View style={styles.container}>
-        <SubHeader view='apps' title='Seleccione el servicio' navigation={this.props.navigation} />
+        <SubHeader
+          view='apps'
+          title='Seleccione el servicio'
+          navigation={this.props.navigation}
+          me={this.props.me}
+        />
+
         <SectionDivider title='Servicios disponibles' />
         <ScrollView>{items.map(app => this.renderRow(app))}</ScrollView>
       </View>
     )
   }
 }
-
-//   graphql(getMeQry),
-//   graphql(servicesListQry)
-// )(Services)

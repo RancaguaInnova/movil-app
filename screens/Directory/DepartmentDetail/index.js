@@ -60,11 +60,7 @@ class DepartmentDetail extends React.Component {
         style={touchableIcons}
         onPress={() => (phone ? this.makeACall(phone) : <Text />)}
       >
-        {phone ? (
-          <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} />
-        ) : (
-          <Text />
-        )}
+        {phone && <Ionicons styleName='disclosure' name='ios-call' color='green' size={28} />}
       </TouchableOpacity>
     )
   }
@@ -75,7 +71,7 @@ class DepartmentDetail extends React.Component {
         style={touchableIcons}
         onPress={() => (email ? this.sendEmail(email) : <Text />)}
       >
-        {email ? <Ionicons styleName='disclosure' name='ios-mail' size={28} /> : <Text />}
+        {email && <Ionicons styleName='disclosure' name='ios-mail' size={28} />}
       </TouchableOpacity>
     )
   }
@@ -98,9 +94,11 @@ class DepartmentDetail extends React.Component {
           )}
 
           <View styleName='vertical'>
-            <Subtitle style={textStyles.rowSubtitle}>{officer.position}</Subtitle>
-            <Text numberOfLines={2} style={textStyles.rowText}>
+            <Subtitle style={textStyles.rowSubtitle} numberOfLines={2}>
               {fullName}
+            </Subtitle>
+            <Text numberOfLines={2} style={textStyles.rowText}>
+              {officer.position}
             </Text>
           </View>
 
@@ -126,6 +124,20 @@ class DepartmentDetail extends React.Component {
       <View style={styles.container}>
         <SubHeader view='muni' title={strAddress} imageUrl={department.imageUrl} />
         <SectionDivider title={department.businessHours || ''} />
+        {strAddress !== '' && (
+          <Subtitle
+            styleName='h-center'
+            style={{
+              ...textStyles.rowSubtitle,
+              backgroundColor: '#6d2533',
+              color: 'white',
+              marginBottom: 5,
+            }}
+            numberOfLines={2}
+          >
+            {strAddress}
+          </Subtitle>
+        )}
         <ScrollView>{officials.map(officer => this.renderOfficer(officer))}</ScrollView>
       </View>
     )

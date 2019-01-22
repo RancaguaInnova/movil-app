@@ -12,11 +12,15 @@ import { Agenda, LocaleConfig } from 'react-native-calendars'
 import { client } from 'providers/ApolloProvider'
 import autobind from 'autobind-decorator'
 import EmptyDate from './emptyDate'
+import PropTypes from 'prop-types'
 import Item from './Item'
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
 
 export default class Calendar extends React.Component {
+  static propTypes = {
+    me: PropTypes.ObjectComponent,
+  }
   state = {
     events: {},
     months: {},
@@ -73,6 +77,11 @@ export default class Calendar extends React.Component {
     return (
       <View style={styles.container}>
         <Agenda
+          theme={{
+            dotColor: '#fe0747',
+            selectedDayBackgroundColor: '#fe0747',
+            todayTextColor: '#fe0747',
+          }}
           items={events}
           loadItemsForMonth={this.loadItemsForMonth}
           // specify how each item should be rendered in agenda
@@ -82,6 +91,7 @@ export default class Calendar extends React.Component {
                 item={item}
                 firstItemInDay={firstItemInDay}
                 navigation={this.props.navigation}
+                me={this.props.me}
               />
             )
           }}

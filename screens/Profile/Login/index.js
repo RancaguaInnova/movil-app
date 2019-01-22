@@ -122,7 +122,11 @@ export default class Login extends React.Component {
             onPress={this.submit}
             label='Entrar'
           />
-          <Button onPress={() => this.props.navigation.navigate('Register')} label='Registrarme' />
+          <Button
+            onPress={() => this.props.navigation.navigate('Register')}
+            label='Registrarme'
+            color='#b22d48'
+          />
         </View>
       </ScrollView>
     )
