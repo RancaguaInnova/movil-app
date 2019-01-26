@@ -59,14 +59,13 @@ export default class Tickets extends React.Component {
 
   render() {
     const profile = getSession()
-    const pollInterval = 100 * 30 // 30 seg
     return (
       <View style={styles.container}>
         {!profile && (
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
         )}
         {profile && profile.userId && (
-          <Query query={ticketsQry(profile.userId)} pollInterval={pollInterval}>
+          <Query query={ticketsQry(profile.userId)} fetchPolicy='network-only'>
             {({ loading, error, data, refetch }) => {
               if (loading) return <Loading />
               if (error) return <Retry callback={refetch} />
