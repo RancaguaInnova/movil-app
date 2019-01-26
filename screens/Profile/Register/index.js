@@ -100,12 +100,14 @@ export default class Register extends React.Component {
         profile,
       }
       const { session } = await this.props.createUser(newUserData)
-      const saveResult = await saveSession(session)
+      console.log('session:', session)
+      await saveSession(session)
       this.setState({ loading: false, errorMessage: null })
+      console.log('NOT LOADING')
       Alert.alert(
         `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`
       )
-      this.props.navigation.navigate('Profile')
+      this.props.navigation.replace('Profile')
     } catch (error) {
       let errorMessage = ''
       const graphQLErrors = error.graphQLErrors || []
