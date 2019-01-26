@@ -31,6 +31,7 @@ const saveSession = async newSession => {
   session = newSession
   await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
   // await client.resetStore()
+  await client.clearStore()
 }
 
 /* const getIntroVisualization = () => {
