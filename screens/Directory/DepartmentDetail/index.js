@@ -78,12 +78,10 @@ class DepartmentDetail extends React.Component {
 
   renderOfficer(officer) {
     const fullName = `${officer.firstname} ${officer.lastname}`
-    const contactPhone =
-      officer.contactInformation &&
-      officer.contactInformation.phone &&
-      officer.contactInformation.phone.mobilePhone
-        ? officer.contactInformation.phone.mobilePhone
-        : `${officer.contactInformation.phone.areaCode}${officer.contactInformation.phone.number}`
+    const phone = officer && officer.contactInformation ? officer.contactInformation.phone : {}
+    const contactPhone = phone.mobilePhone
+      ? phone.mobilePhone
+      : `${phone.areaCode || ''}${phone.number || ''}`
     return (
       <View key={officer._id}>
         <Row styleName='small'>
