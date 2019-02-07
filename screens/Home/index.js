@@ -1,5 +1,7 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
+import { pageHit, screenHit } from '/helpers/analytics'
 import { View, Divider, Caption, Text, Icon } from '@shoutem/ui'
 import styles from './styles'
 import HomeOverlay from './HomeOverlay'
@@ -11,6 +13,7 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { getMeQry } from 'queries'
+const pageName = 'home'
 
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class Home extends React.Component {
@@ -19,11 +22,13 @@ export default class Home extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const title = `RANCAGUA, ${moment()
       .format('DD MMMM [DE] YYYY')
       .toUpperCase()}`
     return (
       <View style={styles.mainContainer}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <SubHeader
           view='home'
           title='Rancagua'

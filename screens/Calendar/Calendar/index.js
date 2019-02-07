@@ -1,5 +1,7 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
+import { pageHit } from '/helpers/analytics'
+import { NavigationEvents } from 'react-navigation'
 import { View, Text, Divider, Caption } from '@shoutem/ui'
 import styles from './styles'
 import { eventsByMonth } from 'queries'
@@ -16,6 +18,7 @@ import PropTypes from 'prop-types'
 import Item from './Item'
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
+const pageName = 'calendar'
 
 export default class Calendar extends React.Component {
   static propTypes = {
@@ -73,9 +76,11 @@ export default class Calendar extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const events = this.state.events
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <Agenda
           theme={{
             dotColor: '#fe0747',

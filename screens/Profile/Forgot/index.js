@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, Title, Text } from '@shoutem/ui'
+import { pageHit } from '/helpers/analytics'
+import { NavigationEvents } from 'react-navigation'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
 import TextInput from 'components/fields/TextInput'
@@ -9,7 +11,7 @@ import PropTypes from 'prop-types'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
 import LightButton from 'components/LightButton'
-
+const pageName = 'profile/forgot'
 @withMutation(gql`
   mutation forgotPassword($email: String) {
     forgotPassword(email: $email)
@@ -86,8 +88,10 @@ export default class Forgot extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <Title style={styles.title}>Enviaremos instrucciones a tu correo</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View style={styles.fieldsContainer}>

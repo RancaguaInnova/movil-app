@@ -7,6 +7,7 @@ import { View, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoute
 import { Ionicons } from '@expo/vector-icons'
 import { getSession } from 'providers/ApolloProvider'
 import { getMeQry } from 'queries'
+import { parseUrl } from '/helpers/url'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
@@ -26,15 +27,13 @@ export default class Item extends React.Component {
   componentDidMount() {}
 
   _handleRedirect = event => {
-    console.log('event!!!', event)
+    //console.log('event!!!', event)
   }
 
   onClickItem = async item => {
     try {
       if (item.externalUrl && item.externalUrl.trim() !== '' && this.props.me) {
-        let url =
-          item.externalUrl.indexOf('?') !== -1 ? `${item.externalUrl}&` : `${item.externalUrl}?`
-        url += `token=${this.props.me.userToken}&v=${Math.random()}`
+        let url = parseUrl(item.externalUrl, { token: this.props.me.userToken })
         Linking.addEventListener('url', this._handleRedirect)
         let result = await WebBrowser.openBrowserAsync(url)
         Linking.removeEventListener('url', this._handleRedirect)

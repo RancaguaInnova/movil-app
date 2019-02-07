@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, Divider, Caption, Subtitle, TouchableOpacity, Row } from '@shoutem/ui'
 import { Alert, ScrollView } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
+import { pageHit } from '/helpers/analytics'
 import PropTypes from 'prop-types'
 import textStyles from 'styles/texts'
 import styles from './styles'
@@ -12,7 +14,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
 import { getMeQry, servicesListQry, bannerBySectionQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-
+import { parseUrl } from '/helpers/url'
+const pageName = 'services'
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 @withGraphQL(servicesListQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class Services extends React.Component {
@@ -38,8 +41,7 @@ export default class Services extends React.Component {
   async openApp(app) {
     try {
       if (app.applicationURL && app.applicationURL.trim() !== '' && this.props.me) {
-        const finalUrl = `${app.applicationURL}?token=${this.props.me.userToken}`
-        console.log('finalUrl', finalUrl)
+        const finalUrl = parseUrl(app.applicationURL, { token: this.props.me.userToken })
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
       } else if (!this.props.me) {
@@ -72,10 +74,12 @@ export default class Services extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const items =
       this.props.applications && this.props.applications.items ? this.props.applications.items : []
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <SubHeader
           view='apps'
           title='Seleccione el servicio'

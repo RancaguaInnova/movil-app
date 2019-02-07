@@ -14,6 +14,7 @@ import { Query } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
 import { getMeQry } from 'queries'
+import { parseUrl } from '/helpers/url'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { Alert } from 'react-native'
 
@@ -50,7 +51,7 @@ export default class HomeOverlay extends React.Component {
   onPressCard = async card => {
     try {
       if (card.targetUrl && card.targetUrl.trim() !== '' && this.props.me) {
-        const finalUrl = `${card.targetUrl}?token=${this.props.me.userToken}`
+        const finalUrl = parseUrl(card.targetUrl, { token: this.props.me.userToken })
         console.log('finalUrl', finalUrl)
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })

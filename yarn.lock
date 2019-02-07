@@ -1673,6 +1673,11 @@ buffer@~4.5.1:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+build-url@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/build-url/-/build-url-1.3.2.tgz#2a48659092d6955a7af31ca7a69e3f88e7b7b219"
+  integrity sha512-L6H0SvNHEQC3GaTh07IdQ04BbERtccx6rHEBpprU2vPerYY2n0qyU2jb2Un5T7xgGhoCrP5Br1ThO6jH3pR5ow==
+
 builtin-modules@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -2334,6 +2339,11 @@ expo-analytics-segment@~1.1.0:
   resolved "https://registry.yarnpkg.com/expo-analytics-segment/-/expo-analytics-segment-1.1.0.tgz#d4f9591ebb542ea70e9d3ac23a5d97ead79dfb5d"
   dependencies:
     expo-core "~1.2.0"
+
+expo-analytics@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/expo-analytics/-/expo-analytics-1.0.7.tgz#d78b4b9090ba359b2ec233fce35512b90ef392db"
+  integrity sha1-14tLkJC6NZsuwjP841USuQ7zkts=
 
 expo-asset@~1.1.1:
   version "1.1.1"
@@ -5059,7 +5069,7 @@ qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
-query-string@^6.1.0:
+query-string@^6.1.0, query-string@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.2.0.tgz#468edeb542b7e0538f9f9b1aeb26f034f19c86e1"
   dependencies:

@@ -1,7 +1,9 @@
 import React from 'react'
 import { ScrollView, Alert } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
 import { View, TouchableOpacity, Row, Subtitle, Text, Divider, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
+import { pageHit } from '/helpers/analytics'
 import textStyles from 'styles/texts'
 import styles from './styles'
 import moment from 'helpers/date/moment'
@@ -10,10 +12,11 @@ import { Query } from 'react-apollo'
 import autobind from 'autobind-decorator'
 import { getSession } from 'providers/ApolloProvider'
 import { ticketsQry } from 'queries'
+import { parseUrl } from '/helpers/url'
 import { client } from 'providers/ApolloProvider/client'
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
-
+const pageName = 'calendar/tickets'
 export default class Tickets extends React.Component {
   state = {
     profile: null,
@@ -22,11 +25,7 @@ export default class Tickets extends React.Component {
   onClickTicket = async ticket => {
     try {
       if (ticket.externalUrl && ticket.externalUrl.trim() !== '') {
-        let url =
-          ticket.externalUrl.indexOf('?') !== -1
-            ? `${ticket.externalUrl}&`
-            : `${ticket.externalUrl}?`
-        url += `ticket=${ticket._id}`
+        let url = parseUrl(ticket.externalUrl, { ticket: ticket._id })
         let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
       }
@@ -58,9 +57,11 @@ export default class Tickets extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const profile = getSession()
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         {!profile && (
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
         )}

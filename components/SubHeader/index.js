@@ -11,6 +11,7 @@ import { WebBrowser } from 'expo'
 import { getMeQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { Alert } from 'react-native'
+import { parseUrl } from '/helpers/url'
 
 /* @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> }) */
 export default class SubHeader extends React.Component {
@@ -29,7 +30,7 @@ export default class SubHeader extends React.Component {
   onPressBanner = async banner => {
     try {
       if (banner.targetUrl && banner.targetUrl.trim() !== '' && this.props.me) {
-        const finalUrl = `${banner.targetUrl}?token=${this.props.me.userToken}`
+        const finalUrl = parseUrl(banner.targetUrl, { token: this.props.me.userToken })
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
       } else if (!this.props.me) {
