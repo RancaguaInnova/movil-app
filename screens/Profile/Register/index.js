@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Title, Text, ScrollView } from '@shoutem/ui'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import { Alert } from 'react-native'
 import styles from './styles.js'
@@ -107,6 +107,7 @@ export default class Register extends React.Component {
       Alert.alert(
         `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`
       )
+      event('registry_success', cleanEmail)
       this.props.navigation.replace('Profile')
     } catch (error) {
       let errorMessage = ''
@@ -139,6 +140,7 @@ export default class Register extends React.Component {
 
       this.setState({ errorMessage })
       console.log('Error:', JSON.stringify(error))
+      event('registry_error', JSON.stringify(error))
       this.setState({ loading: false })
     }
   }

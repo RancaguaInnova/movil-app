@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import { View, Title, Subtitle, Text, Caption } from '@shoutem/ui'
 import styles from './styles'
 import { Form, Field } from 'simple-react-form'
@@ -65,7 +65,9 @@ export default class Login extends React.Component {
         email,
         password,
       })
+
       await saveSession(session)
+      //event('login_success', email)
       this.props.onLoginSuccess(session)
       /* this.props.navigation.navigate(
         'Profile',
@@ -76,6 +78,7 @@ export default class Login extends React.Component {
       const errorMessage = error.message.replace('GraphQL error: ', '')
       this.setState({ errorMessage: 'Email o contraseña incorrecta' })
       console.log('Error:', error)
+      event('login_error', error)
       this.setState({ loading: false })
     }
   }

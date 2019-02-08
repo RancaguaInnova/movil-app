@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Divider, Caption, Subtitle, TouchableOpacity, Row } from '@shoutem/ui'
 import { Alert, ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import PropTypes from 'prop-types'
 import textStyles from 'styles/texts'
 import styles from './styles'
@@ -44,11 +44,26 @@ export default class Services extends React.Component {
         const finalUrl = parseUrl(app.applicationURL, { token: this.props.me.userToken })
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
+        event('click_service_online', app.applicationURL)
       } else if (!this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
-          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-          { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
+          {
+            text: 'Cancelar',
+            onPress: () => {
+              //console.log('Cancel Pressed')
+              event('click_service_login', 'cancel')
+            },
+            style: 'cancel',
+          },
+          {
+            text: 'Iniciar',
+            onPress: () => {
+              this.props.navigation.navigate('Profile')
+              event('click_service_login', 'login')
+            },
+          },
         ])
+        event('click_service_offline', app.applicationURL)
       }
     } catch (error) {
       this.setState({ result: null })

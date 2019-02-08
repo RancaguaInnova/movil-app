@@ -2,7 +2,7 @@ import { Analytics, PageHit, ScreenHit, Event } from 'expo-analytics'
 
 var analytics = null
 
-const analyticsId = 'UA-123977917-2'
+const analyticsId = 'UA-133228609-2'
 
 export const pageHit = function(pageName) {
   if (!analytics) analytics = new Analytics(analyticsId)
@@ -30,11 +30,11 @@ export const screenHit = function(pageName) {
     })
 }
 
-export const event = function(event = []) {
+export const event = function(event, action) {
   if (!analytics) analytics = new Analytics(analyticsId)
-  console.log('event!', event)
+  //console.log('event!', event)
   analytics
-    .event(new Event(event))
+    .event(new Event(event, action))
     .then(result => {
       //console.log('result event', result)
     })

@@ -16,6 +16,7 @@ import autobind from 'autobind-decorator'
 import EmptyDate from './emptyDate'
 import PropTypes from 'prop-types'
 import Item from './Item'
+import { event } from '/helpers/analytics'
 LocaleConfig.locales['es'] = locales
 LocaleConfig.defaultLocale = 'es'
 const pageName = 'calendar'
@@ -102,6 +103,9 @@ export default class Calendar extends React.Component {
           }}
           // specify how each date should be rendered. day can be undefined if the item is not first in that day.
           renderDay={(day, item) => <View />}
+          onCalendarToggled={calendarOpened => {
+            event('click_calendar_open', calendarOpened)
+          }}
           firstDay={1}
           futureScrollRange={300}
           pastScrollRange={300}

@@ -3,7 +3,7 @@ import { ScrollView, Alert } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { View, TouchableOpacity, Row, Subtitle, Text, Divider, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import textStyles from 'styles/texts'
 import styles from './styles'
 import moment from 'helpers/date/moment'
@@ -28,6 +28,7 @@ export default class Tickets extends React.Component {
         let url = parseUrl(ticket.externalUrl, { ticket: ticket._id })
         let result = await WebBrowser.openBrowserAsync(url)
         this.setState({ result })
+        event('click_ticket', url)
       }
     } catch (error) {
       console.log('Error handling onClickItem', error)

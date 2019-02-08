@@ -12,6 +12,7 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 import moment from 'helpers/date/moment'
+import { event } from '/helpers/analytics'
 
 export default class Item extends React.Component {
   static propTypes = {
@@ -38,11 +39,26 @@ export default class Item extends React.Component {
         let result = await WebBrowser.openBrowserAsync(url)
         Linking.removeEventListener('url', this._handleRedirect)
         this.setState({ result })
+        event('click_calendar_online_event', item.externalUrl)
       } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder al Evento', null, [
-          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-          { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
+          {
+            text: 'Cancelar',
+            onPress: () => {
+              //console.log('Cancel Pressed')
+              event('click_calendar_event_login', 'cancel')
+            },
+            style: 'cancel',
+          },
+          {
+            text: 'Iniciar',
+            onPress: () => {
+              this.props.navigation.navigate('Profile')
+              event('click_calendar_event_login', 'login')
+            },
+          },
         ])
+        event('click_calendar_offline_event', item.externalUrl)
       }
     } catch (error) {
       console.log('Error handling onClickItem', error)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Title, Text } from '@shoutem/ui'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
@@ -35,6 +35,8 @@ export default class Forgot extends React.Component {
       const { email } = this.state
       await this.props.forgotPassword({ email })
       this.setState({ success: true, loading: false })
+
+      event('recover_password_success', email)
     } catch ({ response, operation, graphQLErrors, networkError }) {
       const arrError = graphQLErrors || []
       const arrMsj = []
@@ -59,6 +61,7 @@ export default class Forgot extends React.Component {
       const errorMessage =
         arrMsj.length > 0 ? arrMsj.join(', ') : 'Ups, ocurrió un problema intente nuevamente' //response.message.replace('GraphQL error: ', '')
       this.setState({ errorMessage, loading: false })
+      event('recover_password_error', JSON.stringify(arrMsj))
     }
   }
 

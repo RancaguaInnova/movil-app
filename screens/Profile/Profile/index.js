@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
@@ -111,6 +111,7 @@ export default class Profile extends React.Component {
     await logout()
     await saveSession(null)
     this.props.onLogout()
+    event('logout', 'true')
     //this.props.navigation.navigate('Home')
   }
 
@@ -135,6 +136,7 @@ export default class Profile extends React.Component {
         errorMessage: '', //error.message.replace('GraphQL error:', ''),
         loading: false,
       })
+      event('profile_update_success', JSON.stringify(user))
       Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
       const errMsj = []
@@ -171,6 +173,7 @@ export default class Profile extends React.Component {
         errorMessage: msj,
         loading: false,
       })
+      event('profile_update_error', JSON.stringify(errMsj))
     }
   }
 

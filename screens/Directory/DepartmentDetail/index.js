@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, Alert } from 'react-native'
-import { pageHit } from '/helpers/analytics'
+import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import { View, Text, Divider, Caption, Row, Subtitle, Image, TouchableOpacity } from '@shoutem/ui'
 import styles, { touchableIcons } from './styles'
@@ -40,6 +40,7 @@ class DepartmentDetail extends React.Component {
       Alert.alert('Email de contacto: ' + to)
       console.log('[sendEmail]:', error)
     }
+    event('click_directory_department_email', emailTo)
   }
 
   makeACall(phone) {
@@ -54,6 +55,7 @@ class DepartmentDetail extends React.Component {
       Alert.alert(`Número telefónico: ${phone}`)
       console.log('[makeACall]:', error)
     }
+    event('click_directory_department_phone', phone)
   }
 
   renderPhoneIcon(phone) {
