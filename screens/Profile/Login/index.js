@@ -1,5 +1,7 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
+import { pageHit, event } from '/helpers/analytics'
 import { View, Title, Subtitle, Text, Caption } from '@shoutem/ui'
 import styles from './styles'
 import { Form, Field } from 'simple-react-form'
@@ -16,6 +18,7 @@ import Loading from 'providers/ApolloProvider/Loading'
 import saveSession from 'helpers/auth/saveSession'
 import { getMeQry } from 'queries'
 import gql from 'graphql-tag'
+const pageName = 'profile/login'
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 @withNavigation
 @withMutation(gql`
@@ -62,17 +65,13 @@ export default class Login extends React.Component {
         email,
         password,
       })
+
       await saveSession(session)
       this.props.onLoginSuccess(session)
-      /* this.props.navigation.navigate(
-        'Profile',
-        {},
-        NavigationActions.navigate({ routeName: 'Profile' })
-      ) */
     } catch (error) {
       const errorMessage = error.message.replace('GraphQL error: ', '')
       this.setState({ errorMessage: 'Email o contraseña incorrecta' })
-      console.log('Error:', error)
+      event('login_error', error)
       this.setState({ loading: false })
     }
   }
@@ -83,9 +82,11 @@ export default class Login extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     if (this.props.me) this.props.onLoginSuccess(this.props.me)
     return (
       <ScrollView style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <Title style={styles.title}>Inicia sesión en tu cuenta:</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)}>
           <View style={styles.fieldsContainer}>

@@ -3,11 +3,13 @@ import { View } from '@shoutem/ui'
 import NewsListItem from './NewsListItem/index'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
+
 import { client } from '../../../providers/ApolloProvider/client'
 import Retry from '../../../providers/ApolloProvider/Retry'
 import Loading from '../../../providers/ApolloProvider/Loading'
 import { newsListQry } from '../../../queries'
 import { Query } from 'react-apollo'
+import { event } from '/helpers/analytics'
 
 export default class NewsList extends React.Component {
   onClickNews = async news => {
@@ -15,6 +17,7 @@ export default class NewsList extends React.Component {
       if (news.externalUrl && news.externalUrl.trim() !== '') {
         let result = await WebBrowser.openBrowserAsync(news.externalUrl)
         this.setState({ result })
+        event('click_news', news.externalUrl)
       }
     } catch (error) {
       this.setState({ result: null })

@@ -1,6 +1,8 @@
 import React from 'react'
 import { ScrollView, Button } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
+import { pageHit } from '/helpers/analytics'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
 import styles from './styles'
 import Loading from 'providers/ApolloProvider/Loading'
@@ -13,7 +15,7 @@ import DepartmentDetail from './DepartmentDetail'
 import autobind from 'autobind-decorator'
 import { directoryListQry } from './../../queries/'
 import { Query } from 'react-apollo'
-
+const pageName = 'directory/list'
 export default class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
     if (navigation.getParam('header')) {
@@ -103,9 +105,11 @@ export default class Directory extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const pollInterval = 100 * 60 * 60 // 60 min
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         {this.state.selected ? (
           <DepartmentDetail department={this.state.selected} close={this.closeDetail} />
         ) : (

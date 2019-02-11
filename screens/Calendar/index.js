@@ -14,6 +14,7 @@ import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { getMeQry } from 'queries'
+import { event } from '/helpers/analytics'
 
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class CalendarScreen extends React.Component {
@@ -31,11 +32,13 @@ export default class CalendarScreen extends React.Component {
   @autobind
   showCalendar() {
     this.setState({ current: 'calendar' })
+    event('click_calendar_tab', 'calendar')
   }
 
   @autobind
   showTickets() {
     this.setState({ current: 'tickets' })
+    event('click_calendar_tab', 'tickets')
   }
 
   render() {

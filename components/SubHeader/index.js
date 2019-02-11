@@ -11,6 +11,8 @@ import { WebBrowser } from 'expo'
 import { getMeQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { Alert } from 'react-native'
+import { parseUrl } from '/helpers/url'
+import { event } from '/helpers/analytics'
 
 /* @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> }) */
 export default class SubHeader extends React.Component {
@@ -29,14 +31,16 @@ export default class SubHeader extends React.Component {
   onPressBanner = async banner => {
     try {
       if (banner.targetUrl && banner.targetUrl.trim() !== '' && this.props.me) {
-        const finalUrl = `${banner.targetUrl}?token=${this.props.me.userToken}`
+        const finalUrl = parseUrl(banner.targetUrl, { token: this.props.me.userToken })
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
+        event(`click_banner_${this.props.view}_online`, banner.targetUrl)
       } else if (!this.props.me) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
           { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
         ])
+        event(`click_banner_${this.props.view}_offline`, banner.targetUrl)
       }
     } catch (error) {
       this.setState({ result: null })

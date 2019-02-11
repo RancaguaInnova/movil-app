@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, Title, Text, ScrollView } from '@shoutem/ui'
+import { pageHit, event } from '/helpers/analytics'
+import { NavigationEvents } from 'react-navigation'
 import { Alert } from 'react-native'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
@@ -11,7 +13,7 @@ import LightButton from 'components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import saveSession from 'helpers/auth/saveSession'
 import gql from 'graphql-tag'
-
+const pageName = 'profile/register'
 import {
   validateIdentifier,
   validateEmail,
@@ -105,6 +107,7 @@ export default class Register extends React.Component {
       Alert.alert(
         `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`
       )
+      event('registry_success', cleanEmail)
       this.props.navigation.replace('Profile')
     } catch (error) {
       let errorMessage = ''
@@ -137,6 +140,7 @@ export default class Register extends React.Component {
 
       this.setState({ errorMessage })
       console.log('Error:', JSON.stringify(error))
+      event('registry_error', JSON.stringify(error))
       this.setState({ loading: false })
     }
   }
@@ -147,8 +151,10 @@ export default class Register extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     return (
       <ScrollView style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <Title style={styles.title}>Crea tu cuenta:</Title>
         <Form state={this.state} onChange={changes => this.setState(changes)} style={{ flex: 1 }}>
           <View style={styles.fieldsContainer}>

@@ -1,5 +1,7 @@
 import React from 'react'
 import { ScrollView, Alert } from 'react-native'
+import { pageHit, event } from '/helpers/analytics'
+import { NavigationEvents } from 'react-navigation'
 import { View, Text, Divider, Caption, Row, Subtitle, Image, TouchableOpacity } from '@shoutem/ui'
 import styles, { touchableIcons } from './styles'
 import textStyles from './../../../styles/texts'
@@ -13,7 +15,7 @@ import email from 'react-native-email'
 import call from 'react-native-phone-call'
 import { graphql } from 'react-apollo'
 import { officialsByDepartmentQry } from './../../../queries/'
-
+const pageName = 'directory/detail'
 class DepartmentDetail extends React.Component {
   static propTypes = {
     department: PropTypes.object,
@@ -36,8 +38,8 @@ class DepartmentDetail extends React.Component {
       })
     } catch (error) {
       Alert.alert('Email de contacto: ' + to)
-      console.log('[sendEmail]:', error)
     }
+    event('click_directory_department_email', emailTo)
   }
 
   makeACall(phone) {
@@ -50,8 +52,8 @@ class DepartmentDetail extends React.Component {
       })
     } catch (error) {
       Alert.alert(`Número telefónico: ${phone}`)
-      console.log('[makeACall]:', error)
     }
+    event('click_directory_department_phone', phone)
   }
 
   renderPhoneIcon(phone) {
@@ -110,6 +112,7 @@ class DepartmentDetail extends React.Component {
   }
 
   render() {
+    pageHit(pageName)
     const department = this.props.department || {}
     const address =
       department.contactInformation && department.contactInformation.address
@@ -120,6 +123,7 @@ class DepartmentDetail extends React.Component {
     const officials = this.props.data.officialsByDepartment || []
     return (
       <View style={styles.container}>
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         <SubHeader view='muni' title={strAddress} imageUrl={department.imageUrl} />
         <SectionDivider title={department.businessHours || ''} />
         {strAddress !== '' && (
