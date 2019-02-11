@@ -29,13 +29,13 @@ export default class Home extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
-        <SubHeader
+        {/* <SubHeader
           view='home'
           title='Rancagua'
           navigation={this.props.navigation}
           me={this.props.me}
-        />
-        {/*  <HomeOverlay navigation={this.props.navigation} /> */}
+        /> */}
+        <HomeOverlay navigation={this.props.navigation} />
         <SectionDivider title={title} />
         <ScrollView style={styles.container}>
           <NewsList />

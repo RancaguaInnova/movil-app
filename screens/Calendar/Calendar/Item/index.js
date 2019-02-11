@@ -45,7 +45,6 @@ export default class Item extends React.Component {
           {
             text: 'Cancelar',
             onPress: () => {
-              //console.log('Cancel Pressed')
               event('click_calendar_event_login', 'cancel')
             },
             style: 'cancel',

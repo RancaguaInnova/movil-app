@@ -67,17 +67,10 @@ export default class Login extends React.Component {
       })
 
       await saveSession(session)
-      //event('login_success', email)
       this.props.onLoginSuccess(session)
-      /* this.props.navigation.navigate(
-        'Profile',
-        {},
-        NavigationActions.navigate({ routeName: 'Profile' })
-      ) */
     } catch (error) {
       const errorMessage = error.message.replace('GraphQL error: ', '')
       this.setState({ errorMessage: 'Email o contraseña incorrecta' })
-      console.log('Error:', error)
       event('login_error', error)
       this.setState({ loading: false })
     }

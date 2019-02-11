@@ -50,7 +50,6 @@ export default class Services extends React.Component {
           {
             text: 'Cancelar',
             onPress: () => {
-              //console.log('Cancel Pressed')
               event('click_service_login', 'cancel')
             },
             style: 'cancel',

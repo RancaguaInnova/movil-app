@@ -53,7 +53,6 @@ export default class HomeOverlay extends React.Component {
     try {
       if (card.targetUrl && card.targetUrl.trim() !== '' && this.props.me) {
         const finalUrl = parseUrl(card.targetUrl, { token: this.props.me.userToken })
-        console.log('finalUrl', finalUrl)
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
         event('click_card_online', finalUrl)

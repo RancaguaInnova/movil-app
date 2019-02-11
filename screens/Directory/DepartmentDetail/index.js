@@ -38,7 +38,6 @@ class DepartmentDetail extends React.Component {
       })
     } catch (error) {
       Alert.alert('Email de contacto: ' + to)
-      console.log('[sendEmail]:', error)
     }
     event('click_directory_department_email', emailTo)
   }
@@ -53,7 +52,6 @@ class DepartmentDetail extends React.Component {
       })
     } catch (error) {
       Alert.alert(`Número telefónico: ${phone}`)
-      console.log('[makeACall]:', error)
     }
     event('click_directory_department_phone', phone)
   }
