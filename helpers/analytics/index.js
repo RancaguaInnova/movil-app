@@ -6,7 +6,6 @@ const analyticsId = 'UA-133228609-2'
 
 export const pageHit = function(pageName) {
   if (!analytics) analytics = new Analytics(analyticsId)
-  console.log('pageHit!!!!!!!!', pageName)
   analytics
     .hit(new PageHit(pageName))
     .then(result => {
@@ -19,7 +18,6 @@ export const pageHit = function(pageName) {
 
 export const screenHit = function(pageName) {
   if (!analytics) analytics = new Analytics(analyticsId)
-  //console.log('screenHit!!!!!!!!')
   analytics
     .hit(new ScreenHit(pageName))
     .then(result => {
@@ -32,7 +30,6 @@ export const screenHit = function(pageName) {
 
 export const event = function(event, action) {
   if (!analytics) analytics = new Analytics(analyticsId)
-  //console.log('event!', event)
   analytics
     .event(new Event(event, action))
     .then(result => {
