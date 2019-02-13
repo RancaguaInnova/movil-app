@@ -12,7 +12,7 @@ import SubHeader from './../../components/SubHeader'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
-import { getMeQry } from 'queries'
+import { getMeQry } from 'providers/ApolloProvider/queries'
 const pageName = 'home'
 
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })

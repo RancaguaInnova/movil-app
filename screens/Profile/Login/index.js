@@ -16,7 +16,7 @@ import { withNavigation, NavigationActions } from 'react-navigation'
 import Error from 'providers/ApolloProvider/ApolloError'
 import Loading from 'providers/ApolloProvider/Loading'
 import saveSession from 'helpers/auth/saveSession'
-import { getMeQry } from 'queries'
+import { getMeQry } from 'providers/ApolloProvider/queries'
 import gql from 'graphql-tag'
 const pageName = 'profile/login'
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })

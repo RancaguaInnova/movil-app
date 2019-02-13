@@ -30,7 +30,7 @@ import saveSession from 'helpers/auth/saveSession'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
-import { UserFragments } from 'queries/User'
+import { UserFragments } from 'providers/ApolloProvider/queries/User'
 import SectionDivider from 'components/SectionDivider'
 const pageName = 'profile'
 @withGraphQL(

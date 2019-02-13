@@ -5,16 +5,14 @@ import { View, Tile, Subtitle, Overlay, ImageBackground, TouchableOpacity } from
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
-import { bannerBySectionQry } from 'queries'
+import { bannerBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
 import { WebBrowser } from 'expo'
-import { getMeQry } from 'queries'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { Alert } from 'react-native'
 import { parseUrl } from '/helpers/url'
 import { event } from '/helpers/analytics'
 
-/* @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> }) */
 export default class SubHeader extends React.Component {
   static propTypes = {
     view: PropTypes.string,

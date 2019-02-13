@@ -13,7 +13,7 @@ import SubHeader from './../../components/SubHeader'
 import SectionDivider from '../../components/SectionDivider'
 import DepartmentDetail from './DepartmentDetail'
 import autobind from 'autobind-decorator'
-import { directoryListQry } from './../../queries/'
+import { directoryListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
 const pageName = 'directory/list'
 export default class Directory extends React.Component {
