@@ -14,7 +14,7 @@ import autobind from 'autobind-decorator'
 import email from 'react-native-email'
 import call from 'react-native-phone-call'
 import { graphql } from 'react-apollo'
-import { officialsByDepartmentQry } from './../../../queries/'
+import { officialsByDepartmentQry } from 'providers/ApolloProvider/queries'
 const pageName = 'directory/detail'
 class DepartmentDetail extends React.Component {
   static propTypes = {

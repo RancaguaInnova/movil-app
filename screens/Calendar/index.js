@@ -13,7 +13,7 @@ import { ObjectComponent } from 'simple-react-form'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
-import { getMeQry } from 'queries'
+import { getMeQry } from 'providers/ApolloProvider/queries'
 import { event } from '/helpers/analytics'
 
 @withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })

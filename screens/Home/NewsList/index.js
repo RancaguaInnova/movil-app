@@ -7,7 +7,7 @@ import autobind from 'autobind-decorator'
 import { client } from '../../../providers/ApolloProvider/client'
 import Retry from '../../../providers/ApolloProvider/Retry'
 import Loading from '../../../providers/ApolloProvider/Loading'
-import { newsListQry } from '../../../queries'
+import { newsListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
 import { event } from '/helpers/analytics'
 
