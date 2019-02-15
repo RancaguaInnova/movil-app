@@ -40,6 +40,10 @@
     "react-native-remote-svg": "^1.4.0",
     "react-native-typography": "^1.4.0",
     "react-navigation": "^2.18.2",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "rut.js": "^1.0.1",
     "simple-react-form": "^2.2.1"
   },
