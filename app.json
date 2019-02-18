@@ -4,10 +4,10 @@
     "slug": "rancagua-digital",
     "scheme": "rancaguadigital",
     "privacy": "public",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
     "githubUrl": "https://github.com/RancaguaInnova/app-movil",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -24,11 +24,12 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.rancagua.digital",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.rancagua.digital",
-      "versionCode": 6
+      "versionCode": 8,
+      "permissions": []
     },
     "description": ""
   }
