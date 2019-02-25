@@ -10,7 +10,15 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+const mapStateToProps = state => {
+  const { auth: { session, loading } } = state
+  return {
+    session,
+    loading
+  }
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);

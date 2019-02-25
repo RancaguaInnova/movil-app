@@ -1,4 +1,6 @@
-import authReducers from './Auth/reducers'
+import auth from './Auth/reducers'
 import { combineReducers } from 'redux'
 
-export default combineReducers({ authReducers })
+// Reducers will be combined in an objects each with a unique "initialState".
+// Name the imported reducer to reflect this object
+export default combineReducers({ auth })

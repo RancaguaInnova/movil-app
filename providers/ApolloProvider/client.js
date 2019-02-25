@@ -3,7 +3,7 @@ import url from './url'
 import { AsyncStorage } from 'react-native'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
-const sessionKey = '@orionjsapp:session'
+const sessionKey = '@rancagua_digital:session'
 let session = null
 let client = null
 
@@ -19,7 +19,10 @@ const recoverSession = async () => {
   }
 }
 
-const getSession = () => {
+const getSession = async () => {
+  // return session
+  let session = await AsyncStorage.getItem(sessionKey)
+  console.log('session asdf:', session)
   return session
 }
 
@@ -28,10 +31,9 @@ const removeSession = async () => {
 }
 
 const saveSession = async newSession => {
+  await client.clearStore()
   session = newSession
   await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
-  // await client.resetStore()
-  await client.clearStore()
 }
 
 /* const getIntroVisualization = () => {

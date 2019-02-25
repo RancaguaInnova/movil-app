@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
-import saveSession from 'helpers/auth/saveSession'
+import { saveSession } from 'helpers/auth'
 import gql from 'graphql-tag'
 const pageName = 'profile/register'
 import {

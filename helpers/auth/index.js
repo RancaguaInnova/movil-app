@@ -1,5 +1,5 @@
+import { saveSession, getSession } from 'providers/ApolloProvider'
 import gql from 'graphql-tag'
-import saveSession from './saveSession'
 
 const logout = async function() {
   await global.apolloClient.mutate({
@@ -14,4 +14,4 @@ const logout = async function() {
 
 global.logout = logout
 
-export default logout
+export { saveSession, getSession, logout }

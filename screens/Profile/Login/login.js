@@ -15,7 +15,7 @@ import withMutation from 'react-apollo-decorators/lib/withMutation'
 import { withNavigation, NavigationActions } from 'react-navigation'
 import Error from 'providers/ApolloProvider/ApolloError'
 import Loading from 'providers/ApolloProvider/Loading'
-import saveSession from 'helpers/auth/saveSession'
+import { saveSession } from 'helpers/auth'
 import { getMeQry } from 'providers/ApolloProvider/queries'
 import gql from 'graphql-tag'
 const pageName = 'profile/login'
@@ -25,7 +25,8 @@ const pageName = 'profile/login'
 export default class Login extends React.Component {
   static propTypes = {
     open: PropTypes.func,
-    loginWithPassword: PropTypes.func,
+    onLogin: PropTypes.func.isRequired,
+    loading: PropTypes.string.isRequired,
     onLoginSuccess: PropTypes.func,
   }
 
@@ -46,18 +47,16 @@ export default class Login extends React.Component {
     this.setState({ loading: true, errorMessage: null })
     try {
       const { email, password } = this.state
-      const { session } = await this.props.loginWithPassword({
-        email,
-        password,
-      })
+      await this.props.onLogin(email, password)
 
-      await saveSession(session)
-      this.props.onLoginSuccess(session)
+    //   await saveSession(session)
+    //   this.props.onLoginSuccess(session)
     } catch (error) {
-      const errorMessage = error.message.replace('GraphQL error: ', '')
-      this.setState({ errorMessage: 'Email o contraseña incorrecta' })
-      event('login_error', error)
-      this.setState({ loading: false })
+      console.log('Error at onLogin redux:', error)
+    //   const errorMessage = error.message.replace('GraphQL error: ', '')
+    //   this.setState({ errorMessage: 'Email o contraseña incorrecta' })
+    //   event('login_error', error)
+    //   this.setState({ loading: false })
     }
   }
 

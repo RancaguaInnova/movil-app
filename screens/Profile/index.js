@@ -4,7 +4,7 @@ import { View, Text, Divider, Caption } from '@shoutem/ui'
 import styles from './styles'
 import moment from 'helpers/date/moment'
 import { getMeQry } from 'providers/ApolloProvider/queries'
-import { getSession, removeSession } from 'providers/ApolloProvider'
+import { getSession } from 'helpers/auth'
 import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import Login from './Login'
@@ -26,6 +26,7 @@ class ProfileScreen extends React.Component {
   }
 
   componentDidMount() {
+    console.log('session on client:', getSession())
     this.setState({ profile: getSession() })
   }
 
@@ -40,6 +41,7 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
+    console.log('this.state.profile:', this.state.profile)
     return (
       <View style={styles.container}>
         {this.state.profile ? (
