@@ -14,11 +14,12 @@ export const loginRequest = () => {
   }
 }
 
-export const loginResponse = session => {
+export const loginResponse = (session, me) => {
   return {
     type: LOGIN_RESPONSE,
     loading:false,
-    session
+    session,
+    me
   }
 }
 
@@ -54,13 +55,21 @@ export const login = (email, password) => {
             emailVerified
             user {
               _id
+              profile {
+                identifier
+              }
+              email
+              userToken
             }
           }
         }`,
         variables: {email, password}
       })
+
+      const me = session.user
+      console.log('me:', me)
       // Dispatch sync action to "notify" the store we finnished the async action
-      dispatch(loginResponse(session))
+      dispatch(loginResponse(session, me))
     } catch (error) {
       console.log('Error login in:', error)
       dispatch(loginError(error))
