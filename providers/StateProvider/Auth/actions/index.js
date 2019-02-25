@@ -57,6 +57,21 @@ export const login = (email, password) => {
               _id
               profile {
                 identifier
+                firstName
+                lastName
+                gender
+                birthdate
+                educationalLevel
+                address {
+                  streetName
+                  streetNumber
+                  departmentNumber
+                  city
+                  postalCode
+                }
+                phone {
+                  mobilePhone
+                }
               }
               email
               userToken

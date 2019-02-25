@@ -3,31 +3,19 @@ import { ScrollView } from 'react-native'
 import { View, Text, Divider, Caption } from '@shoutem/ui'
 import styles from './styles'
 import moment from 'helpers/date/moment'
-import { getMeQry } from 'providers/ApolloProvider/queries'
 import { getSession } from 'helpers/auth'
-import { graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 import Login from './Login'
 import Profile from './Profile'
 import autobind from 'autobind-decorator'
 
-class ProfileScreen extends React.Component {
+export default class ProfileScreen extends React.Component {
   static navigationOptions = {
     title: 'Perfil',
   }
   static propTypes = {
-    data: PropTypes.shape({
-      me: PropTypes.object,
-    }),
-  }
-
-  state = {
-    profile: null,
-  }
-
-  componentDidMount() {
-    console.log('session on client:', getSession())
-    this.setState({ profile: getSession() })
+    me: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
   }
 
   @autobind
@@ -41,10 +29,10 @@ class ProfileScreen extends React.Component {
   }
 
   render() {
-    console.log('this.state.profile:', this.state.profile)
+    console.log('this.props.profile:', this.props.profile)
     return (
       <View style={styles.container}>
-        {this.state.profile ? (
+        {this.props.profile ? (
           <Profile data={this.state.profile} onLogout={this.onLogout} />
         ) : (
           <Login onLoginSuccess={this.onLoginSuccess} />
@@ -53,5 +41,3 @@ class ProfileScreen extends React.Component {
     )
   }
 }
-
-export default graphql(getMeQry)(ProfileScreen)

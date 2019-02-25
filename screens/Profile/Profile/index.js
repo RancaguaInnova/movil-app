@@ -31,7 +31,7 @@ import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
 import { UserFragments } from 'providers/ApolloProvider/queries/User'
 import SectionDivider from 'components/SectionDivider'
-const pageName = 'profile'
+
 @withGraphQL(
   gql`
     query getMe {
@@ -207,7 +207,7 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    pageHit(pageName)
+    pageHit('profile')
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
