@@ -20,9 +20,8 @@ const recoverSession = async () => {
 }
 
 const getSession = async () => {
-  // return session
   let session = await AsyncStorage.getItem(sessionKey)
-  console.log('session asdf:', session)
+  console.log('session on Apollo Client:', session)
   return session
 }
 

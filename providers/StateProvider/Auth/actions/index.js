@@ -9,7 +9,8 @@ import {
 
 import { client } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from 'react-native'
+import { getSession } from 'providers/ApolloProvider/client'
 
 export const loginRequest = () => {
   return {
@@ -116,17 +117,17 @@ export const sessionError = error => {
   }
 }
 
-export const getSession = () => {
-  console.log('Running getSession')
+export const requestSession = () => {
+  console.log('Running requestSession')
   return async (dispatch, getState) => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(sessionRequest())
     try {
-      const session = await AsyncStorage.getItem('@rancagua_digital:session')
+      const session = JSON.parse(await getSession())
       if (session._id) {
         dispatch(sessionResponse(session))
       } else {
-        dispatch(sessionResponse({}))
+        dispatch(sessionResponse(null))
       }
     } catch(error) {
       dispatch(sessionError(error))

@@ -14,14 +14,23 @@ export default class ProfileScreen extends React.Component {
   }
 
   static propTypes = {
-    getSession: PropTypes.func.isRequired,
+    requestSession: PropTypes.func.isRequired,
     session: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
   }
 
-  // componentDidMount() {
-  //   this.props.getSession()
-  // }
+  state = {
+    session: null
+  }
+
+  async componentDidMount() {
+    try {
+      const session = await this.props.requestSession()
+      this.setState({ session })
+    } catch(error) {
+      console.log('Error getting session:', error)
+    }
+  }
 
   @autobind
   onLogout() {
@@ -29,11 +38,10 @@ export default class ProfileScreen extends React.Component {
   }
 
   render() {
-    console.log('this.props.session:', this.props.session)
     return (
       <View style={styles.container}>
-        {this.props.session ? (
-          <Profile data={this.props.session.user.profile} onLogout={this.onLogout} />
+        {this.props.session || this.state.session ? (
+          <Profile profile={this.props.session.user.profile} onLogout={this.onLogout} />
         ) : (
           <Login />
         )}

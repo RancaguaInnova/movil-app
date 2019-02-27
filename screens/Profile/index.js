@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import Profile from './Profile'
-import { getSession } from 'providers/StateProvider/Auth/actions'
+import Profile from './ProfileComponent'
+import { requestSession } from 'providers/StateProvider/Auth/actions'
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSession: () => {
-      dispatch(getSession())
+    requestSession: () => {
+      dispatch(requestSession())
     }
   }
 }
