@@ -4,13 +4,15 @@ import {
   LOGIN_ERROR,
   SESSION_REQUEST,
   SESSION_RESPONSE,
-  SESSION_ERROR
+  SESSION_ERROR,
+  LOGOUT_REQUEST,
+  LOGOUT_RESPONSE,
+  LOGOUT_ERROR
 } from './types'
 
 import { client } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
-import { AsyncStorage } from 'react-native'
-import { getSession } from 'providers/ApolloProvider/client'
+import { saveSession, getSession, removeSession } from 'providers/ApolloProvider/client'
 
 export const loginRequest = () => {
   return {
@@ -79,12 +81,7 @@ export const login = (email, password) => {
         variables: {email, password}
       })
 
-      const me = session.user
-      console.log('me:', me)
-
-      // TODO: Save the new session on AsyncStorage
-      await AsyncStorage.setItem('@rancagua_digital:session', JSON.stringify(session, null, 2))
-
+      await saveSession(session)
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(loginResponse(session))
     } catch (error) {
@@ -123,13 +120,55 @@ export const requestSession = () => {
     dispatch(sessionRequest())
     try {
       const session = JSON.parse(await getSession())
-      if (session._id) {
+      if (session && session._id) {
         dispatch(sessionResponse(session))
       } else {
-        dispatch(sessionResponse(null))
+        dispatch(sessionResponse({}))
       }
     } catch(error) {
       dispatch(sessionError(error))
+    }
+  }
+}
+
+export const logoutRequest = () => {
+  return {
+    type: LOGOUT_REQUEST,
+    loading: true
+  }
+}
+
+export const logoutResponse = () => {
+  return {
+    type: LOGOUT_RESPONSE,
+    loading: false,
+    session: {}
+  }
+}
+
+export const logoutError = error => {
+  return {
+    type: LOGOUT_ERROR,
+    loading: false,
+    error
+  }
+}
+
+export const logout = sessionId => {
+  return async (dispatch, getState) => {
+    dispatch(logoutRequest())
+    try {
+      const response = await client.mutate({
+        mutation: gql`mutation logout($sessionId: ID) {
+          logout: logout(sessionId: $sessionId)
+        }`,
+        variables: { sessionId }
+      })
+      await removeSession()
+      dispatch(logoutResponse())
+    } catch(error) {
+      console.log('Error on logout action:', error)
+      dispatch(logoutError(error))
     }
   }
 }

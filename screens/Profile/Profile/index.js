@@ -18,18 +18,18 @@ import styles from './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
 import { Form } from 'simple-react-form'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
+import Loading from 'components/Loading'
 import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
-import { saveSession, logout } from 'helpers/auth'
 import { Alert } from 'react-native'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import SectionDivider from 'components/SectionDivider'
 import gql from 'graphql-tag'
 import { UserFragments } from 'providers/ApolloProvider/queries/User'
+import { withNavigation } from 'react-navigation'
 
+@withNavigation
 @withMutation(gql`
   mutation updateUser($user: UserInput!) {
     updateUser(user: $user) {
@@ -45,7 +45,8 @@ import { UserFragments } from 'providers/ApolloProvider/queries/User'
 export default class Profile extends React.Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
-    onLogout: PropTypes.func.isRequired
+    sessionId: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired
   }
 
   componentDidMount() {
@@ -62,6 +63,7 @@ export default class Profile extends React.Component {
     section: 'identification',
     errorMessage: '',
     currentSection: 0,
+    loading: false
   }
 
   sections = [
@@ -88,12 +90,14 @@ export default class Profile extends React.Component {
 
   @autobind
   async signOut() {
-    this.setState({ loading: true })
-    await logout()
-    await saveSession(null)
-    this.props.onLogout()
-    event('logout', 'true')
-    //this.props.navigation.navigate('Home')
+    try {
+      this.setState({ loading: true })
+      await this.props.logout(this.props.sessionId)
+      this.setState({ loading: false })
+      this.props.navigation.navigate('Home')
+    } catch(error) {
+      console.log('Error loging out:', error)
+    }
   }
 
   renderLogoutButton() {
@@ -189,13 +193,14 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    console.log('this.state.profile:', this.state.profile)
+    console.log('this.props.sessionId:', this.props.sessionId)
     pageHit('profile')
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
+    if (this.state.loading) return <Loading />
     return (
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
