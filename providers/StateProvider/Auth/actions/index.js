@@ -1,4 +1,11 @@
 import {
+  registrationRequest,
+  registrationResponse,
+  registrationError,
+  register,
+} from './registration'
+
+import {
   loginRequest,
   loginResponse,
   loginError,
@@ -20,6 +27,10 @@ import {
 } from './session'
 
 export {
+  registrationRequest,
+  registrationResponse,
+  registrationError,
+  register,
   loginRequest,
   loginResponse,
   loginError,

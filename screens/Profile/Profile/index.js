@@ -192,7 +192,6 @@ export default class Profile extends React.Component {
   }
 
   render() {
-    console.log('this.props.sessionId:', this.props.sessionId)
     pageHit('profile')
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
