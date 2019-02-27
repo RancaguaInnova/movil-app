@@ -8,6 +8,7 @@ import HomeOverlay from './HomeOverlay'
 import NewsList from './NewsList'
 import moment from '../../helpers/date/moment'
 import SectionDivider from '../../components/SectionDivider'
+import WebView from 'components/WebView'
 import SubHeader from './../../components/SubHeader'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
@@ -38,6 +39,7 @@ export default class Home extends React.Component {
         <HomeOverlay navigation={this.props.navigation} />
         <SectionDivider title={title} />
         <ScrollView style={styles.container}>
+          {/* <WebView url='http://google.cl' /> */}
           <NewsList />
         </ScrollView>
       </View>
