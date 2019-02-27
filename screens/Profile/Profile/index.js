@@ -93,7 +93,6 @@ export default class Profile extends React.Component {
     try {
       this.setState({ loading: true })
       await this.props.logout(this.props.sessionId)
-      this.setState({ loading: false })
       this.props.navigation.navigate('Home')
     } catch(error) {
       console.log('Error loging out:', error)

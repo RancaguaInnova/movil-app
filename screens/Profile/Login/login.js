@@ -17,7 +17,7 @@ const pageName = 'profile/login'
 @withNavigation
 export default class Login extends React.Component {
   static propTypes = {
-    onLogin: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired
   }
@@ -39,10 +39,10 @@ export default class Login extends React.Component {
     this.setState({ loading: true, errorMessage: null })
     try {
       const { email, password } = this.state
-      await this.props.onLogin(email, password)
+      await this.props.login(email, password)
 
     } catch (error) {
-      console.log('Error at onLogin redux:', error)
+      console.log('Error at login redux:', error)
     //   const errorMessage = error.message.replace('GraphQL error: ', '')
     //   this.setState({ errorMessage: 'Email o contraseña incorrecta' })
     //   event('login_error', error)
