@@ -18,7 +18,7 @@ const pageName = 'profile/login'
 export default class Login extends React.Component {
   static propTypes = {
     onLogin: PropTypes.func.isRequired,
-    loading: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired
   }
 

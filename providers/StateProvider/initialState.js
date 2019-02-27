@@ -1,6 +1,8 @@
 export default {
-  loading: false,
-  session: null,
-  data: null,
-  error: null
+  auth: {
+    session: null,
+    loading: null,
+    data: null,
+    error: null
+  }
 }

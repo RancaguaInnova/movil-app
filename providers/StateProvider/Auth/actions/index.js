@@ -118,7 +118,6 @@ export const sessionError = error => {
 }
 
 export const requestSession = () => {
-  console.log('Running requestSession')
   return async (dispatch, getState) => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(sessionRequest())
