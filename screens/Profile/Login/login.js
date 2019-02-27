@@ -10,24 +10,16 @@ import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import withMutation from 'react-apollo-decorators/lib/withMutation'
 import { withNavigation, NavigationActions } from 'react-navigation'
 import Error from 'providers/ApolloProvider/ApolloError'
-import Loading from 'providers/ApolloProvider/Loading'
-import { saveSession } from 'helpers/auth'
-import { getMeQry } from 'providers/ApolloProvider/queries'
-import gql from 'graphql-tag'
 const pageName = 'profile/login'
 
-@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 @withNavigation
 export default class Login extends React.Component {
   static propTypes = {
-    open: PropTypes.func,
     onLogin: PropTypes.func.isRequired,
     loading: PropTypes.string.isRequired,
-    onLoginSuccess: PropTypes.func,
+    session: PropTypes.object.isRequired
   }
 
   state = { email: '', password: '' }
@@ -49,8 +41,6 @@ export default class Login extends React.Component {
       const { email, password } = this.state
       await this.props.onLogin(email, password)
 
-    //   await saveSession(session)
-    //   this.props.onLoginSuccess(session)
     } catch (error) {
       console.log('Error at onLogin redux:', error)
     //   const errorMessage = error.message.replace('GraphQL error: ', '')
@@ -67,7 +57,6 @@ export default class Login extends React.Component {
 
   render() {
     pageHit(pageName)
-    if (this.props.me) this.props.onLoginSuccess(this.props.me)
     return (
       <ScrollView style={styles.container}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
