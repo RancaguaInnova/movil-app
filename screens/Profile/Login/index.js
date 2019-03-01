@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { login } from 'providers/StateProvider/Auth/actions'
-import Login from './Login'
+import Login from './LoginComponent'
 
 const mapDispatchToProps = dispatch => {
   return {
