@@ -31,7 +31,7 @@ export const registrationError = error => {
   }
 }
 
-export const register = (email, password, profile) => {
+export const register = ({ email, password, profile }) => {
   return async (dispatch, getState) => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(registrationRequest())
@@ -39,25 +39,25 @@ export const register = (email, password, profile) => {
     try {
       const { data: { session } } = await client.mutate({
         mutation: gql`mutation createUser($email: String, $password: String, $profile:
-        UserProfileInput) {
-          session: createUser(email: $email, password: $password, profile: $profile) {
-            _id
-            publicKey
-            secretKey
-            userId
-            locale
-            roles
-            emailVerified
-            user {
+          UserProfileInput) {
+            session: createUser(email: $email, password: $password, profile: $profile) {
               _id
-              profile {
-                identifier
+              publicKey
+              secretKey
+              userId
+              locale
+              roles
+              emailVerified
+              user {
+                _id
+                profile {
+                  identifier
+                }
+                email
+                userToken
               }
-              email
-              userToken
             }
-          }
-        }`,
+          }`,
         variables: { email, password, profile }
       })
 

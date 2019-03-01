@@ -72,7 +72,7 @@ export const login = (email, password) => {
             }
           }
         }`,
-        variables: {email, password}
+        variables: { email, password }
       })
 
       await saveSession(session)
