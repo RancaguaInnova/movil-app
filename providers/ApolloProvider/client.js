@@ -15,6 +15,7 @@ const recoverSession = async () => {
     const json = await AsyncStorage.getItem(sessionKey)
     session = JSON.parse(json)
   } catch (e) {
+    console.log('error', e)
     session = null
   }
 }
@@ -32,6 +33,8 @@ const saveSession = async newSession => {
   await client.clearStore()
   session = newSession
   await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
+  await client.resetStore()
+  //await client.clearStore()
 }
 
 /* const getIntroVisualization = () => {
