@@ -16,38 +16,20 @@ import Identification from './Identification'
 import Contact from './Contact'
 import styles from './styles'
 import textStyles from 'styles/texts'
-//import moment from '../../helpers/date/moment'
 import PropTypes from 'prop-types'
 import { Form } from 'simple-react-form'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
+import Loading from 'components/Loading'
 import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
-import logout from 'helpers/auth/logout'
 import { Alert } from 'react-native'
-import saveSession from 'helpers/auth/saveSession'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
+import SectionDivider from 'components/SectionDivider'
 import gql from 'graphql-tag'
 import { UserFragments } from 'providers/ApolloProvider/queries/User'
-import SectionDivider from 'components/SectionDivider'
-const pageName = 'profile'
-@withGraphQL(
-  gql`
-    query getMe {
-      me {
-        emails {
-          address
-          verified
-        }
-        ...Profile
-      }
-    }
-    ${UserFragments.Profile}
-  `,
-  { loading: <Loading />, errorComponent: Error }
-)
+import { withNavigation } from 'react-navigation'
+
+@withNavigation
 @withMutation(gql`
   mutation updateUser($user: UserInput!) {
     updateUser(user: $user) {
@@ -62,25 +44,26 @@ const pageName = 'profile'
 `)
 export default class Profile extends React.Component {
   static propTypes = {
-    profile: PropTypes.object,
-    onLogout: PropTypes.func,
-    me: PropTypes.object,
+    profile: PropTypes.object.isRequired,
+    sessionId: PropTypes.string.isRequired,
+    logout: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    let me = Object.assign({}, this.props.me)
+    let profile = Object.assign({}, this.props.profile)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
-    if (me.profile && me.profile.address && me.profile.address.streetNumber) {
-      me.profile.address.streetNumber = this.props.me.profile.address.streetNumber.toString()
+    if (profile && profile.address && profile.address.streetNumber) {
+      profile.address.streetNumber = this.props.profile.address.streetNumber.toString()
     }
-    this.setState({ me })
+    this.setState({ profile })
   }
 
   state = {
     section: 'identification',
     errorMessage: '',
     currentSection: 0,
+    loading: false
   }
 
   sections = [
@@ -107,12 +90,13 @@ export default class Profile extends React.Component {
 
   @autobind
   async signOut() {
-    this.setState({ loading: true })
-    await logout()
-    await saveSession(null)
-    this.props.onLogout()
-    event('logout', 'true')
-    //this.props.navigation.navigate('Home')
+    try {
+      this.setState({ loading: true })
+      await this.props.logout(this.props.sessionId)
+      this.props.navigation.navigate('Home')
+    } catch(error) {
+      console.log('Error loging out:', error)
+    }
   }
 
   renderLogoutButton() {
@@ -204,21 +188,22 @@ export default class Profile extends React.Component {
 
   @autobind
   onChange(change) {
-    this.setState({ me: change })
+    this.setState({ profile: change })
   }
 
   render() {
-    pageHit(pageName)
+    pageHit('profile')
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
+    if (this.state.loading) return <Loading />
     return (
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
         <ScrollView styleNames='fill-container' style={styles.container}>
-          <Form state={this.state.me} onChange={this.onChange}>
+          <Form state={this.state.profile} onChange={this.onChange}>
             {this.renderSection(defaultSection)}
           </Form>
           {this.renderErrorMessage()}

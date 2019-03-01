@@ -4,12 +4,12 @@ import NewsListItem from './NewsListItem/index'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
 
-import { client } from '../../../providers/ApolloProvider/client'
-import Retry from '../../../providers/ApolloProvider/Retry'
-import Loading from '../../../providers/ApolloProvider/Loading'
+import { client } from 'providers/ApolloProvider/client'
+import Retry from 'providers/ApolloProvider/Retry'
+import Loading from 'providers/ApolloProvider/Loading'
 import { newsListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
-import { event } from '/helpers/analytics'
+import { event } from 'helpers/analytics'
 
 export default class NewsList extends React.Component {
   onClickNews = async news => {

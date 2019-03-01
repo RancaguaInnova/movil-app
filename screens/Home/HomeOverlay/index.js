@@ -71,7 +71,8 @@ export default class HomeOverlay extends React.Component {
   renderCard(card) {
     if (card.type === 'banner') {
       return (
-        <TouchableOpacity style={styles.informationCard} onPress={() => this.onPressCard(card)}>
+        <TouchableOpacity style={styles.informationCard} onPress={() => this.onPressCard(card)}
+          key={card.title}>
           <ImageBackground
             styleName='large-banner'
             source={{ uri: card.imageUrl }}
