@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles.js'
-import WebViewHeader from './WebViewHeader'
+import CustomHeader from '/components/CustomHeader'
 import WebViewFooter from './WebViewFooter'
 import PropTypes from 'prop-types'
 import { WebView } from 'react-native'
@@ -90,7 +90,7 @@ export default class WebViewComponent extends React.Component {
           onRequestClose={this.onRequestClose}
         >
           <View style={styles.container}>
-            <WebViewHeader onClose={this.close} />
+            <CustomHeader onClose={this.close} type='popup' />
             <View style={styles.webViewContainer}>
               <WebView
                 ref={r => (this.webViewRef = r)}
