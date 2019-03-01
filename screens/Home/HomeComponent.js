@@ -9,7 +9,6 @@ import HomeOverlay from './HomeOverlay'
 import NewsList from './NewsList'
 import moment from '../../helpers/date/moment'
 import SectionDivider from '../../components/SectionDivider'
-const pageName = 'home'
 import Loading from 'components/Loading'
 
 export default class Home extends React.Component {
@@ -18,6 +17,8 @@ export default class Home extends React.Component {
     session: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
   }
+
+  static pageName = 'Home'
 
   static navigationOptions = {
     header: null,
@@ -28,14 +29,14 @@ export default class Home extends React.Component {
   }
 
   render() {
-    pageHit(pageName)
+    pageHit(this.pageName)
     const title = `RANCAGUA, ${moment()
       .format('DD MMMM [DE] YYYY')
       .toUpperCase()}`
     if (this.props.loading) return <Loading />
     return (
       <View style={styles.mainContainer}>
-        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
+        <NavigationEvents onWillFocus={payload => pageHit(this.pageName)} />
         <HomeOverlay navigation={this.props.navigation} />
         <SectionDivider title={title} />
         <ScrollView style={styles.container}>

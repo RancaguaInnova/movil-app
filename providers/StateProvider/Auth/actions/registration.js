@@ -64,6 +64,7 @@ export const register = ({ email, password, profile }) => {
       await saveSession(session)
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(registrationResponse(session))
+      return session
     } catch (error) {
       console.log('Error at registration action:', error)
       dispatch(registrationError(error))

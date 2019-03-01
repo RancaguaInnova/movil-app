@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Title, Text, ScrollView } from '@shoutem/ui'
 import { pageHit, event } from '/helpers/analytics'
-import { NavigationEvents } from 'react-navigation'
+import { withNavigation, NavigationEvents } from 'react-navigation'
 import { Alert } from 'react-native'
 import styles from './styles.js'
 import { Form, Field } from 'simple-react-form'
@@ -9,8 +9,6 @@ import TextInput from 'components/fields/TextInput'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
 import Button from 'components/ShoutemButton'
-import LightButton from 'components/LightButton'
-const pageName = 'profile/register'
 import {
   validateIdentifier,
   validateEmail,
@@ -19,11 +17,14 @@ import {
   validateCoincidence,
   combineValidators,
 } from 'helpers/validators'
+const pageName = 'profile/register'
 
+@withNavigation
 export default class Register extends React.Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
-    session: PropTypes.object
+    session: PropTypes.object,
+    navigation: PropTypes.object
   }
 
   state = {}
@@ -86,12 +87,13 @@ export default class Register extends React.Component {
       }
 
       await this.props.register(newUserData)
-      this.setState({ loading: false, errorMessage: null })
       Alert.alert(
         `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`
       )
       event('registry_success', cleanEmail)
-      this.props.navigation.replace('Profile')
+      this.setState({ loading: false, errorMessage: null })
+      this.props.navigation.navigate('Home')
+
     } catch (error) {
       let errorMessage = ''
       const graphQLErrors = error.graphQLErrors || []
