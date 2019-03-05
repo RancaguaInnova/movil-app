@@ -11,10 +11,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  const { auth: { session, loading } } = state
+  const { auth: { session, loading, error } } = state
   return {
     session,
-    loading
+    loading,
+    error
   }
 }
 

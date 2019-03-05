@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
     case LOGIN_ERROR:
       return {
         ...state,
+        loading: false,
         error: action.error
       }
     case SESSION_REQUEST:

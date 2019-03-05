@@ -8,4 +8,10 @@ export default {
   webview: {
     url: '',
   },
+  services: {
+    services: {},
+    loading: false,
+    data: null,
+    error: null,
+  },
 }
