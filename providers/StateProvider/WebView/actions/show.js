@@ -5,7 +5,7 @@ export const setCurrentUrl = url => {
   console.log('type:', type)
   return {
     type,
-    url: url,
+    url,
   }
 }
 
