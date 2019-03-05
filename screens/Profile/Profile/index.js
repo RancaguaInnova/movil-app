@@ -46,7 +46,7 @@ export default class Profile extends React.Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
     sessionId: PropTypes.string.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -203,7 +203,7 @@ export default class Profile extends React.Component {
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
         <ScrollView styleNames='fill-container' style={styles.container}>
-          <Form state={this.state.profile} onChange={this.onChange}>
+          <Form state={this.state} onChange={this.onChange}>
             {this.renderSection(defaultSection)}
           </Form>
           {this.renderErrorMessage()}
