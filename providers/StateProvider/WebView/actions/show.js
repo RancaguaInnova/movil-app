@@ -1,8 +1,10 @@
 import { OPEN_WEBVIEW, CLOSE_WEBVIEW } from './types'
 
 export const setCurrentUrl = url => {
+  const type = url && url.trim() !== '' ? OPEN_WEBVIEW : CLOSE_WEBVIEW
+  console.log('type:', type)
   return {
-    type: OPEN_WEBVIEW,
+    type,
     url: url,
   }
 }
