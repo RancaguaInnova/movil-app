@@ -90,7 +90,7 @@ export default class CustomHeader extends React.Component {
         rightComponent={{
           icon: 'close',
           color: 'black',
-          onPress: this.showMenu,
+          onPress: this.props.onClose,
         }}
         containerStyle={styles.header}
       />

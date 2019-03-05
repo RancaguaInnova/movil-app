@@ -102,7 +102,6 @@ class WebViewComponent extends React.Component {
 }
 
 // Redux
-
 const mapStateToProps = state => {
   const {
     webview: { url },

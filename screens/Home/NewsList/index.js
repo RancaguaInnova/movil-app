@@ -65,4 +65,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps)(NewsList)
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewsList)

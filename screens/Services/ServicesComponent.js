@@ -18,9 +18,10 @@ export default class Services extends React.Component {
   static propTypes = {
     session: PropTypes.object,
     getServices: PropTypes.func.isRequired,
+    openWebView: PropTypes.func.isRequired,
     services: PropTypes.object,
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
   }
 
   static navigationOptions = {
@@ -30,7 +31,7 @@ export default class Services extends React.Component {
   async componentDidMount() {
     try {
       await this.props.getServices()
-    } catch(error) {
+    } catch (error) {
       console.log('Error getting services:', error)
     }
   }
@@ -45,21 +46,24 @@ export default class Services extends React.Component {
         cache: 'no-cache',
         headers: {
           Authorization: `Bearer ${app.appToken}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          'user_session': {
-            'email': `${userEmail}`
-          }
-        })
+          user_session: {
+            email: `${userEmail}`,
+          },
+        }),
       })
-      const { data: { attributes: { url } } } = await response.json()
+      const {
+        data: {
+          attributes: { url },
+        },
+      } = await response.json()
       console.log('url:', url)
       return url
-    } catch(error) {
+    } catch (error) {
       console.log('Error getting magic link:', error)
     }
-
   }
 
   async openApp(app) {
@@ -75,8 +79,9 @@ export default class Services extends React.Component {
         } else {
           finalUrl = parseUrl(app.applicationURL, { token: session.userToken })
         }
-        let result = await WebBrowser.openBrowserAsync(finalUrl)
-        this.setState({ result })
+        this.props.openWebView(finalUrl)
+        //let result = await WebBrowser.openBrowserAsync(finalUrl)
+        //this.setState({ result })
         event('click_service_online', app.applicationURL)
       } else if (!session) {
         Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
@@ -98,7 +103,7 @@ export default class Services extends React.Component {
         event('click_service_offline', app.applicationURL)
       }
     } catch (error) {
-      this.setState({ result: null })
+      //this.setState({ result: null })
     }
   }
 
@@ -126,7 +131,7 @@ export default class Services extends React.Component {
     const items = services && services.items ? services.items : []
     if (loading) {
       return <Loading />
-    }  else if (error) {
+    } else if (error) {
       return <Text>Ups! Ocurrió un error!</Text>
     } else {
       return (
