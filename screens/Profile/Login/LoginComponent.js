@@ -11,7 +11,6 @@ import LightButton from 'components/LightButton'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { withNavigation, NavigationActions } from 'react-navigation'
-import Error from 'providers/ApolloProvider/ApolloError'
 const pageName = 'profile/login'
 
 @withNavigation
@@ -19,7 +18,8 @@ export default class Login extends React.Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
-    session: PropTypes.object.isRequired
+    session: PropTypes.object.isRequired,
+    error: PropTypes.object
   }
 
   state = { email: '', password: '' }
@@ -36,23 +36,19 @@ export default class Login extends React.Component {
 
   @autobind
   async submit() {
-    this.setState({ loading: true, errorMessage: null })
     try {
       const { email, password } = this.state
       await this.props.login(email, password)
 
     } catch (error) {
-      console.log('Error at login redux:', error)
-    //   const errorMessage = error.message.replace('GraphQL error: ', '')
-    //   this.setState({ errorMessage: 'Email o contraseña incorrecta' })
-    //   event('login_error', error)
-    //   this.setState({ loading: false })
+      event('login_error', error)
     }
   }
 
   renderErrorMessage() {
-    if (!this.state.errorMessage) return null
-    return <Caption style={styles.errorMessage}>{this.state.errorMessage}</Caption>
+    const { error } = this.props || null
+    if (!error) return null
+    return <Caption style={styles.errorMessage}>Email o contraseña incorrecta</Caption>
   }
 
   render() {
@@ -92,7 +88,7 @@ export default class Login extends React.Component {
         <View>
           <Button
             disabled={!this.isFormReady()}
-            loading={this.state.loading}
+            loading={this.props.loading}
             onPress={this.submit}
             label='Entrar'
           />

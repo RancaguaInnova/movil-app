@@ -24,6 +24,7 @@ export const loginResponse = session => {
 }
 
 export const loginError = error => {
+  debugger
   return {
     type: LOGIN_ERROR,
     loading: false,
