@@ -28,7 +28,6 @@ export default class Services extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('Running didMount')
     try {
       await this.props.getServices()
     } catch(error) {
@@ -36,11 +35,45 @@ export default class Services extends React.Component {
     }
   }
 
+  async getMagicLink(app) {
+    const userEmail = this.props.session.user.email
+    console.log('userEmail:', userEmail)
+    try {
+      const response = await fetch(app.applicationURL, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+          Authorization: `Bearer ${app.appToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'user_session': {
+            'email': `${userEmail}`
+          }
+        })
+      })
+      const { data: { attributes: { url } } } = await response.json()
+      console.log('url:', url)
+      return url
+    } catch(error) {
+      console.log('Error getting magic link:', error)
+    }
+
+  }
+
   async openApp(app) {
     const { session } = this.props
     try {
       if (app.applicationURL && app.applicationURL.trim() !== '' && session) {
-        const finalUrl = parseUrl(app.applicationURL, { token: session.userToken })
+        let finalUrl
+        // TODO: Change this condition to check a more general flag
+        if (app.name === 'Libreta Educativa') {
+          const userUrl = await this.getMagicLink(app)
+          finalUrl = parseUrl(userUrl)
+          console.log('finalUrl:', finalUrl)
+        } else {
+          finalUrl = parseUrl(app.applicationURL, { token: session.userToken })
+        }
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
         event('click_service_online', app.applicationURL)
@@ -72,7 +105,7 @@ export default class Services extends React.Component {
     return (
       <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
         <Row styleName='small'>
-          <Ionicons name={app.icon || ''} size={30} style={styles.leftIcon} />
+          <Ionicons name={app.icon || 'ios-apps'} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
             <Text numberOfLines={2} style={textStyles.rowText}>

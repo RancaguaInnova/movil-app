@@ -43,12 +43,13 @@ export const services = () => {
             items {
               name
               description
+              applicationURL
+              appToken
             }
           }
         }`
       })
 
-      console.log('services on action:', services)
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(servicesResponse(services))
       return services
