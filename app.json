@@ -1,13 +1,36 @@
 {
   "expo": {
-    "sdkVersion": "30.0.0",
+    "name": "Rancagua",
+    "slug": "rancagua-digital",
+    "scheme": "rancaguadigital",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": ["ios", "android"],
+    "githubUrl": "https://github.com/RancaguaInnova/app-movil",
+    "version": "1.0.5",
     "orientation": "portrait",
-    "primaryColor": "#f68e44",
-    "icon": "./App/assets/icons/app-icon.png",
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./App/assets/splash.png",
-      "backgroundColor": "#f68e44",
-      "resizeMode": "cover"
-    }
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ee1948"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 30000
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.rancagua.digital",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.rancagua.digital",
+      "versionCode": 8,
+      "permissions": []
+    },
+    "description": ""
   }
 }

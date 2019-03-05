@@ -1,17 +1,19 @@
 {
   "presets": ["babel-preset-expo"],
-  "env": {
-    "development": {
-      "plugins": ["transform-react-jsx-source"]
-    }
-  },
   "plugins": [
     [
       "module-resolver",
       {
         "root": ["./"],
         "alias": {
-          "App": "./App"
+          "App": "./App",
+          "queries": "./queries",
+          "providers": "./providers",
+          "components": "./components",
+          "screens:": "./screens",
+          "styles": "./styles",
+          "constants": "./constants",
+          "helpers": "./helpers"
         }
       }
     ]
