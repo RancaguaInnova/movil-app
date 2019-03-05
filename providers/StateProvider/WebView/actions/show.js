@@ -19,6 +19,6 @@ export const openWebView = url => {
 
 export const closeWebView = () => {
   return (dispatch, getState) => {
-    dispatch(dispatch(setCurrentUrl('')))
+    dispatch(setCurrentUrl(''))
   }
 }
