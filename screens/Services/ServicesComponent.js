@@ -35,6 +35,7 @@ export default class Services extends React.Component {
     }
   }
 
+  // TODO: move this to a Redux action?
   async getMagicLink(app) {
     const userEmail = this.props.session.user.email
     console.log('userEmail:', userEmail)
