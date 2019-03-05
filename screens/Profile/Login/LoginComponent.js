@@ -39,7 +39,6 @@ export default class Login extends React.Component {
     try {
       const { email, password } = this.state
       await this.props.login(email, password)
-
     } catch (error) {
       event('login_error', error)
     }

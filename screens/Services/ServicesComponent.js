@@ -7,35 +7,46 @@ import PropTypes from 'prop-types'
 import textStyles from 'styles/texts'
 import styles from './styles'
 import SubHeader from 'components/SubHeader'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
-import SectionDivider from '../../components/SectionDivider'
+import SectionDivider from 'components/SectionDivider'
+import Loading from 'components/Loading'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
-import { getMeQry, servicesListQry, bannerBySectionQry } from 'providers/ApolloProvider/queries'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { parseUrl } from '/helpers/url'
 const pageName = 'services'
 
-@withGraphQL(servicesListQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class Services extends React.Component {
-
   static propTypes = {
     session: PropTypes.object,
-    applications: PropTypes.object,
+    getServices: PropTypes.func.isRequired,
+    services: PropTypes.object,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object
   }
 
   state = {
-    profile: null,
+    session: null,
+    services: null
   }
 
   static navigationOptions = {
     title: 'Servicios',
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    console.log('Running didMount')
+    let services
+    try {
+      services = await this.props.getServices()
+      console.log('services after query:', services)
+      this.setState({
+        services
+      })
+    } catch(error) {
+      console.log('Error getting services:', error)
+    }
     this.setState({
       session: this.props.session,
+      services
     })
   }
 
@@ -75,7 +86,7 @@ export default class Services extends React.Component {
     return (
       <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
         <Row styleName='small'>
-          <Ionicons name={app.icon} size={30} style={styles.leftIcon} />
+          <Ionicons name={app.icon || ''} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
             <Text numberOfLines={2} style={textStyles.rowText}>
@@ -90,22 +101,29 @@ export default class Services extends React.Component {
   }
 
   render() {
-    const { applications } = this.props
     pageHit(pageName)
-    const items = applications && applications.items ? applications.items : []
-    return (
-      <View style={styles.container}>
-        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
-        <SubHeader
-          view='apps'
-          title='Seleccione el servicio'
-          navigation={this.props.navigation}
-          me={this.props.session}
-        />
+    const { services } = this.state
+    const { loading } = this.props
+    console.log('services on render:', services)
+    console.log('PROPS', this.props)
+    const items = services && services.items ? services.items : []
+    if (loading) {
+      return <Loading />
+    } else {
+      return (
+        <View style={styles.container}>
+          <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
+          <SubHeader
+            view='apps'
+            title='Seleccione el servicio'
+            navigation={this.props.navigation}
+            me={this.props.session}
+          />
 
-        <SectionDivider title='Servicios disponibles' />
-        <ScrollView>{items.map(app => this.renderRow(app))}</ScrollView>
-      </View>
-    )
+          <SectionDivider title='Servicios disponibles' />
+          <ScrollView>{items.map(app => this.renderRow(app))}</ScrollView>
+        </View>
+      )
+    }
   }
 }
