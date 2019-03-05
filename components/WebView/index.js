@@ -16,28 +16,19 @@ import {
   Button,
 } from 'react-native'
 import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
-//import Loading from 'providers/ApolloProvider/Loading'
-/* import Retry from 'providers/ApolloProvider/Retry'
-
-import Error from 'providers/ApolloProvider/ApolloError'
-import { bannerBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
-import { Query } from 'react-apollo'
-import { WebBrowser } from 'expo'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import { Alert } from 'react-native'
-import { parseUrl } from '/helpers/url' */
 import { event } from '/helpers/analytics'
+import { connect } from 'react-redux'
+import { closeWebView } from 'providers/StateProvider/WebView/actions'
 
-export default class WebViewComponent extends React.Component {
+class WebViewComponent extends React.Component {
   static propTypes = {
-    url: PropTypes.string,
-    onClose: PropTypes.func,
-    closeOnBack: PropTypes.boolean,
+    url: PropTypes.string.isRequired,
+    closeWebView: PropTypes.func,
+    closeOnBack: PropTypes.bool,
   }
 
   static defaultProps = {
-    url: '',
-    onClose: () => {},
+    closeWebView: () => {},
     closeOnBack: false,
   }
 
@@ -48,7 +39,7 @@ export default class WebViewComponent extends React.Component {
   @autobind
   close() {
     console.log('close!')
-    this.props.onClose()
+    this.props.closeWebView()
   }
 
   @autobind
@@ -109,3 +100,27 @@ export default class WebViewComponent extends React.Component {
     )
   }
 }
+
+// Redux
+
+const mapStateToProps = state => {
+  const {
+    webview: { url },
+  } = state
+  return {
+    url,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    closeWebView: () => {
+      dispatch(closeWebView())
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WebViewComponent)

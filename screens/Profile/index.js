@@ -1,55 +1,27 @@
-import React from 'react'
-import { ScrollView } from 'react-native'
-import { View, Text, Divider, Caption } from '@shoutem/ui'
-import styles from './styles'
-import moment from 'helpers/date/moment'
-import { getMeQry } from 'providers/ApolloProvider/queries'
-import { getSession, removeSession } from 'providers/ApolloProvider'
-import { graphql } from 'react-apollo'
-import PropTypes from 'prop-types'
-import Login from './Login'
-import Profile from './Profile'
-import autobind from 'autobind-decorator'
+import { connect } from 'react-redux'
+import Profile from './ProfileComponent'
+import { requestSession, logout } from 'providers/StateProvider/Auth/actions'
 
-class ProfileScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Perfil',
-  }
-  static propTypes = {
-    data: PropTypes.shape({
-      me: PropTypes.object,
-    }),
-  }
-
-  state = {
-    profile: null,
-  }
-
-  componentDidMount() {
-    this.setState({ profile: getSession() })
-  }
-
-  @autobind
-  onLoginSuccess(session) {
-    this.setState({ profile: session })
-  }
-
-  @autobind
-  onLogout() {
-    this.setState({ profile: null })
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        {this.state.profile ? (
-          <Profile data={this.state.profile} onLogout={this.onLogout} />
-        ) : (
-          <Login onLoginSuccess={this.onLoginSuccess} />
-        )}
-      </View>
-    )
+const mapDispatchToProps = dispatch => {
+  return {
+    requestSession: () => {
+      dispatch(requestSession())
+    },
+    logout: sessionId => {
+      dispatch(logout(sessionId))
+    }
   }
 }
 
-export default graphql(getMeQry)(ProfileScreen)
+const mapStateToProps = state => {
+  const { auth: { loading, session } } = state
+  return {
+    session,
+    loading
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile)

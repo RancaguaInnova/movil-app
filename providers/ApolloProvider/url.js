@@ -4,6 +4,6 @@ const urls = {
   prod: 'https://api.smartrancagua.com',
 }
 
-const env = 'prod'
+const env = 'local'
 
 export default urls[env]

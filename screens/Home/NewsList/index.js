@@ -3,25 +3,26 @@ import { View } from '@shoutem/ui'
 import NewsListItem from './NewsListItem/index'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
-import WebView from 'components/WebView'
-import { client } from '../../../providers/ApolloProvider/client'
-import Retry from '../../../providers/ApolloProvider/Retry'
-import Loading from '../../../providers/ApolloProvider/Loading'
+import { connect } from 'react-redux'
+import { openWebView } from 'providers/StateProvider/WebView/actions'
+import { client } from 'providers/ApolloProvider/client'
+import Retry from 'providers/ApolloProvider/Retry'
+import Loading from 'providers/ApolloProvider/Loading'
 import { newsListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
-import { event } from '/helpers/analytics'
+import { event } from 'helpers/analytics'
+import PropTypes from 'prop-types'
 
-export default class NewsList extends React.Component {
-  state = {
-    currentNews: '',
+class NewsList extends React.Component {
+  static propTypes = {
+    openWebView: PropTypes.func.isRequired,
   }
 
   onClickNews = async news => {
     try {
       if (news.externalUrl && news.externalUrl.trim() !== '') {
-        this.setState({ currentNews: news.externalUrl })
-        //let result = await WebBrowser.openBrowserAsync(news.externalUrl)
-        //this.setState({ result })
+        this.props.openWebView(news.externalUrl)
+        //this.setState({ currentNews: news.externalUrl })
         event('click_news', news.externalUrl)
       }
     } catch (error) {
@@ -31,7 +32,7 @@ export default class NewsList extends React.Component {
   }
 
   onCloseNews = () => {
-    this.setState({ currentNews: '' })
+    //this.setState({ currentNews: '' })
   }
 
   renderNews() {
@@ -51,11 +52,17 @@ export default class NewsList extends React.Component {
   }
 
   render() {
-    return (
-      <View>
-        {this.renderNews()}
-        <WebView url={this.state.currentNews} onClose={this.onCloseNews} />
-      </View>
-    )
+    return <View>{this.renderNews()}</View>
   }
 }
+
+// Redux
+const mapDispatchToProps = dispatch => {
+  return {
+    openWebView: url => {
+      dispatch(openWebView(url))
+    },
+  }
+}
+
+export default connect(mapDispatchToProps)(NewsList)
