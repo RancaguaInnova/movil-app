@@ -4,5 +4,11 @@ export default {
     loading: false,
     data: null,
     error: null
+  },
+  services: {
+    services: {},
+    loading: false,
+    data: null,
+    error: null
   }
 }
