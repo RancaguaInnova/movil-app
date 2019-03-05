@@ -23,37 +23,23 @@ export default class Services extends React.Component {
     error: PropTypes.object
   }
 
-  state = {
-    session: null,
-    services: null
-  }
-
   static navigationOptions = {
     title: 'Servicios',
   }
 
   async componentDidMount() {
     console.log('Running didMount')
-    let services
     try {
-      services = await this.props.getServices()
-      console.log('services after query:', services)
-      this.setState({
-        services
-      })
+      await this.props.getServices()
     } catch(error) {
       console.log('Error getting services:', error)
     }
-    this.setState({
-      session: this.props.session,
-      services
-    })
   }
 
   async openApp(app) {
-    const { session } = this.props.session
+    const { session } = this.props
     try {
-      if (app.applicationURL && app.applicationURL.trim() !== '' && sesison) {
+      if (app.applicationURL && app.applicationURL.trim() !== '' && session) {
         const finalUrl = parseUrl(app.applicationURL, { token: session.userToken })
         let result = await WebBrowser.openBrowserAsync(finalUrl)
         this.setState({ result })
@@ -102,13 +88,12 @@ export default class Services extends React.Component {
 
   render() {
     pageHit(pageName)
-    const { services } = this.state
-    const { loading } = this.props
-    console.log('services on render:', services)
-    console.log('PROPS', this.props)
+    const { services, loading, error } = this.props
     const items = services && services.items ? services.items : []
     if (loading) {
       return <Loading />
+    }  else if (error) {
+      return <Text>Ups! Ocurrió un error!</Text>
     } else {
       return (
         <View style={styles.container}>

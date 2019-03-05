@@ -16,7 +16,7 @@ import {
         return {
           ...state,
           loading: false,
-          session: action.services
+          services: action.services
         }
       case SERVICES_ERROR:
         return {
