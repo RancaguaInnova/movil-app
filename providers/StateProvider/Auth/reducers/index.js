@@ -19,30 +19,30 @@ export default (state = initialState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
       }
     case LOGIN_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         session: action.session,
         error: null
       }
     case LOGIN_ERROR:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         error: action.error
       }
     case SESSION_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
       }
     case SESSION_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         session: action.session,
         error: null
       }
@@ -54,12 +54,12 @@ export default (state = initialState, action) => {
     case LOGOUT_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
       }
     case LOGOUT_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         session: action.session,
         error: null
       }
@@ -71,18 +71,19 @@ export default (state = initialState, action) => {
     case PROFILE_UPDATE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
       }
     case PROFILE_UPDATE_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         session: action.session,
         error: null
       }
     case PROFILE_UPDATE_ERROR:
       return {
         ...state,
+        loading: action.loading,
         error: action.error
       }
     default:

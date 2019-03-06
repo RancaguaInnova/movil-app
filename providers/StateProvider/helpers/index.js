@@ -1,7 +1,7 @@
 import isArray from 'lodash/isArray'
 import isPlainObject from 'lodash/isPlainObject'
 
-// TODO: Test this func
+// TODO: Test this funcs
 
 /**
  * Recursively remove "__typename" key, value pairs from objects.
@@ -10,7 +10,7 @@ import isPlainObject from 'lodash/isPlainObject'
  * @param {Object} obj Graphql object to be used as Input
  * @returns {Object} Object without "__typename" key, value pairs
  */
-export const removeTypenameDeep = function (obj) {
+export const removeTypenameDeep = obj => {
   let newObj = Object.assign({}, obj)
   Object.entries(newObj).forEach(entrie => {
     if (entrie[0] === '__typename') {
@@ -22,4 +22,15 @@ export const removeTypenameDeep = function (obj) {
     }
   })
   return obj
+}
+
+/**
+ * Cleans the GraphQL error message taking out the "GraphQL error:" string.
+ *
+ * @param {Error} error GraphQL error thrown
+ * @returns {Error} The Error with cleaned message
+ */
+export const cleanErrorMessage = error => {
+  error.message = error.message.replace('GraphQL error: ', '')
+  return error
 }

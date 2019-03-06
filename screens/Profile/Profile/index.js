@@ -109,7 +109,7 @@ export default class Profile extends React.Component {
     try {
       const response = await this.props.updateProfile(userInput)
       event('profile_update_success', JSON.stringify(userInput))
-      if (!this.props.error) Alert.alert('Datos actualizados con éxito')
+      // if (!this.props.error) Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
       const errMsj = []
       const arrError = graphQLErrors || []

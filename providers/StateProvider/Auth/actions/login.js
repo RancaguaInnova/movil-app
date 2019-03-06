@@ -44,7 +44,6 @@ export const login = (email, password) => {
             _id
             userId
             publicKey
-            secretKey
             userId
             locale
             roles

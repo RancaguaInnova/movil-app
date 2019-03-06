@@ -3,7 +3,7 @@ import {
   PROFILE_UPDATE_RESPONSE,
   PROFILE_UPDATE_ERROR,
 } from './types'
-import { removeTypenameDeep } from '../../helpers'
+import { removeTypenameDeep, cleanErrorMessage } from '../../helpers'
 
 import { client } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
@@ -81,7 +81,7 @@ export const updateProfile = userInput => {
       // return user
     } catch (error) {
       console.log('Error at profileUpdate action:', error)
-      dispatch(profileUpdateError(error))
+      dispatch(profileUpdateError(cleanErrorMessage(error)))
     }
   }
 }

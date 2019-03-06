@@ -5263,7 +5263,7 @@ react-native-gesture-responder@0.1.1:
   dependencies:
     react-timer-mixin "^0.13.3"
 
-"react-native-lightbox@github:shoutem/react-native-lightbox#v0.7.2":
+react-native-lightbox@shoutem/react-native-lightbox#v0.7.2:
   version "0.7.2"
   resolved "https://codeload.github.com/shoutem/react-native-lightbox/tar.gz/91f3f58759e9901d9c006b01ce32d074606eda0e"
   dependencies:
@@ -5276,7 +5276,7 @@ react-native-linear-gradient@~2.4.0:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.4.tgz#64944a39290eefbede18dfd7e9551f1ef61e3de7"
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -5301,7 +5301,7 @@ react-native-modalbox@^1.6.0:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
 
-"react-native-navigation-experimental-compat@github:shoutem/react-native-navigation-experimental-compat#fbce4b9e478f808634a98dac48901ec6ed4ee9fd":
+react-native-navigation-experimental-compat@shoutem/react-native-navigation-experimental-compat#fbce4b9e478f808634a98dac48901ec6ed4ee9fd:
   version "1.1.1"
   resolved "https://codeload.github.com/shoutem/react-native-navigation-experimental-compat/tar.gz/fbce4b9e478f808634a98dac48901ec6ed4ee9fd"
   dependencies:
@@ -5311,7 +5311,7 @@ react-native-phone-call@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-native-phone-call/-/react-native-phone-call-1.0.9.tgz#4468ec6f95856557fbff9bd69a0db04b54c35e1d"
 
-"react-native-photo-view@github:shoutem/react-native-photo-view#2f650beba07a263876c54f81a34b5ac2f9b805ce":
+react-native-photo-view@shoutem/react-native-photo-view#2f650beba07a263876c54f81a34b5ac2f9b805ce:
   version "1.5.2"
   resolved "https://codeload.github.com/shoutem/react-native-photo-view/tar.gz/2f650beba07a263876c54f81a34b5ac2f9b805ce"
   dependencies:
@@ -5385,7 +5385,7 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-"react-native-transformable-image@github:shoutem/react-native-transformable-image#v0.0.20":
+react-native-transformable-image@shoutem/react-native-transformable-image#v0.0.20:
   version "0.0.20"
   resolved "https://codeload.github.com/shoutem/react-native-transformable-image/tar.gz/ef2e93fa9425bbb479bccec64d165ec85e76e949"
   dependencies:
