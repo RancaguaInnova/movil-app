@@ -1,21 +1,21 @@
 import { OPEN_WEBVIEW, CLOSE_WEBVIEW } from './types'
 
-export const setCurrentUrl = url => {
-  const type = url && url.trim() !== '' ? OPEN_WEBVIEW : CLOSE_WEBVIEW
-  return {
-    type,
-    url,
-  }
-}
-
-export const openWebView = url => {
+export const openWebView = (url, closeOnBack = true) => {
   return (dispatch, getState) => {
-    dispatch(setCurrentUrl(url))
+    dispatch({
+      type: OPEN_WEBVIEW,
+      url,
+      closeOnBack,
+    })
   }
 }
 
 export const closeWebView = () => {
   return (dispatch, getState) => {
-    dispatch(setCurrentUrl(''))
+    dispatch({
+      type: OPEN_WEBVIEW,
+      url: '',
+      closeOnBack: true,
+    })
   }
 }

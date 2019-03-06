@@ -8,8 +8,8 @@ const mapDispatchToProps = dispatch => {
     getServices: () => {
       dispatch(services())
     },
-    openWebView: url => {
-      dispatch(openWebView(url))
+    openWebView: (url, closeOnBack = true) => {
+      dispatch(openWebView(url, closeOnBack))
     },
   }
 }

@@ -14,7 +14,6 @@ import { Agenda, LocaleConfig } from 'react-native-calendars'
 import { client } from 'providers/ApolloProvider'
 import autobind from 'autobind-decorator'
 import EmptyDate from './emptyDate'
-import PropTypes from 'prop-types'
 import Item from './Item'
 import { event } from '/helpers/analytics'
 LocaleConfig.locales['es'] = locales
@@ -22,9 +21,6 @@ LocaleConfig.defaultLocale = 'es'
 const pageName = 'calendar'
 
 export default class Calendar extends React.Component {
-  static propTypes = {
-    me: PropTypes.ObjectComponent,
-  }
   state = {
     events: {},
     months: {},

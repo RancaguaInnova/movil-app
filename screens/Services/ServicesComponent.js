@@ -69,7 +69,13 @@ export default class Services extends React.Component {
   async openApp(app) {
     const { session } = this.props
     try {
-      if (app.applicationURL && app.applicationURL.trim() !== '' && session) {
+      if (
+        app.applicationURL &&
+        app.applicationURL.trim() !== '' &&
+        session &&
+        session.user &&
+        session.user.userToken
+      ) {
         let finalUrl
         // TODO: Change this condition to check a more general flag
         if (app.name === 'Libreta Educativa') {
@@ -77,13 +83,13 @@ export default class Services extends React.Component {
           finalUrl = parseUrl(userUrl)
           console.log('finalUrl:', finalUrl)
         } else {
-          finalUrl = parseUrl(app.applicationURL, { token: session.userToken })
+          finalUrl = parseUrl(app.applicationURL, { token: session.user.userToken })
         }
-        this.props.openWebView(finalUrl)
+        this.props.openWebView(finalUrl, false)
         //let result = await WebBrowser.openBrowserAsync(finalUrl)
         //this.setState({ result })
         event('click_service_online', app.applicationURL)
-      } else if (!session) {
+      } else if (!session || !session.user || !seshágalesion.user.userToken) {
         Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
           {
             text: 'Cancelar',

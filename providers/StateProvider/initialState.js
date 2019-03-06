@@ -7,6 +7,7 @@ export default {
   },
   webview: {
     url: '',
+    closeOnBack: true,
   },
   services: {
     services: {},

@@ -22,17 +22,11 @@ class NewsList extends React.Component {
     try {
       if (news.externalUrl && news.externalUrl.trim() !== '') {
         this.props.openWebView(news.externalUrl)
-        //this.setState({ currentNews: news.externalUrl })
         event('click_news', news.externalUrl)
       }
     } catch (error) {
       this.setState({ currentNews: '' })
-      //this.setState({ result: null })
     }
-  }
-
-  onCloseNews = () => {
-    //this.setState({ currentNews: '' })
   }
 
   renderNews() {

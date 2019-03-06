@@ -1,28 +1,29 @@
 import React from 'react'
-import CardSilder from 'react-native-cards-slider'
-import { ImageBackground, TouchableOpacity, View, Text, Image as Img } from '@shoutem/ui'
-import Image from 'react-native-remote-svg'
-import { cardListQry } from 'providers/ApolloProvider/queries'
-import styles from './styles'
+import { Alert } from 'react-native'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { client } from 'providers/ApolloProvider'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
-import Retry from 'providers/ApolloProvider/Retry'
 import autobind from 'autobind-decorator'
 import { Query } from 'react-apollo'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
-import { getMeQry } from 'providers/ApolloProvider/queries'
-import { parseUrl } from '/helpers/url'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import { Alert } from 'react-native'
-import { event } from '/helpers/analytics'
+import CardSilder from 'react-native-cards-slider'
+import { ImageBackground, TouchableOpacity, View, Text, Image as Img } from '@shoutem/ui'
+import Image from 'react-native-remote-svg'
 
-@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
-export default class HomeOverlay extends React.Component {
+import styles from './styles'
+
+import { cardListQry } from 'providers/ApolloProvider/queries'
+import { client } from 'providers/ApolloProvider'
+import Loading from 'providers/ApolloProvider/Loading'
+import Error from 'providers/ApolloProvider/ApolloError'
+import Retry from 'providers/ApolloProvider/Retry'
+import { parseUrl } from '/helpers/url'
+import { event } from '/helpers/analytics'
+import { openWebView } from 'providers/StateProvider/WebView/actions'
+
+class HomeOverlay extends React.Component {
   static propTypes = {
-    me: PropTypes.object,
+    userToken: PropTypes.string,
   }
   renderIcon(card) {
     const type =
@@ -51,12 +52,11 @@ export default class HomeOverlay extends React.Component {
 
   onPressCard = async card => {
     try {
-      if (card.targetUrl && card.targetUrl.trim() !== '' && this.props.me) {
-        const finalUrl = parseUrl(card.targetUrl, { token: this.props.me.userToken })
-        let result = await WebBrowser.openBrowserAsync(finalUrl)
-        this.setState({ result })
+      if (card.targetUrl && card.targetUrl.trim() !== '' && this.props.userToken) {
+        const finalUrl = parseUrl(card.targetUrl, { token: this.props.userToken })
+        this.props.openWebView(finalUrl)
         event('click_card_online', finalUrl)
-      } else if (!this.props.me) {
+      } else if (!this.props.userToken) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
           { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
@@ -64,15 +64,18 @@ export default class HomeOverlay extends React.Component {
         event('click_card_offline', card.targetUrl)
       }
     } catch (error) {
-      this.setState({ result: null })
+      //this.setState({ result: null })
     }
   }
 
   renderCard(card) {
     if (card.type === 'banner') {
       return (
-        <TouchableOpacity style={styles.informationCard} onPress={() => this.onPressCard(card)}
-          key={card.title}>
+        <TouchableOpacity
+          style={styles.informationCard}
+          onPress={() => this.onPressCard(card)}
+          key={card.title}
+        >
           <ImageBackground
             styleName='large-banner'
             source={{ uri: card.imageUrl }}
@@ -169,3 +172,25 @@ export default class HomeOverlay extends React.Component {
     )
   }
 }
+
+// Redux
+const mapStateToProps = state => {
+  const {
+    auth: { session },
+  } = state
+  return {
+    userToken: session && session.user && session.user.userToken ? session.user.userToken : null,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openWebView: url => {
+      dispatch(openWebView(url))
+    },
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeOverlay)

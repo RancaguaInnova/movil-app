@@ -7,11 +7,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         url: action.url,
+        closeOnBack: action.closeOnBack,
       }
     case CLOSE_WEBVIEW:
       return {
         ...state,
         url: '',
+        closeOnBack: true,
       }
     default:
       return state

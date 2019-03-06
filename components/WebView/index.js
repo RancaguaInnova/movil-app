@@ -29,7 +29,7 @@ class WebViewComponent extends React.Component {
 
   static defaultProps = {
     closeWebView: () => {},
-    closeOnBack: false,
+    closeOnBack: true,
   }
 
   state = {
@@ -38,7 +38,6 @@ class WebViewComponent extends React.Component {
 
   @autobind
   close() {
-    console.log('close!')
     this.props.closeWebView()
   }
 
@@ -104,10 +103,11 @@ class WebViewComponent extends React.Component {
 // Redux
 const mapStateToProps = state => {
   const {
-    webview: { url },
+    webview: { url, closeOnBack },
   } = state
   return {
     url,
+    closeOnBack,
   }
 }
 
