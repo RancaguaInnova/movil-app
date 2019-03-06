@@ -25,7 +25,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
+        error: null
       }
     case LOGIN_ERROR:
       return {
@@ -42,7 +43,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
+        error: null
       }
     case SESSION_ERROR:
       return {
@@ -58,7 +60,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
+        error: null
       }
     case LOGOUT_ERROR:
       return {
@@ -74,7 +77,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        user: action.user
+        session: action.session,
+        error: null
       }
     case PROFILE_UPDATE_ERROR:
       return {

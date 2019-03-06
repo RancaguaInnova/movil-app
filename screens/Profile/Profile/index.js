@@ -29,15 +29,15 @@ import { withNavigation } from 'react-navigation'
 @withNavigation
 export default class Profile extends React.Component {
   static propTypes = {
-    userId: PropTypes.string,
-    profile: PropTypes.object.isRequired,
-    sessionId: PropTypes.string.isRequired,
+    session: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
     updateProfile: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object
   }
 
   componentDidMount() {
-    let profile = Object.assign({}, this.props.profile)
+    let profile = Object.assign({}, this.props.session.user.profile)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
     if (profile && profile.address && profile.address.streetNumber) {
@@ -79,7 +79,7 @@ export default class Profile extends React.Component {
   async signOut() {
     try {
       this.setState({ loading: true })
-      await this.props.logout(this.props.sessionId)
+      await this.props.logout(this.props.session._id)
       this.props.navigation.navigate('Home')
     } catch(error) {
       console.log('Error loging out:', error)
@@ -87,24 +87,29 @@ export default class Profile extends React.Component {
   }
 
   renderLogoutButton() {
-    if (this.props.me) {
+    if (this.props.session) {
       return <LightButton onPress={this.signOut} title='Cerrar Sesión' />
     }
   }
 
   renderErrorMessage() {
-    if (!this.state.errorMessage) return
-    return <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+    const { error } = this.props
+    if (!error) return
+    return <Text style={styles.errorMessage}>{error.message}</Text>
   }
 
   @autobind
   async submit() {
-    let user = Object.assign({}, { __typename: 'UserInput', _id: this.props.userId, profile: this.state.profile })
-    console.log('user:', user)
+    const { user } = this.props.session
+    let userInput = Object.assign({}, {
+      _id: user._id,
+      emails: user.emails,
+      profile: this.state.profile
+    })
     try {
-      const response = await this.props.updateProfile({ user })
-      event('profile_update_success', JSON.stringify(user))
-      Alert.alert('Datos actualizados con éxito')
+      const response = await this.props.updateProfile(userInput)
+      event('profile_update_success', JSON.stringify(userInput))
+      if (!this.props.error) Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
       const errMsj = []
       const arrError = graphQLErrors || []
@@ -181,7 +186,7 @@ export default class Profile extends React.Component {
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
-    if (this.state.loading) return <Loading />
+    if (this.props.loading) return <Loading />
     return (
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />

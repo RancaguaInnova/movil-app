@@ -3,6 +3,7 @@ import {
   PROFILE_UPDATE_RESPONSE,
   PROFILE_UPDATE_ERROR,
 } from './types'
+import { removeTypenameDeep } from '../../helpers'
 
 import { client } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
@@ -30,16 +31,17 @@ export const profileUpdateError = error => {
   }
 }
 
-export const updateProfile = ({ user }) => {
-  console.log('user on action:', user)
+export const updateProfile = userInput => {
+  // Delete "__typename" key, value pairs that are not include in Input type
+  userInput = removeTypenameDeep(userInput)
   return async (dispatch, getState) => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(profileUpdateRequest())
-    // Call Apollo client with the profileUpdate mutation here
+    // Call Apollo client
     try {
       const { data: { user } } = await client.mutate({
-        mutation: gql`mutation updateUser($user: UserInput!) {
-          session: updateUser(user: $user) {
+        mutation: gql`mutation updateUser($user: UserInput) {
+          user: updateUser(user: $user) {
             _id
             email
             userToken
@@ -65,9 +67,14 @@ export const updateProfile = ({ user }) => {
             }
           }
         }`,
-        variables: { user }
+        variables: { user: userInput }
       })
 
+      console.log('user:', user)
+      // Merge the User type with the Session type
+      const currentState = getState()
+      console.log('currentState:', currentState)
+      const session = Object.assign({}, currentState, user)
       console.log('session:', session)
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(profileUpdateResponse(session))

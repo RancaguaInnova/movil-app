@@ -42,6 +42,7 @@ export const login = (email, password) => {
         mutation: gql`mutation loginWithPassword($email: String, $password: String) {
           session: loginWithPassword(email: $email, password: $password) {
             _id
+            userId
             publicKey
             secretKey
             userId
@@ -50,6 +51,10 @@ export const login = (email, password) => {
             emailVerified
             user {
               _id
+              emails {
+                address
+                verified
+              }
               profile {
                 identifier
                 firstName

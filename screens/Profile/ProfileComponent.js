@@ -27,17 +27,17 @@ export default class ProfileScreen extends React.Component {
   }
 
   render() {
-    const { session, logout, updateProfile, error } = this.props
+    const { session, loading, logout, updateProfile, error } = this.props
     if (error) console.log(error)
     return (
       <View style={styles.container}>
         {!isEmpty(session) || !isEmpty(this.state.session) ? (
           <Profile
-            userId={session.user._id}
-            profile={session.user.profile}
-            sessionId={session._id}
+            session={session}
             logout={logout}
             updateProfile={updateProfile}
+            error={error}
+            loading={loading}
           />
         ) : (
           <Login />

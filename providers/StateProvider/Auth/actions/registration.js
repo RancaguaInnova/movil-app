@@ -43,7 +43,6 @@ export const register = ({ email, password, profile }) => {
             session: createUser(email: $email, password: $password, profile: $profile) {
               _id
               publicKey
-              secretKey
               userId
               locale
               roles
