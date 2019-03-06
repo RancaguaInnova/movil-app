@@ -26,6 +26,13 @@ import {
   requestSession,
 } from './session'
 
+import {
+  profileUpdateRequest,
+  profileUpdateResponse,
+  profileUpdateError,
+  updateProfile,
+} from './updateProfile'
+
 export {
   registrationRequest,
   registrationResponse,
@@ -43,4 +50,8 @@ export {
   sessionResponse,
   sessionError,
   requestSession,
+  profileUpdateRequest,
+  profileUpdateResponse,
+  profileUpdateError,
+  updateProfile,
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Profile from './ProfileComponent'
-import { requestSession, logout } from 'providers/StateProvider/Auth/actions'
+import { requestSession, logout, updateProfile } from 'providers/StateProvider/Auth/actions'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -9,15 +9,19 @@ const mapDispatchToProps = dispatch => {
     },
     logout: sessionId => {
       dispatch(logout(sessionId))
+    },
+    updateProfile: userInput => {
+      dispatch(updateProfile(userInput))
     }
   }
 }
 
 const mapStateToProps = state => {
-  const { auth: { loading, session } } = state
+  const { auth: { loading, session, error } } = state
   return {
     session,
-    loading
+    loading,
+    error
   }
 }
 

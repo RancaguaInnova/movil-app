@@ -23,30 +23,17 @@ import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
 import { Alert } from 'react-native'
-import withMutation from 'react-apollo-decorators/lib/withMutation'
 import SectionDivider from 'components/SectionDivider'
-import gql from 'graphql-tag'
-import { UserFragments } from 'providers/ApolloProvider/queries/User'
 import { withNavigation } from 'react-navigation'
 
 @withNavigation
-@withMutation(gql`
-  mutation updateUser($user: UserInput!) {
-    updateUser(user: $user) {
-      emails {
-        address
-        verified
-      }
-      ...Profile
-    }
-  }
-  ${UserFragments.Profile}
-`)
 export default class Profile extends React.Component {
   static propTypes = {
+    userId: PropTypes.string,
     profile: PropTypes.object.isRequired,
     sessionId: PropTypes.string.isRequired,
     logout: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -112,14 +99,10 @@ export default class Profile extends React.Component {
 
   @autobind
   async submit() {
-    let user = Object.assign({}, this.state.me)
-    this.setState({ loading: true })
+    let user = Object.assign({}, { __typename: 'UserInput', _id: this.props.userId, profile: this.state.profile })
+    console.log('user:', user)
     try {
-      const response = await this.props.updateUser({ user })
-      this.setState({
-        errorMessage: '', //error.message.replace('GraphQL error:', ''),
-        loading: false,
-      })
+      const response = await this.props.updateProfile({ user })
       event('profile_update_success', JSON.stringify(user))
       Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
@@ -188,7 +171,7 @@ export default class Profile extends React.Component {
 
   @autobind
   onChange(change) {
-    this.setState({ profile: change })
+    this.setState({ profile: change.profile })
   }
 
   render() {
@@ -203,7 +186,7 @@ export default class Profile extends React.Component {
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
         <ScrollView styleNames='fill-container' style={styles.container}>
-          <Form state={this.state} onChange={this.onChange}>
+          <Form state={this.state} onChange={change => this.onChange(change)}>
             {this.renderSection(defaultSection)}
           </Form>
           {this.renderErrorMessage()}

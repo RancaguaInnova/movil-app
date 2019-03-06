@@ -7,7 +7,10 @@ import {
   SESSION_ERROR,
   LOGOUT_REQUEST,
   LOGOUT_RESPONSE,
-  LOGOUT_ERROR
+  LOGOUT_ERROR,
+  PROFILE_UPDATE_REQUEST,
+  PROFILE_UPDATE_RESPONSE,
+  PROFILE_UPDATE_ERROR
 } from '../actions/types'
 import initialState from '../../initialState'
 
@@ -58,6 +61,22 @@ export default (state = initialState, action) => {
         session: action.session
       }
     case LOGOUT_ERROR:
+      return {
+        ...state,
+        error: action.error
+      }
+    case PROFILE_UPDATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case PROFILE_UPDATE_RESPONSE:
+      return {
+        ...state,
+        loading: false,
+        user: action.user
+      }
+    case PROFILE_UPDATE_ERROR:
       return {
         ...state,
         error: action.error
