@@ -10,7 +10,6 @@ import styles from './styles'
 
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 import { getSession } from 'providers/ApolloProvider'
-import { getMeQry } from 'providers/ApolloProvider/queries'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 
