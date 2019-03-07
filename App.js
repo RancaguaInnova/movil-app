@@ -9,7 +9,7 @@ import Drawer from 'react-native-drawer'
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import WebView from 'components/WebView'
 import { recoverSession, client } from 'providers/ApolloProvider'
-
+import MainMenu from 'components/MainMenu'
 import store from 'providers/StateProvider'
 
 YellowBox.ignoreWarnings(['Require cycle:'])
@@ -46,17 +46,13 @@ export default class App extends React.Component {
           <Provider store={store}>
             <Drawer
               open={this.state.drawerOpen}
-              openDrawerOffset={0.3}
+              openDrawerOffset={0.2}
               side='right'
               acceptTap={true}
               onClose={this.onDrawerClose}
               useInteractionManager={true}
               ref={ref => (this._drawer = ref)}
-              content={
-                <View style={{ paddingTop: 50 }}>
-                  <Text>olaola</Text>
-                </View>
-              }
+              content={<MainMenu />}
             >
               <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
