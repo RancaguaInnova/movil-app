@@ -42,9 +42,9 @@ export default class MainMenu extends React.Component {
           name='ios-arrow-back'
           size={30}
           color='black'
-          style={{ padding: 20, position: 'absolute' }}
+          style={{ padding: 25, position: 'absolute' }}
         />
-        <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
+        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 10 }}>
           <Avatar
             rounded
             size='large'
@@ -63,8 +63,8 @@ export default class MainMenu extends React.Component {
               title={item.title}
               titleStyle={{ fontSize: 14 }}
               bottomDivider={true}
-              leftIcon={<Ionicons name={item.icon} size={30} color='#969696' />}
-              rightIcon={<Ionicons name='ios-arrow-forward' size={30} color='#969696' />}
+              leftIcon={<Ionicons name={item.icon} size={26} color='#c0c0c0' />}
+              rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#c0c0c0' />}
             />
           ))}
         </View>
