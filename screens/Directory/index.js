@@ -4,17 +4,23 @@ import { NavigationEvents } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { pageHit } from '/helpers/analytics'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
-import styles from './styles'
-import Loading from 'providers/ApolloProvider/Loading'
-import textStyles from './../../styles/texts'
-import PropTypes from 'prop-types'
-import moment from '../../helpers/date/moment'
-import SubHeader from './../../components/SubHeader'
-import SectionDivider from '../../components/SectionDivider'
-import DepartmentDetail from './DepartmentDetail'
-import autobind from 'autobind-decorator'
-import { directoryListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
+import autobind from 'autobind-decorator'
+import PropTypes from 'prop-types'
+
+import styles from './styles'
+import textStyles from 'styles/texts'
+
+import Loading from 'providers/ApolloProvider/Loading'
+import { directoryListQry } from 'providers/ApolloProvider/queries'
+
+import moment from 'helpers/date/moment'
+
+import SubHeader from 'components/SubHeader'
+import SectionDivider from 'components/SectionDivider'
+import CustomHeader from 'components/CustomHeader'
+import DepartmentDetail from './DepartmentDetail'
+
 const pageName = 'directory/list'
 export default class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -24,7 +30,7 @@ export default class Directory extends React.Component {
       }
     } else {
       return {
-        title: navigation.getParam('title') || 'Directorio',
+        header: <CustomHeader type='main' />,
       }
     }
   }

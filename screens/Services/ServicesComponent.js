@@ -2,16 +2,21 @@ import React from 'react'
 import { View, Text, Divider, Caption, Subtitle, TouchableOpacity, Row } from '@shoutem/ui'
 import { Alert, ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
-import { pageHit, event } from '/helpers/analytics'
+import { Ionicons } from '@expo/vector-icons'
+import { WebBrowser } from 'expo'
 import PropTypes from 'prop-types'
+
 import textStyles from 'styles/texts'
 import styles from './styles'
+
+import { pageHit, event } from '/helpers/analytics'
+import { parseUrl } from '/helpers/url'
+
 import SubHeader from 'components/SubHeader'
 import SectionDivider from 'components/SectionDivider'
 import Loading from 'components/Loading'
-import { Ionicons } from '@expo/vector-icons'
-import { WebBrowser } from 'expo'
-import { parseUrl } from '/helpers/url'
+import CustomHeader from 'components/CustomHeader'
+
 const pageName = 'services'
 
 export default class Services extends React.Component {
@@ -25,7 +30,7 @@ export default class Services extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'Servicios',
+    header: <CustomHeader type='main' />,
   }
 
   async componentDidMount() {

@@ -12,12 +12,13 @@ import autobind from 'autobind-decorator'
 import { ObjectComponent } from 'simple-react-form'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
+import CustomHeader from 'components/CustomHeader'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { getMeQry } from 'providers/ApolloProvider/queries'
 import { event } from '/helpers/analytics'
 export default class CalendarScreen extends React.Component {
   static navigationOptions = {
-    title: 'Calendario',
+    header: <CustomHeader type='main' />,
   }
 
   state = {

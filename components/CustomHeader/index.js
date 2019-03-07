@@ -76,7 +76,7 @@ export default class CustomHeader extends React.Component {
           size: 35,
           onPress: this.showMenu,
         }}
-        rightContainerStyle={{ fontSize: 20 }}
+        /* rightContainerStyle=""*/
         containerStyle={styles.header}
       />
     )
