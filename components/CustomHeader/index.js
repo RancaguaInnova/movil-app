@@ -3,6 +3,7 @@ import styles from './styles.js'
 import PropTypes from 'prop-types'
 import { WebView } from 'react-native'
 import autobind from 'autobind-decorator'
+import { connect } from 'react-redux'
 import {
   Modal,
   View,
@@ -16,19 +17,23 @@ import {
 import { Header } from 'react-native-elements'
 import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
 import { event } from '/helpers/analytics'
+import { openDrawer } from 'providers/StateProvider/Drawer/actions'
 
-export default class CustomHeader extends React.Component {
+class CustomHeader extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
     type: PropTypes.string,
+    openDrawer: PropTypes.func,
   }
 
   static defaultProps = {
     onClose: () => {},
     type: 'main',
   }
+
+  @autobind
   showMenu() {
-    console.log('show menu')
+    this.props.openDrawer()
   }
 
   showNotifications() {
@@ -106,3 +111,25 @@ export default class CustomHeader extends React.Component {
     }
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openDrawer: () => {
+      dispatch(openDrawer())
+    },
+  }
+}
+
+const mapStateToProps = state => {
+  const {
+    auth: { session, loading },
+  } = state
+  return {
+    session,
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomHeader)

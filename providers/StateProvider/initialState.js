@@ -15,4 +15,7 @@ export default {
     data: null,
     error: null,
   },
+  drawer: {
+    open: false,
+  },
 }
