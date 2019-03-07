@@ -33,6 +33,13 @@ import {
   updateProfile,
 } from './updateProfile'
 
+import {
+  notificationsRequest,
+  notificationsResponse,
+  notificationsError,
+  notifications,
+} from './notifications'
+
 export {
   registrationRequest,
   registrationResponse,
@@ -54,4 +61,8 @@ export {
   profileUpdateResponse,
   profileUpdateError,
   updateProfile,
+  notificationsRequest,
+  notificationsResponse,
+  notificationsError,
+  notifications,
 }

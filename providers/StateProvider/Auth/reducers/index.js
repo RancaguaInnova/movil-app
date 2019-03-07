@@ -10,7 +10,10 @@ import {
   LOGOUT_ERROR,
   PROFILE_UPDATE_REQUEST,
   PROFILE_UPDATE_RESPONSE,
-  PROFILE_UPDATE_ERROR
+  PROFILE_UPDATE_ERROR,
+  NOTIFICATIONS_REQUEST,
+  NOTIFICATIONS_RESPONSE,
+  NOTIFICATIONS_ERROR,
 } from '../actions/types'
 import initialState from '../../initialState'
 
@@ -84,6 +87,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading,
+        error: action.error
+      }
+    case NOTIFICATIONS_REQUEST:
+      return {
+        ...state,
+        loading: action.loading,
+      }
+    case NOTIFICATIONS_RESPONSE:
+      return {
+        ...state,
+        loading: action.loading,
+        error: null
+      }
+    case NOTIFICATIONS_ERROR:
+      return {
+        ...state,
         error: action.error
       }
     default:

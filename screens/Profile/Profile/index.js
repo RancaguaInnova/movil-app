@@ -14,6 +14,7 @@ import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
+import Notifications from './Notifications'
 import styles from './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
@@ -68,6 +69,13 @@ export default class Profile extends React.Component {
       icon: 'ios-contacts',
       component: Contact,
     },
+    {
+      key: 'notifications',
+      name: 'Notifications',
+      description: 'Elige que notificaciones recibir',
+      icon: 'ios-notifications',
+      component: Notifications,
+    },
   ]
 
   @autobind
@@ -111,6 +119,7 @@ export default class Profile extends React.Component {
       event('profile_update_success', JSON.stringify(userInput))
       // if (!this.props.error) Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
+    // TODO: Use this in redux actions as a helper for displaying error messages
       const errMsj = []
       const arrError = graphQLErrors || []
       arrError.forEach(err => {
@@ -163,7 +172,7 @@ export default class Profile extends React.Component {
           <Ionicons name={section.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             {/* <Subtitle style={textStyles.rowSubtitle}>{section.name}</Subtitle> */}
-            <Text numberOfLines={2} style={{ ...textStyles.rowText, paddingLeft: 5 }}>
+            <Text numberOfLines={2} style={{ ...textStyles.rowText, paddingLeft: 5, paddingRight: 5 }}>
               {section.description}
             </Text>
           </View>
@@ -184,8 +193,10 @@ export default class Profile extends React.Component {
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
+      { title: 'Notificaciones', action: () => this.setCurrentSection(2) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
+
     if (this.props.loading) return <Loading />
     return (
       <View style={styles.container}>
