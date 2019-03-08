@@ -10,17 +10,22 @@ import { Ionicons } from '@expo/vector-icons'
 import Notifications from 'screens/Notifications'
 import Contact from 'screens/Contact'
 import Subscriptions from 'screens/Subscriptions'
+import Profile from 'screens/Profile/Profile'
 
 // Redux actions
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import { openModal } from 'providers/StateProvider/Modal/actions'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
+import { logout } from 'providers/StateProvider/Auth/actions'
 
 import styles from './styles.js'
 
 class MainMenu extends React.Component {
   static propTypes = {
     closeDrawer: PropTypes.func,
+    openWebView: PropTypes.func,
+    openModal: PropTypes.func,
+    logout: PropTypes.func,
     session: PropTypes.object,
   }
 
@@ -29,6 +34,9 @@ class MainMenu extends React.Component {
       title: 'Editar Perfil',
       icon: 'ios-contact',
       requireAuth: true,
+      /* onPress: () => {
+        this.props.openModal(<Profile />)
+      }, */
     },
     {
       title: 'Mis Entradas',
@@ -67,6 +75,9 @@ class MainMenu extends React.Component {
       title: 'Cerrar Sesión',
       icon: 'ios-log-out',
       requireAuth: true,
+      onPress: () => {
+        this.props.logout(this.props.session._id)
+      },
     },
     {
       title: 'Iniciar Sesión',
@@ -146,6 +157,9 @@ const mapDispatchToProps = dispatch => {
     },
     openWebView: url => {
       dispatch(openWebView(url))
+    },
+    logout: sessionId => {
+      dispatch(logout(sessionId))
     },
   }
 }
