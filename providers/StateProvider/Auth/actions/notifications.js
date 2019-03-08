@@ -34,10 +34,10 @@ export const notifications = ({ userId, deviceToken }) => {
     dispatch(notificationsRequest())
     try {
       const response = await client.mutate({
-        mutation: gql`mutation registerDevice(userId: ID, $deviceToken: ID!) {
-          notifications: notifications(deviceToken: $deviceToken)
+        mutation: gql`mutation registerDevice($userId: ID!, $deviceToken: ID!) {
+          success: registerDevice(userId: $userId, deviceToken: $deviceToken)
         }`,
-        variables: { deviceToken }
+        variables: { userId, deviceToken }
       })
       dispatch(notificationsResponse())
     } catch(error) {
