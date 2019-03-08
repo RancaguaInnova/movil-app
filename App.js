@@ -8,6 +8,7 @@ import { connect, Provider } from 'react-redux'
 import Drawer from 'react-native-drawer'
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import WebView from 'components/WebView'
+import CustomModal from 'components/CustomModal'
 import { recoverSession, client } from 'providers/ApolloProvider'
 import MainMenu from 'components/MainMenu'
 import store from 'providers/StateProvider'
@@ -58,6 +59,7 @@ export default class App extends React.Component {
                 {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
                 <AppNavigator />
                 <WebView />
+                <CustomModal />
               </View>
             </Drawer>
           </Provider>

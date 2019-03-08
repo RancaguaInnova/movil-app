@@ -38,8 +38,8 @@ export default class Home extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavigationEvents onWillFocus={payload => pageHit(this.pageName)} />
-        <HomeOverlay navigation={this.props.navigation} />
         <SectionDivider title={title} />
+        <HomeOverlay navigation={this.props.navigation} />
         <ScrollView style={styles.container}>
           <NewsList />
         </ScrollView>

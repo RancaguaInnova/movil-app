@@ -18,12 +18,16 @@ import { Header } from 'react-native-elements'
 import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
 import { event } from '/helpers/analytics'
 import { openDrawer } from 'providers/StateProvider/Drawer/actions'
+import { openModal } from 'providers/StateProvider/Modal/actions'
+
+import Notifications from 'screens/Notifications'
 
 class CustomHeader extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
     type: PropTypes.string,
     openDrawer: PropTypes.func,
+    openModal: PropTypes.func,
   }
 
   static defaultProps = {
@@ -36,8 +40,9 @@ class CustomHeader extends React.Component {
     this.props.openDrawer()
   }
 
+  @autobind
   showNotifications() {
-    console.log('show notifications')
+    this.props.openModal(<Notifications />)
   }
 
   renderLogo() {
@@ -116,6 +121,9 @@ const mapDispatchToProps = dispatch => {
   return {
     openDrawer: () => {
       dispatch(openDrawer())
+    },
+    openModal: child => {
+      dispatch(openModal(child))
     },
   }
 }

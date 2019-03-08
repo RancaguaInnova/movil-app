@@ -1,7 +1,7 @@
 export default {
   divider: {
     paddingTop: 0,
-    backgroundColor: '#b22d48',
+    backgroundColor: '#ff1248',
     borderBottomWidth: 0,
     borderTopWidth: 0,
   },

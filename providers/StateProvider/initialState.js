@@ -18,4 +18,7 @@ export default {
   drawer: {
     open: false,
   },
+  modal: {
+    child: null,
+  },
 }
