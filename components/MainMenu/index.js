@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 
 // Screens
+import Login from 'screens/Auth/Login'
 import Notifications from 'screens/Notifications'
 import Contact from 'screens/Contact'
 import Subscriptions from 'screens/Subscriptions'
@@ -83,6 +84,9 @@ class MainMenu extends React.Component {
       title: 'Iniciar Sesión',
       icon: 'ios-log-in',
       requireAuth: false,
+      onPress: () => {
+        this.props.openModal(<Login />)
+      },
     },
     {
       title: 'Registrarse',

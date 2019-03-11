@@ -2,7 +2,9 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { pageHit, event } from '/helpers/analytics'
+
 import { View, Title, Subtitle, Text, Caption } from '@shoutem/ui'
+
 import styles from './styles'
 import { Form, Field } from 'simple-react-form'
 import { TextInput } from 'components/fields'
@@ -19,7 +21,7 @@ export default class Login extends React.Component {
     login: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
   }
 
   state = { email: '', password: '' }
@@ -45,7 +47,7 @@ export default class Login extends React.Component {
   }
 
   renderErrorMessage() {
-    const { error } = this.props || null
+    const { error } = this.props || null
     if (!error) return null
     return <Caption style={styles.errorMessage}>Email o contraseña incorrecta</Caption>
   }
