@@ -21,5 +21,5 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
   },
   image: { width: 180, height: 38, resizeMode: 'contain' },
-  notificationImage: { height: 25, resizeMode: 'contain' },
+  notificationImage: { height: 28, resizeMode: 'contain' },
 })
