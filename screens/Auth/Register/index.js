@@ -16,8 +16,8 @@ import { pageHit, event } from '/helpers/analytics'
 import styles from './styles.js'
 import SectionDivider from 'components/SectionDivider'
 
-const pageName = 'auth/login'
-class Login extends React.Component {
+const pageName = 'auth/register'
+class Register extends React.Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -123,4 +123,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login)
+)(Register)

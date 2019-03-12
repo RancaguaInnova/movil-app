@@ -2,7 +2,7 @@ export default {
   input: {
     margin: 5,
     marginLeft: 0,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#ebebeb',
     marginBottom: 10,
     height: 35,
