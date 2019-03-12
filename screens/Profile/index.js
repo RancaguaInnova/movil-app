@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => {
     },
     updateProfile: userInput => {
       dispatch(updateProfile(userInput))
-    }
+    },
   }
 }
 

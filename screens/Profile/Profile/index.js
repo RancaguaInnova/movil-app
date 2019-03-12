@@ -14,7 +14,7 @@ import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
-import Notifications from './Notifications'
+import Subscriptions from './Subscriptions'
 import styles from './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
@@ -42,7 +42,7 @@ export default class Profile extends React.Component {
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
     if (profile && profile.address && profile.address.streetNumber) {
-      profile.address.streetNumber = this.props.profile.address.streetNumber.toString()
+      profile.address.streetNumber = profile.address.streetNumber.toString()
     }
     this.setState({ profile })
   }
@@ -70,11 +70,11 @@ export default class Profile extends React.Component {
       component: Contact,
     },
     {
-      key: 'notifications',
-      name: 'Notifications',
+      key: 'subscriptions',
+      name: 'Subscripciones',
       description: 'Elige que notificaciones recibir',
       icon: 'ios-notifications',
-      component: Notifications,
+      component: Subscriptions,
     },
   ]
 
@@ -193,7 +193,7 @@ export default class Profile extends React.Component {
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
-      { title: 'Notificaciones', action: () => this.setCurrentSection(2) },
+      { title: 'Subscripciones', action: () => this.setCurrentSection(2) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
 

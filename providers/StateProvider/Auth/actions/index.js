@@ -34,11 +34,11 @@ import {
 } from './updateProfile'
 
 import {
-  notificationsRequest,
-  notificationsResponse,
-  notificationsError,
-  notifications,
-} from './notifications'
+  deviceRegistrationRequest,
+  deviceRegistrationResponse,
+  deviceRegistrationError,
+  registerDevice,
+} from './deviceRegistration'
 
 export {
   registrationRequest,
@@ -61,8 +61,8 @@ export {
   profileUpdateResponse,
   profileUpdateError,
   updateProfile,
-  notificationsRequest,
-  notificationsResponse,
-  notificationsError,
-  notifications,
+  deviceRegistrationRequest,
+  deviceRegistrationResponse,
+  deviceRegistrationError,
+  registerDevice,
 }
