@@ -9,6 +9,8 @@ import {
   LOGOUT_RESPONSE,
   LOGOUT_ERROR,
   REGISTRATION_ERROR,
+  REGISTRATION_REQUEST,
+  REGISTRATION_RESPONSE,
 } from '../actions/types'
 import initialState from '../../initialState'
 
@@ -63,11 +65,22 @@ export default (state = initialState, action) => {
         ...state,
         error: action.error,
       }
+    case REGISTRATION_REQUEST:
+      return {
+        ...state,
+        loading: action.loading,
+      }
     case REGISTRATION_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
+      }
+    case REGISTRATION_RESPONSE:
+      return {
+        ...state,
+        loading: action.loading,
+        session: action.session,
       }
     default:
       return state

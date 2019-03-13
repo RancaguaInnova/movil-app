@@ -32,9 +32,10 @@ export const register = ({ email, password, profile }) => {
   return async (dispatch, getState) => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(registrationRequest())
+    let createUser = null
     // Call Apollo client with the registration mutation here
     try {
-      const createUser = await client.mutate({
+      createUser = await client.mutate({
         mutation: gql`
           mutation createUser($email: String, $password: String, $profile: UserProfileInput) {
             session: createUser(email: $email, password: $password, profile: $profile) {
@@ -58,20 +59,23 @@ export const register = ({ email, password, profile }) => {
         `,
         variables: { email, password, profile },
       })
-
-      console.log('createUser', createUser)
-
-      const {
-        data: { session },
-      } = createUser
-
-      const result = await saveSession(session)
-      console.log('Result save session:', result)
-      // Dispatch sync action to "notify" the store we finnished the async action
-      dispatch(registrationResponse(session))
-      return session
     } catch (error) {
       dispatch(registrationError(error))
+      return null
+    } finally {
+      if (createUser) {
+        const {
+          data: { session },
+        } = createUser
+
+        await saveSession(session)
+
+        // Dispatch sync action to "notify" the store we finnished the async action
+        dispatch(registrationResponse(session))
+        return session
+      } else {
+        return null
+      }
     }
   }
 }

@@ -96,17 +96,7 @@ class Register extends React.Component {
         profile,
       }
 
-      const result = await this.props.register(newUserData)
-
-      /*
-      console.log('register result', result)
-      this.setState({ loading: false, errorMessage: null })
-      Alert.alert(
-        'Registro exitoso',
-        `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`,
-        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
-      ) */
-      event('registry_success', cleanEmail)
+      await this.props.register(newUserData)
     } catch (error) {
       const errorMsj = this.onError(error)
       this.setState({ errorMessage: errorMsj })
@@ -157,8 +147,24 @@ class Register extends React.Component {
     return <Text style={styles.errorMessage}>{errorMessage}</Text>
   }
 
+  @autobind
+  checkSession() {
+    if (this.props.session && this.props.session.user) {
+      const {
+        user: { email },
+      } = this.props.session
+      Alert.alert(
+        'Registro exitoso',
+        `Hemos enviado un email a ${email}, siga las instrucciones para completar su registro`,
+        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
+      )
+      event('registry_success', email)
+    }
+  }
+
   render() {
     pageHit(pageName)
+    this.checkSession()
     return (
       <View style={styles.container}>
         <View style={styles.content}>
