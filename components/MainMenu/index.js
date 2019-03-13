@@ -20,6 +20,7 @@ import { openWebView } from 'providers/StateProvider/WebView/actions'
 import { logout } from 'providers/StateProvider/Auth/actions'
 
 import styles from './styles.js'
+import { sessionError } from '../../providers/StateProvider/Auth/actions/session'
 
 class MainMenu extends React.Component {
   static propTypes = {
@@ -114,6 +115,8 @@ class MainMenu extends React.Component {
 
   render() {
     const auth = this.props.session && this.props.session.userId ? true : false
+    const { user } = this.props.session
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.props.closeDrawer}>
@@ -128,8 +131,12 @@ class MainMenu extends React.Component {
             activeOpacity={0.7}
           />
 
-          {auth && <Text style={{ fontWeight: 'bold', paddingTop: 10 }}>Nombre del usuario</Text>}
-          {auth && <Text>email@usuario.com</Text>}
+          {auth && (
+            <Text style={{ fontWeight: 'bold', paddingTop: 10 }}>
+              {`${user.profile.firstName.toUpperCase()} ${user.profile.lastName.toUpperCase()}`}
+            </Text>
+          )}
+          {auth && <Text>{user.email}</Text>}
         </View>
         <ScrollView style={{ padding: 5, marginTop: 15 }}>
           {this.menuItems

@@ -19,67 +19,77 @@ export default (state = initialState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
+        error: action.error,
       }
     case LOGIN_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
+        error: action.error,
         session: action.session,
       }
     case LOGIN_ERROR:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         error: action.error,
       }
     case SESSION_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
+        error: action.error,
       }
     case SESSION_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
+        error: action.error,
         session: action.session,
       }
     case SESSION_ERROR:
       return {
         ...state,
+        loading: action.loading,
         error: action.error,
       }
     case LOGOUT_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: action.loading,
+        error: action.error,
       }
     case LOGOUT_RESPONSE:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
+        error: action.error,
         session: action.session,
       }
     case LOGOUT_ERROR:
       return {
         ...state,
+        loading: action.loading,
         error: action.error,
       }
     case REGISTRATION_REQUEST:
       return {
         ...state,
         loading: action.loading,
+        error: action.error,
       }
     case REGISTRATION_ERROR:
       return {
         ...state,
-        loading: false,
+        loading: action.loading,
         error: action.error,
       }
     case REGISTRATION_RESPONSE:
       return {
         ...state,
         loading: action.loading,
+        error: action.error,
         session: action.session,
       }
     default:

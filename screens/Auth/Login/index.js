@@ -44,10 +44,22 @@ class Login extends React.Component {
     try {
       const { email, password } = this.state
       await this.props.login(email, password)
-      this.props.closeModal()
     } catch (error) {
       event('login_error', error)
       console.log('login_error:', error)
+    }
+  }
+
+  @autobind
+  checkSession() {
+    if (this.props.session && this.props.session.user) {
+      const {
+        user: { email },
+      } = this.props.session
+      event('registry_success', email)
+      setTimeout(() => {
+        this.props.closeModal()
+      }, 100)
     }
   }
 
@@ -59,6 +71,7 @@ class Login extends React.Component {
 
   render() {
     pageHit(pageName)
+    this.checkSession()
     return (
       <View style={styles.container}>
         <View style={styles.content}>

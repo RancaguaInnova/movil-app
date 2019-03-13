@@ -9,9 +9,9 @@ import Home from 'screens/Home'
 import Calendar from 'screens/Calendar'
 import Services from 'screens/Services'
 import Directory from 'screens/Directory'
-import Profile from 'screens/Profile'
+/* import Profile from 'screens/Profile'
 import Register from 'screens/Profile/Register'
-import Forgot from 'screens/Profile/Forgot'
+import Forgot from 'screens/Profile/Forgot' */
 
 const HomeStack = createStackNavigator({
   Home,
@@ -59,24 +59,24 @@ DirectoryStack.navigationOptions = {
   tabBarOptions: TabBarOptions,
 }
 
-const ProfileStack = createStackNavigator({
+/* const ProfileStack = createStackNavigator({
   Profile,
   Register,
   Forgot,
-})
+}) */
 
-ProfileStack.navigationOptions = {
+/* ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
   tabBarIcon: ({ focused, tintColor }) => (
     <TabBarIcon color={tintColor} focused={focused} name='ios-person' />
   ),
   tabBarOptions: TabBarOptions,
-}
+} */
 
 export default createBottomTabNavigator({
   HomeStack,
   CalendarStack,
   ServicesStack,
   DirectoryStack,
-  ProfileStack,
+  //ProfileStack,
 })

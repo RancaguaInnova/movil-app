@@ -221,7 +221,7 @@ class Register extends React.Component {
               onPress={this.submit}
               titleStyle={styles.submitTitle}
               buttonStyle={styles.submitButton}
-              title='Registrar'
+              title='Registrarse'
             />
           </View>
         </View>
