@@ -90,7 +90,7 @@ class MainMenu extends React.Component {
     },
     {
       title: 'Registrarse',
-      icon: 'ios-add',
+      icon: 'ios-person-add',
       requireAuth: false,
       onPress: () => {
         this.props.openModal(<Auth show='register' />)
@@ -117,7 +117,7 @@ class MainMenu extends React.Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.props.closeDrawer}>
-          <Ionicons name='ios-arrow-back' size={30} color='black' style={{ padding: 10 }} />
+          <Ionicons name='ios-arrow-back' size={30} color='#969696' style={{ padding: 10 }} />
         </TouchableOpacity>
         <View style={{ alignItems: 'center', marginBottom: 10 }}>
           <Avatar
@@ -142,8 +142,8 @@ class MainMenu extends React.Component {
                   title={item.title}
                   titleStyle={{ fontSize: 14 }}
                   bottomDivider={true}
-                  leftIcon={<Ionicons name={item.icon} size={26} color='#c0c0c0' />}
-                  rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#c0c0c0' />}
+                  leftIcon={<Ionicons name={item.icon} size={26} color='#ff1248' />}
+                  rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#ff1248' />}
                 />
               </TouchableOpacity>
             ))}

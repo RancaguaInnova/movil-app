@@ -1,22 +1,23 @@
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
 import { Form, Field } from 'simple-react-form'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
-
-import { TextInput } from 'components/fields'
-import { Button } from 'react-native-elements'
-
-import LightButton from 'components/LightButton'
-
-import { login } from 'providers/StateProvider/Auth/actions'
-import { pageHit, event } from '/helpers/analytics'
-import styles from './styles.js'
-import SectionDivider from 'components/SectionDivider'
 import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
+import { Button } from 'react-native-elements'
+
+import { TextInput } from 'components/fields'
+import LightButton from 'components/LightButton'
+import SectionDivider from 'components/SectionDivider'
+
+import { login } from 'providers/StateProvider/Auth/actions'
+import { closeModal } from 'providers/StateProvider/Modal/actions'
+import { pageHit, event } from '/helpers/analytics'
+import styles from './styles.js'
+
 const pageName = 'auth/forgot'
 
 @withMutation(gql`
@@ -30,6 +31,7 @@ class Forgot extends React.Component {
     loading: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired,
     error: PropTypes.object,
+    closeModal: PropTypes.func,
     forgotPassword: PropTypes.func,
   }
 
@@ -52,6 +54,11 @@ class Forgot extends React.Component {
       this.setState({ success: true, loading: false })
 
       event('recover_password_success', email)
+      Alert.alert(
+        'Recuperar contraseña',
+        `Hemos enviado un email a ${email}, siga las instrucciones para recuperar su contraseña`,
+        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
+      )
     } catch ({ response, operation, graphQLErrors, networkError }) {
       const arrError = graphQLErrors || []
       const arrMsj = []
@@ -83,11 +90,6 @@ class Forgot extends React.Component {
   renderErrorMessage() {
     if (!this.state.errorMessage) return
     return <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
-  }
-
-  renderMessage() {
-    if (!this.state.success) return null
-    return <Text style={styles.successMessage}>Revisa tu email para continuar</Text>
   }
 
   renderButtons() {
@@ -123,14 +125,13 @@ class Forgot extends React.Component {
               />
 
               {this.renderErrorMessage()}
-              {this.renderMessage()}
             </View>
           </Form>
 
           <View style={styles.fieldsContainer}>
             <Button
               disabled={!this.isFormReady()}
-              loading={this.props.loading}
+              loading={this.state.loading}
               onPress={this.submit}
               titleStyle={styles.submitTitle}
               buttonStyle={styles.submitButton}
@@ -158,6 +159,9 @@ const mapDispatchToProps = dispatch => {
   return {
     login: (email, password) => {
       dispatch(login(email, password))
+    },
+    closeModal: () => {
+      dispatch(closeModal())
     },
   }
 }

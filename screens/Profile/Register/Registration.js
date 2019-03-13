@@ -24,7 +24,7 @@ export default class Register extends React.Component {
   static propTypes = {
     register: PropTypes.func.isRequired,
     session: PropTypes.object,
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
   }
 
   state = {}
@@ -93,7 +93,6 @@ export default class Register extends React.Component {
       event('registry_success', cleanEmail)
       this.setState({ loading: false, errorMessage: null })
       this.props.navigation.navigate('Home')
-
     } catch (error) {
       let errorMessage = ''
       const graphQLErrors = error.graphQLErrors || []
@@ -193,11 +192,6 @@ export default class Register extends React.Component {
             label='Crear cuenta'
           />
           <Button onPress={() => this.props.navigation.goBack()} label='Volver' color='#b22d48' />
-          {/* <LightButton
-            style={{ position: 'relative' }}
-            onPress={() => this.props.navigation.goBack()}
-            title='Volver'
-          /> */}
         </View>
       </ScrollView>
     )

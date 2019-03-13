@@ -63,7 +63,7 @@ export default class SectionDivider extends React.Component {
                     this.setState({ current: key })
                   }}
                 >
-                  <Text styleName='h-center' style={{ color: 'white', fontSize: 16 }}>
+                  <Text styleName='h-center' style={{ color: 'white', fontSize: 14 }}>
                     {item.title}
                   </Text>
                 </TouchableOpacity>

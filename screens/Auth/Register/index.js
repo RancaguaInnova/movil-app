@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
 import { Form, Field } from 'simple-react-form'
@@ -11,46 +11,150 @@ import { Button } from 'react-native-elements'
 
 import LightButton from 'components/LightButton'
 
-import { login } from 'providers/StateProvider/Auth/actions'
+import { register } from 'providers/StateProvider/Auth/actions'
+import { closeModal } from 'providers/StateProvider/Modal/actions'
 import { pageHit, event } from '/helpers/analytics'
 import styles from './styles.js'
 import SectionDivider from 'components/SectionDivider'
 
+import {
+  validateIdentifier,
+  validateEmail,
+  validateMinLength,
+  validatePresenceOfFields,
+  validateCoincidence,
+  combineValidators,
+} from 'helpers/validators'
+
 const pageName = 'auth/register'
 class Register extends React.Component {
   static propTypes = {
-    login: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    session: PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired,
+    closeModal: PropTypes.func,
+    loading: PropTypes.bool,
+    session: PropTypes.object,
     error: PropTypes.object,
+    navigation: PropTypes.object,
   }
 
-  state = { email: '', password: '' }
+  state = {}
+
+  @autobind
+  focusEmail() {
+    this.refs.email.refs.input.focus()
+  }
 
   @autobind
   focusPassword() {
-    this.refs.password.focus()
+    this.refs.password.refs.input.focus()
+  }
+
+  @autobind
+  focusConfirm() {
+    this.refs.confirm.refs.input.focus()
   }
 
   isFormReady() {
-    if (this.state.email && this.state.password) return true
-    return false
+    return this.state.email && this.state.password && this.state.confirm
+  }
+
+  validate() {
+    const validateForm = combineValidators(
+      validateIdentifier('profile.identifier'),
+      validateEmail('email'),
+      validateMinLength('password', 8),
+      validateCoincidence(
+        { name: 'password', label: 'Contraseña' },
+        { name: 'confirm', label: 'Confirmar Contraseña' }
+      ),
+      validatePresenceOfFields([
+        { name: 'profile.identifier', label: 'RUT' },
+        { name: 'email', label: 'Email' },
+        { name: 'password', label: 'Contraseña' },
+        { name: 'confirm', label: 'Confirmar Contraseña' },
+      ])
+    )
+    return validateForm(this.state)
   }
 
   @autobind
   async submit() {
+    if (this.props.loading) {
+      this.setState({ loading: true, errorMessage: null })
+    }
     try {
-      const { email, password } = this.state
-      await this.props.login(email, password)
+      const { email, password, confirm, profile } = this.state
+      const form = this.state
+      const errorMessage = this.validate()
+      if (errorMessage) {
+        throw new Error(errorMessage)
+      }
+      const cleanEmail = email.trim().toLowerCase()
+      const newUserData = {
+        email: cleanEmail,
+        password,
+        profile,
+      }
+
+      const result = await this.props.register(newUserData)
+
+      /*
+      console.log('register result', result)
+      this.setState({ loading: false, errorMessage: null })
+      Alert.alert(
+        'Registro exitoso',
+        `Hemos enviado un email a ${cleanEmail}, siga las instrucciones para completar su registro`,
+        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
+      ) */
+      event('registry_success', cleanEmail)
     } catch (error) {
-      event('login_error', error)
+      const errorMsj = this.onError(error)
+      this.setState({ errorMessage: errorMsj })
+      this.setState({ loading: false })
     }
   }
 
+  @autobind
+  onError(error) {
+    let errorMessage = ''
+    const graphQLErrors = error.graphQLErrors || []
+    if (graphQLErrors && graphQLErrors.length > 0) {
+      const arrErrors = []
+      graphQLErrors.forEach(err => {
+        const errorKey = err.error
+        if (err.validationErrors) {
+          for (let field in err.validationErrors) {
+            switch (err.validationErrors[field]) {
+              case 'emailExists':
+                arrErrors.push('El email ingresado ya se encuentra registrado')
+                break
+              case 'notUnique':
+                arrErrors.push('El RUT ingresado ya se encuentra registrado')
+                break
+              default:
+                arrErrors.push(`[error]:${err.validationErrors[field]}`)
+            }
+          }
+        } else {
+          arrErrors.push(`[error]:${errorKey}`)
+        }
+      })
+      errorMessage = arrErrors.join(', ')
+    } else {
+      errorMessage = error.message.replace('GraphQL error: ', '')
+    }
+
+    return errorMessage
+  }
+
+  @autobind
   renderErrorMessage() {
-    const { error } = this.props || null
-    if (!error) return null
-    return <Text style={styles.errorMessage}>Email o contraseña incorrecta</Text>
+    let errorMessage = this.state.errorMessage
+    if (this.props.error) {
+      errorMessage = this.onError(this.props.error)
+    }
+    if (!errorMessage) return
+    return <Text style={styles.errorMessage}>{errorMessage}</Text>
   }
 
   render() {
@@ -58,10 +162,20 @@ class Register extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.content}>
-          <Form state={this.state} onChange={changes => this.setState(changes)}>
+          <Form state={this.state} onChange={changes => this.setState(changes)} style={{ flex: 1 }}>
             <View style={styles.fieldsContainer}>
               <Field
                 enablesReturnKeyAutomatically
+                returnKeyType='next'
+                fieldName='profile.identifier'
+                label='Rut'
+                onSubmitEditing={this.focusEmail}
+                type={TextInput}
+                rut
+              />
+              <Field
+                enablesReturnKeyAutomatically
+                ref='email'
                 returnKeyType='next'
                 keyboardType='email-address'
                 fieldName='email'
@@ -75,8 +189,18 @@ class Register extends React.Component {
                 secureTextEntry
                 fieldName='password'
                 label='Contraseña'
-                returnKeyType={this.state.hasTwoFactor ? 'next' : 'done'}
-                onSubmitEditing={this.state.hasTwoFactor ? null : this.submit}
+                returnKeyType='next'
+                onSubmitEditing={this.focusConfirm}
+                type={TextInput}
+              />
+              <Field
+                enablesReturnKeyAutomatically
+                ref='confirm'
+                secureTextEntry
+                fieldName='confirm'
+                label='Confirmar contraseña'
+                returnKeyType='done'
+                onSubmitEditing={this.submit}
                 type={TextInput}
               />
 
@@ -91,7 +215,7 @@ class Register extends React.Component {
               onPress={this.submit}
               titleStyle={styles.submitTitle}
               buttonStyle={styles.submitButton}
-              title='Entrar'
+              title='Registrar'
             />
           </View>
         </View>
@@ -103,8 +227,11 @@ class Register extends React.Component {
 // Redux
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email, password) => {
-      dispatch(login(email, password))
+    register: (email, password, profile) => {
+      dispatch(register(email, password, profile))
+    },
+    closeModal: () => {
+      dispatch(closeModal())
     },
   }
 }

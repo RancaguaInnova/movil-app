@@ -4,22 +4,24 @@ import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
 import { Form, Field } from 'simple-react-form'
 import autobind from 'autobind-decorator'
+import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
 import { TextInput } from 'components/fields'
-import { Button } from 'react-native-elements'
-
 import LightButton from 'components/LightButton'
+import SectionDivider from 'components/SectionDivider'
 
 import { login } from 'providers/StateProvider/Auth/actions'
+import { closeModal } from 'providers/StateProvider/Modal/actions'
+
 import { pageHit, event } from '/helpers/analytics'
 import styles from './styles.js'
-import SectionDivider from 'components/SectionDivider'
 
 const pageName = 'auth/login'
 class Login extends React.Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
+    closeModal: PropTypes.func,
     loading: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired,
     error: PropTypes.object,
@@ -42,8 +44,10 @@ class Login extends React.Component {
     try {
       const { email, password } = this.state
       await this.props.login(email, password)
+      this.props.closeModal()
     } catch (error) {
       event('login_error', error)
+      console.log('login_error:', error)
     }
   }
 
@@ -91,7 +95,7 @@ class Login extends React.Component {
               onPress={this.submit}
               titleStyle={styles.submitTitle}
               buttonStyle={styles.submitButton}
-              title='Entrar'
+              title='Iniciar'
             />
           </View>
         </View>
@@ -105,6 +109,9 @@ const mapDispatchToProps = dispatch => {
   return {
     login: (email, password) => {
       dispatch(login(email, password))
+    },
+    closeModal: () => {
+      dispatch(closeModal())
     },
   }
 }

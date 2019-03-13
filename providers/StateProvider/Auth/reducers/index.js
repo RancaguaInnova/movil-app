@@ -7,12 +7,13 @@ import {
   SESSION_ERROR,
   LOGOUT_REQUEST,
   LOGOUT_RESPONSE,
-  LOGOUT_ERROR
+  LOGOUT_ERROR,
+  REGISTRATION_ERROR,
 } from '../actions/types'
 import initialState from '../../initialState'
 
 export default (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case LOGIN_REQUEST:
       return {
         ...state,
@@ -22,13 +23,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
       }
     case LOGIN_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.error,
       }
     case SESSION_REQUEST:
       return {
@@ -39,12 +40,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
       }
     case SESSION_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
       }
     case LOGOUT_REQUEST:
       return {
@@ -55,12 +56,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        session: action.session
+        session: action.session,
       }
     case LOGOUT_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
+      }
+    case REGISTRATION_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       }
     default:
       return state
