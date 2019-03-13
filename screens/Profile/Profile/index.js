@@ -14,6 +14,7 @@ import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
+import Subscriptions from './Subscriptions'
 import styles from './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
@@ -23,38 +24,25 @@ import Button from 'components/ShoutemButton'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
 import { Alert } from 'react-native'
-import withMutation from 'react-apollo-decorators/lib/withMutation'
 import SectionDivider from 'components/SectionDivider'
-import gql from 'graphql-tag'
-import { UserFragments } from 'providers/ApolloProvider/queries/User'
 import { withNavigation } from 'react-navigation'
 
 @withNavigation
-@withMutation(gql`
-  mutation updateUser($user: UserInput!) {
-    updateUser(user: $user) {
-      emails {
-        address
-        verified
-      }
-      ...Profile
-    }
-  }
-  ${UserFragments.Profile}
-`)
 export default class Profile extends React.Component {
   static propTypes = {
-    profile: PropTypes.object.isRequired,
-    sessionId: PropTypes.string.isRequired,
+    session: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
+    updateProfile: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object
   }
 
   componentDidMount() {
-    let profile = Object.assign({}, this.props.profile)
+    let profile = Object.assign({}, this.props.session.user.profile)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
     if (profile && profile.address && profile.address.streetNumber) {
-      profile.address.streetNumber = this.props.profile.address.streetNumber.toString()
+      profile.address.streetNumber = profile.address.streetNumber.toString()
     }
     this.setState({ profile })
   }
@@ -81,6 +69,13 @@ export default class Profile extends React.Component {
       icon: 'ios-contacts',
       component: Contact,
     },
+    {
+      key: 'subscriptions',
+      name: 'Subscripciones',
+      description: 'Elige que notificaciones recibir',
+      icon: 'ios-notifications',
+      component: Subscriptions,
+    },
   ]
 
   @autobind
@@ -92,7 +87,7 @@ export default class Profile extends React.Component {
   async signOut() {
     try {
       this.setState({ loading: true })
-      await this.props.logout(this.props.sessionId)
+      await this.props.logout(this.props.session._id)
       this.props.navigation.navigate('Home')
     } catch(error) {
       console.log('Error loging out:', error)
@@ -100,29 +95,31 @@ export default class Profile extends React.Component {
   }
 
   renderLogoutButton() {
-    if (this.props.me) {
+    if (this.props.session) {
       return <LightButton onPress={this.signOut} title='Cerrar Sesión' />
     }
   }
 
   renderErrorMessage() {
-    if (!this.state.errorMessage) return
-    return <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+    const { error } = this.props
+    if (!error) return
+    return <Text style={styles.errorMessage}>{error.message}</Text>
   }
 
   @autobind
   async submit() {
-    let user = Object.assign({}, this.state.me)
-    this.setState({ loading: true })
+    const { user } = this.props.session
+    let userInput = Object.assign({}, {
+      _id: user._id,
+      emails: user.emails,
+      profile: this.state.profile
+    })
     try {
-      const response = await this.props.updateUser({ user })
-      this.setState({
-        errorMessage: '', //error.message.replace('GraphQL error:', ''),
-        loading: false,
-      })
-      event('profile_update_success', JSON.stringify(user))
-      Alert.alert('Datos actualizados con éxito')
+      const response = await this.props.updateProfile(userInput)
+      event('profile_update_success', JSON.stringify(userInput))
+      // if (!this.props.error) Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
+    // TODO: Use this in redux actions as a helper for displaying error messages
       const errMsj = []
       const arrError = graphQLErrors || []
       arrError.forEach(err => {
@@ -175,7 +172,7 @@ export default class Profile extends React.Component {
           <Ionicons name={section.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             {/* <Subtitle style={textStyles.rowSubtitle}>{section.name}</Subtitle> */}
-            <Text numberOfLines={2} style={{ ...textStyles.rowText, paddingLeft: 5 }}>
+            <Text numberOfLines={2} style={{ ...textStyles.rowText, paddingLeft: 5, paddingRight: 5 }}>
               {section.description}
             </Text>
           </View>
@@ -188,7 +185,7 @@ export default class Profile extends React.Component {
 
   @autobind
   onChange(change) {
-    this.setState({ profile: change })
+    this.setState({ profile: change.profile })
   }
 
   render() {
@@ -196,14 +193,16 @@ export default class Profile extends React.Component {
     const menu = [
       { title: 'Identificación', action: () => this.setCurrentSection(0) },
       { title: 'Contacto', action: () => this.setCurrentSection(1) },
+      { title: 'Subscripciones', action: () => this.setCurrentSection(2) },
     ]
     const defaultSection = this.sections[this.state.currentSection]
-    if (this.state.loading) return <Loading />
+
+    if (this.props.loading) return <Loading />
     return (
       <View style={styles.container}>
         <SectionDivider title='' menu={menu} />
         <ScrollView styleNames='fill-container' style={styles.container}>
-          <Form state={this.state} onChange={this.onChange}>
+          <Form state={this.state} onChange={change => this.onChange(change)}>
             {this.renderSection(defaultSection)}
           </Form>
           {this.renderErrorMessage()}

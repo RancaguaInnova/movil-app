@@ -39,35 +39,37 @@ export const login = (email, password) => {
       const {
         data: { session },
       } = await client.mutate({
-        mutation: gql`
-          mutation loginWithPassword($email: String, $password: String) {
-            session: loginWithPassword(email: $email, password: $password) {
+        mutation: gql`mutation loginWithPassword($email: String, $password: String) {
+          session: loginWithPassword(email: $email, password: $password) {
+            _id
+            userId
+            publicKey
+            userId
+            locale
+            roles
+            emailVerified
+            user {
               _id
-              publicKey
-              secretKey
-              userId
-              locale
-              roles
-              emailVerified
-              user {
-                _id
-                profile {
-                  identifier
-                  firstName
-                  lastName
-                  gender
-                  birthdate
-                  educationalLevel
-                  address {
-                    streetName
-                    streetNumber
-                    departmentNumber
-                    city
-                    postalCode
-                  }
-                  phone {
-                    mobilePhone
-                  }
+              emails {
+                address
+                verified
+              }
+              profile {
+                identifier
+                firstName
+                lastName
+                gender
+                birthdate
+                educationalLevel
+                address {
+                  streetName
+                  streetNumber
+                  departmentNumber
+                  city
+                  postalCode
+                }
+                phone {
+                  mobilePhone
                 }
                 email
                 userToken

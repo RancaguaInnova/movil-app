@@ -8,6 +8,7 @@ export default StyleSheet.create({
   errorMessage: {
     color: 'red',
     marginBottom: 10,
+    marginLeft: 20,
     fontSize: 16,
   },
 })
