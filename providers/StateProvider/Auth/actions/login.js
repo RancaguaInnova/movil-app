@@ -51,6 +51,8 @@ export const login = (email, password) => {
             emailVerified
             user {
               _id
+              email
+              userToken
               emails {
                 address
                 verified
@@ -75,11 +77,10 @@ export const login = (email, password) => {
                 phone {
                   mobilePhone
                 }
-                email
-                userToken
               }
             }
           }
+        }
         `,
         variables: { email, password },
       })
