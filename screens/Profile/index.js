@@ -221,7 +221,6 @@ class Profile extends React.Component {
             iconName='save'
             style={{ marginTop: this.state.errorMessage ? 5 : 40 }}
           />
-          <LightButton onPress={this.signOut} title='Cerrar Sesión' />
         </ScrollView>
       </View>
     )
