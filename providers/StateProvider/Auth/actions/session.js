@@ -34,7 +34,7 @@ export const requestSession = () => {
     // Dispatch sync action to "notify" the store we are initiating an async action
     dispatch(sessionRequest())
     try {
-      const session = JSON.parse(await getSession())
+      const session = getSession()
       if (session && session._id) {
         dispatch(sessionResponse(session))
       } else {

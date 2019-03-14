@@ -15,12 +15,7 @@ import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { getMeQry } from 'providers/ApolloProvider/queries'
 import { event } from '/helpers/analytics'
-
-@withGraphQL(getMeQry, { loading: <Loading />, errorComponent: <Error /> })
 export default class CalendarScreen extends React.Component {
-  static propTypes = {
-    me: PropTypes.ObjectComponent,
-  }
   static navigationOptions = {
     title: 'Calendario',
   }
@@ -52,14 +47,13 @@ export default class CalendarScreen extends React.Component {
           view='calendar'
           title='Eventos y actividades comunales'
           navigation={this.props.navigation}
-          me={this.props.me}
         />
         <SectionDivider title='' menu={menu} />
 
         {this.state.current === 'calendar' ? (
-          <Calendar navigation={this.props.navigation} me={this.props.me} />
+          <Calendar navigation={this.props.navigation} />
         ) : (
-          <Tickets navigation={this.props.navigation} me={this.props.me} />
+          <Tickets navigation={this.props.navigation} />
         )}
       </View>
     )

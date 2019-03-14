@@ -1,24 +1,27 @@
 import React from 'react'
-import styles from './styles.js'
+import { Alert } from 'react-native'
+import { connect } from 'react-redux'
+import { Query } from 'react-apollo'
 import PropTypes from 'prop-types'
 import { View, Tile, Subtitle, Overlay, ImageBackground, TouchableOpacity } from '@shoutem/ui'
+
+import styles from './styles.js'
+
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { bannerBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
-import { Query } from 'react-apollo'
-import { WebBrowser } from 'expo'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import { Alert } from 'react-native'
+import { openWebView } from 'providers/StateProvider/WebView/actions'
+
 import { parseUrl } from '/helpers/url'
 import { event } from '/helpers/analytics'
 
-export default class SubHeader extends React.Component {
+class SubHeader extends React.Component {
   static propTypes = {
     view: PropTypes.string,
     title: PropTypes.string,
     imageUrl: PropTypes.string,
-    me: PropTypes.object,
+    userToken: PropTypes.string,
   }
 
   static defaultProps = {
@@ -28,12 +31,11 @@ export default class SubHeader extends React.Component {
 
   onPressBanner = async banner => {
     try {
-      if (banner.targetUrl && banner.targetUrl.trim() !== '' && this.props.me) {
-        const finalUrl = parseUrl(banner.targetUrl, { token: this.props.me.userToken })
-        let result = await WebBrowser.openBrowserAsync(finalUrl)
-        this.setState({ result })
+      if (banner.targetUrl && banner.targetUrl.trim() !== '' && this.props.userToken) {
+        const finalUrl = parseUrl(banner.targetUrl, { token: this.props.userToken })
+        this.props.openWebView(finalUrl)
         event(`click_banner_${this.props.view}_online`, banner.targetUrl)
-      } else if (!this.props.me) {
+      } else if (!this.props.session) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
           { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
@@ -41,7 +43,7 @@ export default class SubHeader extends React.Component {
         event(`click_banner_${this.props.view}_offline`, banner.targetUrl)
       }
     } catch (error) {
-      this.setState({ result: null })
+      //this.setState({ result: null })
     }
   }
 
@@ -88,3 +90,25 @@ export default class SubHeader extends React.Component {
     )
   }
 }
+
+// Redux
+const mapStateToProps = state => {
+  const {
+    auth: { session },
+  } = state
+  return {
+    userToken: session && session.user && session.user.userToken ? session.user.userToken : null,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openWebView: url => {
+      dispatch(openWebView(url))
+    },
+  }
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SubHeader)

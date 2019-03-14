@@ -18,7 +18,8 @@ export default class ProfileScreen extends React.Component {
     requestSession: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     session: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object
   }
 
   state = {
@@ -26,13 +27,17 @@ export default class ProfileScreen extends React.Component {
   }
 
   render() {
+    const { session, loading, logout, updateProfile, error } = this.props
+    if (error) console.log(error)
     return (
       <View style={styles.container}>
-        {!isEmpty(this.props.session) || !isEmpty(this.state.session) ? (
+        {!isEmpty(session) || !isEmpty(this.state.session) ? (
           <Profile
-            profile={this.props.session.user.profile}
-            sessionId={this.props.session._id}
-            logout={this.props.logout}
+            session={session}
+            logout={logout}
+            updateProfile={updateProfile}
+            error={error}
+            loading={loading}
           />
         ) : (
           <Login />

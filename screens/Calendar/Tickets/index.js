@@ -1,33 +1,39 @@
 import React from 'react'
 import { ScrollView, Alert } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { View, TouchableOpacity, Row, Subtitle, Text, Divider, Caption } from '@shoutem/ui'
 import { Ionicons } from '@expo/vector-icons'
-import { pageHit, event } from '/helpers/analytics'
-import textStyles from 'styles/texts'
-import styles from './styles'
-import moment from 'helpers/date/moment'
 import { WebBrowser } from 'expo'
 import { Query } from 'react-apollo'
 import autobind from 'autobind-decorator'
+
+import textStyles from 'styles/texts'
+import styles from './styles'
+
+import { pageHit, event } from '/helpers/analytics'
+import moment from 'helpers/date/moment'
+import { parseUrl } from '/helpers/url'
 import { getSession } from 'providers/ApolloProvider'
 import { ticketsQry } from 'providers/ApolloProvider/queries'
-import { parseUrl } from '/helpers/url'
 import { client } from 'providers/ApolloProvider/client'
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
+import { openWebView } from 'providers/StateProvider/WebView/actions'
+
 const pageName = 'calendar/tickets'
-export default class Tickets extends React.Component {
-  state = {
-    profile: null,
+
+class Tickets extends React.Component {
+  static propTypes = {
+    userId: PropTypes.string,
   }
 
   onClickTicket = async ticket => {
     try {
       if (ticket.externalUrl && ticket.externalUrl.trim() !== '') {
         let url = parseUrl(ticket.externalUrl, { ticket: ticket._id })
-        let result = await WebBrowser.openBrowserAsync(url)
-        this.setState({ result })
+        this.props.openWebView(url)
         event('click_ticket', url)
       }
     } catch (error) {
@@ -59,15 +65,14 @@ export default class Tickets extends React.Component {
 
   render() {
     pageHit(pageName)
-    const profile = getSession()
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
-        {!profile && (
+        {!this.props.userId && (
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
         )}
-        {profile && profile.userId && (
-          <Query query={ticketsQry(profile.userId)} fetchPolicy='network-only'>
+        {this.props.userId && (
+          <Query query={ticketsQry(this.props.userId)} fetchPolicy='network-only'>
             {({ loading, error, data, refetch }) => {
               if (loading) return <Loading />
               if (error) return <Retry callback={refetch} />
@@ -75,7 +80,7 @@ export default class Tickets extends React.Component {
               const { eventUserTicket } = data
               return (
                 <ScrollView>
-                  {eventUserTicket && eventUserTicket.length === 0 && profile && profile.userId ? (
+                  {eventUserTicket && eventUserTicket.length === 0 && this.props.userId ? (
                     <Text styleName='h-center'>No posee entradas vigentes</Text>
                   ) : profile ? (
                     eventUserTicket.map(ticket => this.renderTicket(ticket))
@@ -89,3 +94,26 @@ export default class Tickets extends React.Component {
     )
   }
 }
+
+// Redux
+const mapStateToProps = state => {
+  const {
+    auth: { session },
+  } = state
+  return {
+    userId: session.userId || null,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openWebView: url => {
+      dispatch(openWebView(url))
+    },
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tickets)
