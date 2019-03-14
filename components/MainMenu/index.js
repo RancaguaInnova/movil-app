@@ -132,8 +132,14 @@ class MainMenu extends React.Component {
 
           {auth && (
             <Text style={{ fontWeight: 'bold', paddingTop: 10 }}>
-              {`${user.profile.firstName ? user.profile.firstName.toUpperCase() : ''} ${
-                user.profile.lastName ? user.profile.lastName.toUpperCase() : ''
+              {`${
+                user && user.profile && user.profile.firstName
+                  ? user.profile.firstName.toUpperCase()
+                  : ''
+              } ${
+                user && user.profile && user.profile.lastName
+                  ? user.profile.lastName.toUpperCase()
+                  : ''
               }`}
             </Text>
           )}
