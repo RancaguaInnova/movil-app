@@ -1,0 +1,2 @@
+export const OPEN_WEBVIEW = 'OPEN_WEBVIEW'
+export const CLOSE_WEBVIEW = 'CLOSE_WEBVIEW'
