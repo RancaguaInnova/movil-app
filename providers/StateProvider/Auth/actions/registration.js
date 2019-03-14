@@ -48,6 +48,9 @@ export const register = ({ email, password, profile }) => {
               locale
               roles
               emailVerified
+              subscriptions {
+                absence
+              }
               user {
                 _id
                 profile {

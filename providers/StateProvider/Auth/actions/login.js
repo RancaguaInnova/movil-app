@@ -62,6 +62,9 @@ export const login = (email, password) => {
                 gender
                 birthdate
                 educationalLevel
+                subscriptions {
+                  absence
+                }
                 address {
                   streetName
                   streetNumber

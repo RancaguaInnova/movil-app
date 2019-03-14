@@ -52,6 +52,9 @@ export const updateProfile = userInput => {
               gender
               birthdate
               educationalLevel
+              subscriptions {
+                absence absence
+              }
               address {
                 streetName
                 streetNumber
@@ -72,7 +75,7 @@ export const updateProfile = userInput => {
 
       // Merge the User type with the Session type
       const currentState = getState()
-      const session = Object.assign({}, currentState, user)
+      const session = Object.assign({}, currentState, user, {userId: user._id})
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(profileUpdateResponse(session))
       // return user
