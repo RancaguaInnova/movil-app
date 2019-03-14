@@ -26,6 +26,20 @@ import {
   requestSession,
 } from './session'
 
+import {
+  profileUpdateRequest,
+  profileUpdateResponse,
+  profileUpdateError,
+  updateProfile,
+} from './updateProfile'
+
+import {
+  deviceRegistrationRequest,
+  deviceRegistrationResponse,
+  deviceRegistrationError,
+  registerDevice,
+} from './deviceRegistration'
+
 export {
   registrationRequest,
   registrationResponse,
@@ -43,4 +57,12 @@ export {
   sessionResponse,
   sessionError,
   requestSession,
+  profileUpdateRequest,
+  profileUpdateResponse,
+  profileUpdateError,
+  updateProfile,
+  deviceRegistrationRequest,
+  deviceRegistrationResponse,
+  deviceRegistrationError,
+  registerDevice,
 }
