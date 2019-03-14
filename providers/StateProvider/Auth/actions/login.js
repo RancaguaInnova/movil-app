@@ -44,6 +44,7 @@ export const login = (email, password) => {
             _id
             userId
             publicKey
+            secretKey
             userId
             locale
             roles
@@ -61,6 +62,9 @@ export const login = (email, password) => {
                 gender
                 birthdate
                 educationalLevel
+                subscriptions {
+                  absence
+                }
                 address {
                   streetName
                   streetNumber
