@@ -70,12 +70,9 @@ export const updateProfile = userInput => {
         variables: { user: userInput }
       })
 
-      console.log('user:', user)
       // Merge the User type with the Session type
       const currentState = getState()
-      console.log('currentState:', currentState)
       const session = Object.assign({}, currentState, user)
-      console.log('session:', session)
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(profileUpdateResponse(session))
       // return user

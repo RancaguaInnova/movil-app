@@ -5,13 +5,12 @@ import { Avatar, Text, ListItem } from 'react-native-elements'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
-
 // Screens
 import Auth from 'screens/Auth'
 import Notifications from 'screens/Notifications'
 import Contact from 'screens/Contact'
 import Subscriptions from 'screens/Subscriptions'
-import Profile from 'screens/Profile/Profile'
+import Profile from 'screens/Profile'
 
 // Redux actions
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
@@ -36,9 +35,9 @@ class MainMenu extends React.Component {
       title: 'Editar Perfil',
       icon: 'ios-contact',
       requireAuth: true,
-      /* onPress: () => {
+      onPress: () => {
         this.props.openModal(<Profile />)
-      }, */
+      },
     },
     {
       title: 'Mis Entradas',
@@ -133,7 +132,9 @@ class MainMenu extends React.Component {
 
           {auth && (
             <Text style={{ fontWeight: 'bold', paddingTop: 10 }}>
-              {`${user.profile.firstName.toUpperCase()} ${user.profile.lastName.toUpperCase()}`}
+              {`${user.profile.firstName ? user.profile.firstName.toUpperCase() : ''} ${
+                user.profile.lastName ? user.profile.lastName.toUpperCase() : ''
+              }`}
             </Text>
           )}
           {auth && <Text>{user.email}</Text>}
