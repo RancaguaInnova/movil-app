@@ -143,7 +143,7 @@ class MainMenu extends React.Component {
               }`}
             </Text>
           )}
-          {auth && <Text>{user.email}</Text>}
+          {auth && <Text>{user && user.email ? user.email : ''}</Text>}
         </View>
         <ScrollView style={{ padding: 5, marginTop: 15 }}>
           {this.menuItems
