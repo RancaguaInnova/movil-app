@@ -35,7 +35,7 @@ class MainMenu extends React.Component {
       title: 'Editar Perfil',
       icon: 'ios-contact',
       requireAuth: true,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Profile />)
       },
     },
@@ -43,7 +43,7 @@ class MainMenu extends React.Component {
       title: 'Mis Entradas',
       icon: 'ios-pricetags',
       requireAuth: true,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openWebView('https://tickets.smartrancagua.com')
       },
     },
@@ -51,7 +51,7 @@ class MainMenu extends React.Component {
       title: 'Notificaciones',
       icon: 'ios-notifications-outline',
       requireAuth: true,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Notifications />)
       },
     },
@@ -59,7 +59,7 @@ class MainMenu extends React.Component {
       title: 'Suscripciones',
       icon: 'ios-checkbox-outline',
       requireAuth: true,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Subscriptions />)
       },
     },
@@ -76,15 +76,15 @@ class MainMenu extends React.Component {
       title: 'Cerrar Sesión',
       icon: 'ios-log-out',
       requireAuth: true,
-      onPress: () => {
-        this.props.logout(this.props.session._id)
+      onPress: (user = {}) => {
+        this.props.logout(user._id)
       },
     },
     {
       title: 'Iniciar Sesión',
       icon: 'ios-log-in',
       requireAuth: false,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Auth show='login' />)
       },
     },
@@ -92,7 +92,7 @@ class MainMenu extends React.Component {
       title: 'Registrarse',
       icon: 'ios-person-add',
       requireAuth: false,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Auth show='register' />)
       },
     },
@@ -100,16 +100,16 @@ class MainMenu extends React.Component {
       title: 'Contacto',
       icon: 'ios-chatboxes',
       requireAuth: false,
-      onPress: () => {
+      onPress: (user = {}) => {
         this.props.openModal(<Contact />)
       },
     },
   ]
 
   @autobind
-  openMenu(action) {
+  openMenu(action, user) {
     this.props.closeDrawer()
-    if (action) action()
+    if (action) action(user)
   }
 
   render() {
@@ -151,7 +151,7 @@ class MainMenu extends React.Component {
               return (item.requireAuth && auth) || (!item.requireAuth && !auth)
             })
             .map((item, i) => (
-              <TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress)}>
+              <TouchableOpacity key={i} onPress={user => this.openMenu(item.onPress, user)}>
                 <ListItem
                   title={item.title}
                   titleStyle={{ fontSize: 14 }}

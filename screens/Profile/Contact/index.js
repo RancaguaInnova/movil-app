@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text } from '@shoutem/ui'
+import { View, Text } from 'react-native'
+import { Divider } from 'react-native-elements'
 import { Field } from 'simple-react-form'
 import { TextInput } from 'components/fields'
 import PropTypes from 'prop-types'
@@ -14,6 +15,8 @@ export default class ContactInformation extends React.Component {
     if (this.props.active) {
       return (
         <View style={styles.container}>
+          <Text style={styles.title}>Información de Contacto</Text>
+          <Divider style={styles.divider} />
           <Field
             fieldName='profile.address.streetName'
             type={TextInput}

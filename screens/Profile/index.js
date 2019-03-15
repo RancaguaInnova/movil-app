@@ -21,7 +21,7 @@ import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
 import { Form } from 'simple-react-form'
 import Loading from 'components/Loading'
-import Button from 'components/ShoutemButton'
+import { Button } from 'react-native-elements'
 import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
 import { Alert } from 'react-native'
@@ -40,7 +40,9 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    let profile = Object.assign({}, this.props.session.user.profile)
+    const userProfile =
+      this.props.session && this.props.session.user ? this.props.session.user.profile : {}
+    let profile = Object.assign({}, userProfile)
     let streetNumber = ''
     // Horrible bypass to avoid invalid data type on text input
     if (profile && profile.address && profile.address.streetNumber) {
@@ -198,28 +200,23 @@ class Profile extends React.Component {
 
   render() {
     pageHit('profile')
-    const menu = [
-      { title: 'Identificación', action: () => this.setCurrentSection(0) },
-      { title: 'Contacto', action: () => this.setCurrentSection(1) },
-      { title: 'Subscripciones', action: () => this.setCurrentSection(2) },
-    ]
-    const defaultSection = this.sections[this.state.currentSection]
 
     if (this.props.loading) return <Loading />
     return (
       <View style={styles.container}>
-        <SectionDivider title='' menu={menu} />
-        <ScrollView styleNames='fill-container' style={styles.container}>
+        <SectionDivider title='Editar Perfil' />
+        <ScrollView styleNames='fill-container' style={styles.content}>
           <Form state={this.state} onChange={change => this.onChange(change)}>
-            {this.renderSection(defaultSection)}
+            <Identification active={true} />
+            <Contact active={true} />
           </Form>
           {this.renderErrorMessage()}
           <Button
-            loading={this.state.loading}
+            loading={this.props.loading}
             onPress={this.submit}
-            label='Guardar'
-            iconName='save'
-            style={{ marginTop: this.state.errorMessage ? 5 : 40 }}
+            titleStyle={styles.submitTitle}
+            buttonStyle={styles.submitButton}
+            title='Guardar'
           />
         </ScrollView>
       </View>
