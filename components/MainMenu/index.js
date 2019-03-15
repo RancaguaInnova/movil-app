@@ -17,6 +17,7 @@ import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import { openModal } from 'providers/StateProvider/Modal/actions'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 import { logout } from 'providers/StateProvider/Auth/actions'
+import { parseUrl } from 'helpers/url'
 
 import styles from './styles.js'
 import { sessionError } from '../../providers/StateProvider/Auth/actions/session'
@@ -44,7 +45,10 @@ class MainMenu extends React.Component {
       icon: 'ios-pricetags',
       requireAuth: true,
       onPress: (user = {}) => {
-        this.props.openWebView('https://tickets.smartrancagua.com')
+        const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
+          token: user.userToken,
+        })
+        this.props.openWebView(url)
       },
     },
     {
@@ -151,7 +155,7 @@ class MainMenu extends React.Component {
               return (item.requireAuth && auth) || (!item.requireAuth && !auth)
             })
             .map((item, i) => (
-              <TouchableOpacity key={i} onPress={user => this.openMenu(item.onPress, user)}>
+              <TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress, user)}>
                 <ListItem
                   title={item.title}
                   titleStyle={{ fontSize: 14 }}

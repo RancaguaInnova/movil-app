@@ -15,7 +15,6 @@ import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
-import Subscriptions from './Subscriptions'
 import styles from './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
@@ -72,13 +71,6 @@ class Profile extends React.Component {
       description: 'Ingrese sus datos de dirección y teléfono',
       icon: 'ios-contacts',
       component: Contact,
-    },
-    {
-      key: 'subscriptions',
-      name: 'Subscripciones',
-      description: 'Elige que notificaciones recibir',
-      icon: 'ios-notifications',
-      component: Subscriptions,
     },
   ]
 
