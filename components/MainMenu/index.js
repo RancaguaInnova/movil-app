@@ -66,15 +66,15 @@ class MainMenu extends React.Component {
       onPress: (user = {}) => {
         this.props.openModal(<Subscriptions />)
       },
-    },
-    {
+    } /*  ,
+   {
       title: 'Contacto',
       icon: 'ios-chatboxes',
       requireAuth: true,
       onPress: () => {
         this.props.openModal(<Contact />)
       },
-    },
+    } */,
     // Unnautenticated
     {
       title: 'Cerrar Sesión',
