@@ -38,18 +38,18 @@ export default class CalendarScreen extends React.Component {
   }
 
   render() {
-    const menu = [
+    /* const menu = [
       { title: 'Calendario', action: this.showCalendar },
       { title: 'Mis Entradas', action: this.showTickets },
-    ]
+    ] */
     return (
       <View style={styles.container}>
+        <SectionDivider title='Calendario' />
         <SubHeader
           view='calendar'
           title='Eventos y actividades comunales'
           navigation={this.props.navigation}
         />
-        <SectionDivider title='' menu={menu} />
 
         {this.state.current === 'calendar' ? (
           <Calendar navigation={this.props.navigation} />

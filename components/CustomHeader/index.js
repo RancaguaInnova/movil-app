@@ -73,7 +73,7 @@ class CustomHeader extends React.Component {
     return (
       <Header
         leftComponent={this.renderLogo()}
-        centerComponent={this.renderNotifications()}
+        /* centerComponent={this.renderNotifications()} */
         /* centerComponent={{
           icon: 'menu',
           color: 'red',

@@ -35,7 +35,10 @@ class NewsList extends React.Component {
       <Query query={newsListQry} pollInterval={pollInterval}>
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
-          if (error) return <Retry callback={refetch} />
+          if (error) {
+            console.log('ERROR', error)
+            return <Retry callback={refetch} />
+          }
 
           return data.newsList.map(news => (
             <NewsListItem key={news._id} data={news} onClickNews={this.onClickNews} />

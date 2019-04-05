@@ -44,7 +44,6 @@ export default class Services extends React.Component {
   // TODO: move this to a Redux action?
   async getMagicLink(app) {
     const userEmail = this.props.session.user.email
-    console.log('userEmail:', userEmail)
     try {
       const response = await fetch(app.applicationURL, {
         method: 'POST',
@@ -86,7 +85,6 @@ export default class Services extends React.Component {
         if (app.name === 'Libreta Educativa') {
           const userUrl = await this.getMagicLink(app)
           finalUrl = parseUrl(userUrl)
-          console.log('finalUrl:', finalUrl)
         } else {
           finalUrl = parseUrl(app.applicationURL, { token: session.user.userToken })
         }
@@ -148,14 +146,13 @@ export default class Services extends React.Component {
       return (
         <View style={styles.container}>
           <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
+          <SectionDivider title='Servicios disponibles' />
           <SubHeader
             view='apps'
             title='Seleccione el servicio'
             navigation={this.props.navigation}
             me={this.props.session}
           />
-
-          <SectionDivider title='Servicios disponibles' />
           <ScrollView>{items.map(app => this.renderRow(app))}</ScrollView>
         </View>
       )

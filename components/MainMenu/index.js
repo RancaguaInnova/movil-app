@@ -51,14 +51,14 @@ class MainMenu extends React.Component {
         this.props.openWebView(url)
       },
     },
-    {
+    /*    {
       title: 'Notificaciones',
       icon: 'ios-notifications-outline',
       requireAuth: true,
       onPress: (user = {}) => {
         this.props.openModal(<Notifications />)
       },
-    },
+    }, */
     {
       title: 'Suscripciones',
       icon: 'ios-checkbox-outline',
