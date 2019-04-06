@@ -1,6 +1,6 @@
 export default {
   activeTintColor: 'white',
-  inactiveTintColor: '#521a27',
+  inactiveTintColor: 'white',
   style: {
     backgroundColor: '#fe0747',
   },

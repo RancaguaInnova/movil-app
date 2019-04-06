@@ -1,9 +1,10 @@
 import React from 'react'
+import { View, Text } from 'react-native'
 //import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 import TabBarOptions from './TabBarOptions'
-
+import Tab from 'components/Tab'
 import TabBarIcon from 'components/TabBarIcon'
 import Home from 'screens/Home'
 import Calendar from 'screens/Calendar'
@@ -28,9 +29,9 @@ const CalendarStack = createStackNavigator({
 })
 
 CalendarStack.navigationOptions = {
-  tabBarLabel: 'Calendario',
+  tabBarLabel: <View />, //'Calendario',
   tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-calendar' />
+    <Tab color={tintColor} focused={focused} icon='ios-calendar' title='Calendario' />
   ),
   tabBarOptions: TabBarOptions,
 }
@@ -52,10 +53,10 @@ const DirectoryStack = createStackNavigator({
 })
 
 DirectoryStack.navigationOptions = {
-  tabBarLabel: 'Directorio',
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-call' />
-  ),
+  tabBarLabel: <View />, //'Directorio',
+  tabBarIcon: ({ focused, tintColor }) => {
+    return <Tab color={tintColor} focused={focused} icon='ios-call' title='Directorio' />
+  },
   tabBarOptions: TabBarOptions,
 }
 

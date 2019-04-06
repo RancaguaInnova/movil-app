@@ -48,6 +48,7 @@ class MainMenu extends React.Component {
         const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
           token: user.userToken,
         })
+        console.log('url', url)
         this.props.openWebView(url)
       },
     },

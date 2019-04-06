@@ -45,11 +45,11 @@ export default class CalendarScreen extends React.Component {
     return (
       <View style={styles.container}>
         <SectionDivider title='Calendario' />
-        <SubHeader
+        {/* <SubHeader
           view='calendar'
           title='Eventos y actividades comunales'
           navigation={this.props.navigation}
-        />
+        /> */}
 
         {this.state.current === 'calendar' ? (
           <Calendar navigation={this.props.navigation} />
