@@ -19,8 +19,10 @@ const HomeStack = createStackNavigator({
 })
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Inicio',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name='ios-home' />,
+  tabBarLabel: <View />,
+  tabBarIcon: ({ focused, tintColor }) => (
+    <Tab color={tintColor} focused={focused} icon='ios-home' title='Inicio' />
+  ),
   tabBarOptions: TabBarOptions,
 }
 
@@ -41,9 +43,9 @@ const ServicesStack = createStackNavigator({
 })
 
 ServicesStack.navigationOptions = {
-  tabBarLabel: 'Servicios',
+  tabBarLabel: <View />,
   tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-apps' />
+    <Tab color={tintColor} focused={focused} icon='ios-apps' title='Servicios' />
   ),
   tabBarOptions: TabBarOptions,
 }

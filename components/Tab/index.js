@@ -8,14 +8,14 @@ export default class Tab extends React.Component {
     return (
       <View
         style={{
-          backgroundColor: this.props.focused ? 'green' : 'yellow',
+          backgroundColor: this.props.focused ? '#a21635' : '#ff1248',
           width: '100%',
           height: '100%',
           alignItems: 'center',
         }}
       >
         <TabBarIcon color={this.props.color} focused={this.props.focused} name={this.props.icon} />
-        <Text>{this.props.title}</Text>
+        <Text style={{ color: 'white' }}>{this.props.title}</Text>
       </View>
     )
   }

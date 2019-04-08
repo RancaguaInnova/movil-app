@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { WebBrowser } from 'expo'
 import PropTypes from 'prop-types'
-
+import Auth from 'screens/Auth'
 import textStyles from 'styles/texts'
 import styles from './styles'
 
@@ -24,6 +24,7 @@ export default class Services extends React.Component {
     session: PropTypes.object,
     getServices: PropTypes.func.isRequired,
     openWebView: PropTypes.func.isRequired,
+    openModal: PropTypes.func.isRequired,
     services: PropTypes.object,
     loading: PropTypes.bool.isRequired,
     error: PropTypes.object,
@@ -88,6 +89,7 @@ export default class Services extends React.Component {
         } else {
           finalUrl = parseUrl(app.applicationURL, { token: session.user.userToken })
         }
+        console.log('finalUrl', finalUrl)
         this.props.openWebView(finalUrl, false)
         //let result = await WebBrowser.openBrowserAsync(finalUrl)
         //this.setState({ result })
@@ -104,7 +106,8 @@ export default class Services extends React.Component {
           {
             text: 'Iniciar',
             onPress: () => {
-              this.props.navigation.navigate('Profile')
+              this.props.openModal(<Auth show='login' />)
+              //this.props.navigation.navigate('Profile')
               event('click_service_login', 'login')
             },
           },
@@ -119,11 +122,14 @@ export default class Services extends React.Component {
   renderRow(app) {
     return (
       <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
-        <Row styleName='small'>
+        <Row style={{ margin: 5, borderRadius: 10 }}>
           <Ionicons name={app.icon || 'ios-apps'} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
-            <Subtitle style={textStyles.rowSubtitle}>{app.name}</Subtitle>
-            <Text numberOfLines={2} style={textStyles.rowText}>
+            <Subtitle style={{ ...textStyles.rowSubtitle, marginTop: 5 }}>{app.name}</Subtitle>
+            <Text
+              numberOfLines={3}
+              style={{ ...textStyles.rowText, paddingTop: 10, paddingLeft: 5, paddingRight: 5 }}
+            >
               {app.description}
             </Text>
           </View>

@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,

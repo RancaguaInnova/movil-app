@@ -4,7 +4,7 @@ import texts from './../../styles/texts'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   text: {
     ...texts.title,

@@ -1,5 +1,6 @@
 import React from 'react'
-import { View } from '@shoutem/ui'
+//import { View } from '@shoutem/ui'
+import { View } from 'react-native'
 import NewsListItem from './NewsListItem/index'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
@@ -41,7 +42,9 @@ class NewsList extends React.Component {
           }
 
           return data.newsList.map(news => (
-            <NewsListItem key={news._id} data={news} onClickNews={this.onClickNews} />
+            <View key={news._id}>
+              <NewsListItem data={news} onClickNews={this.onClickNews} />
+            </View>
           ))
         }}
       </Query>

@@ -7,7 +7,8 @@ import PropTypes from 'prop-types'
 
 import textStyles from 'styles/texts'
 import styles from './styles'
-
+import Auth from 'screens/Auth'
+import { openModal } from 'providers/StateProvider/Modal/actions'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 import { getSession } from 'providers/ApolloProvider'
 import Loading from 'providers/ApolloProvider/Loading'
@@ -23,6 +24,7 @@ class Item extends React.Component {
     firstItemInDay: PropTypes.bool,
     userToken: PropTypes.string,
     openWebView: PropTypes.func.isRequired,
+    openModal: PropTypes.func.isRequired,
   }
 
   onClickItem = async item => {
@@ -44,7 +46,8 @@ class Item extends React.Component {
           {
             text: 'Iniciar',
             onPress: () => {
-              this.props.navigation.navigate('Profile')
+              this.props.openModal(<Auth show='login' />)
+              //this.props.navigation.navigate('Profile')
               event('click_calendar_event_login', 'login')
             },
           },
@@ -63,12 +66,12 @@ class Item extends React.Component {
     return (
       <View style={styles.container}>
         <Divider styleName='section-header'>
-          <Caption>
+          <Caption style={{ fontSize: 15 }}>
             {date} / {item.time} HRS.
           </Caption>
         </Divider>
         <TouchableOpacity onPress={() => this.onClickItem(item)} style={styles.touchableRow}>
-          <Row style={styles.container}>
+          <Row style={{ ...styles.container, margin: 8, borderRadius: 15 }}>
             <View styleName='vertical' style={styles.itemContent}>
               <Subtitle
                 numberOfLines={2}
@@ -77,13 +80,19 @@ class Item extends React.Component {
                 {item.name}
               </Subtitle>
               {item.description && (
-                <Text numberOfLines={3} style={textStyles.rowText}>
+                <Text
+                  numberOfLines={3}
+                  style={{ ...textStyles.rowText, paddingTop: 10, paddingRight: 5 }}
+                >
                   {item.description}
                 </Text>
               )}
 
               {item.address && (
-                <Text numberOfLines={3} style={{ ...textStyles.rowText, ...styles.itemSubtitle }}>
+                <Text
+                  numberOfLines={3}
+                  style={{ ...textStyles.rowText, ...styles.itemSubtitle, paddingTop: 10 }}
+                >
                   {`${item.address.streetName} ${item.address.streetNumber || ''}, ${
                     item.address.city
                   }`}
@@ -115,6 +124,9 @@ const mapDispatchToProps = dispatch => {
   return {
     openWebView: url => {
       dispatch(openWebView(url))
+    },
+    openModal: child => {
+      dispatch(openModal(child))
     },
   }
 }

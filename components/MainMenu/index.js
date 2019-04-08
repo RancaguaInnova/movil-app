@@ -101,14 +101,14 @@ class MainMenu extends React.Component {
         this.props.openModal(<Auth show='register' />)
       },
     },
-    {
+    /* {
       title: 'Contacto',
       icon: 'ios-chatboxes',
       requireAuth: false,
       onPress: (user = {}) => {
         this.props.openModal(<Contact />)
       },
-    },
+    }, */
   ]
 
   @autobind
@@ -159,9 +159,9 @@ class MainMenu extends React.Component {
               <TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress, user)}>
                 <ListItem
                   title={item.title}
-                  titleStyle={{ fontSize: 14 }}
+                  titleStyle={{ fontSize: 14, color: '#5e5f5f' }}
                   bottomDivider={true}
-                  leftIcon={<Ionicons name={item.icon} size={26} color='#ff1248' />}
+                  leftIcon={<Ionicons name={item.icon} size={28} color='#5e5f5f' />}
                   rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#ff1248' />}
                 />
               </TouchableOpacity>
