@@ -122,7 +122,7 @@ export default class Services extends React.Component {
   renderRow(app) {
     return (
       <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
-        <Row style={{ margin: 5, borderRadius: 10 }}>
+        <Row style={{ marginBottom: 5 }}>
           <Ionicons name={app.icon || 'ios-apps'} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={{ ...textStyles.rowSubtitle, marginTop: 5 }}>{app.name}</Subtitle>

@@ -48,7 +48,7 @@ export default class Directory extends React.Component {
             paddingTop: 25,
           }}
         >
-          <Row style={{ margin: 5, borderRadius: 10 }}>
+          <Row>
             <TouchableOpacity
               style={{
                 width: 60,
@@ -81,7 +81,7 @@ export default class Directory extends React.Component {
   renderDirectoryItem(item) {
     return (
       <TouchableOpacity key={item._id} onPress={() => this.showDetail(item)}>
-        <Row style={{ margin: 5, borderRadius: 10 }}>
+        <Row style={{ marginBottom: 5 }}>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>

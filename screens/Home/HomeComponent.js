@@ -6,6 +6,7 @@ import { pageHit, screenHit } from '/helpers/analytics'
 import { View, Divider, Caption, Text, Icon } from '@shoutem/ui'
 import styles from './styles'
 import HomeOverlay from './HomeOverlay'
+import HomeBanner from './HomeBanner'
 import NewsList from './NewsList'
 import moment from 'helpers/date/moment'
 import SectionDivider from 'components/SectionDivider'
@@ -38,8 +39,9 @@ export default class Home extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavigationEvents onWillFocus={payload => pageHit(this.pageName)} />
-        <SectionDivider title={title} />
-        <HomeOverlay navigation={this.props.navigation} />
+        {/* <SectionDivider title={title} /> */}
+        <HomeBanner />
+        {/* <HomeOverlay navigation={this.props.navigation} /> */}
         <ScrollView style={styles.container}>
           <NewsList />
         </ScrollView>

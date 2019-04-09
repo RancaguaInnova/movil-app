@@ -71,7 +71,7 @@ class Item extends React.Component {
           </Caption>
         </Divider>
         <TouchableOpacity onPress={() => this.onClickItem(item)} style={styles.touchableRow}>
-          <Row style={{ ...styles.container, margin: 8, borderRadius: 15 }}>
+          <Row style={{ ...styles.container, marginBottom: 5 }}>
             <View styleName='vertical' style={styles.itemContent}>
               <Subtitle
                 numberOfLines={2}
