@@ -12,6 +12,7 @@ import withMutation from 'react-apollo-decorators/lib/withMutation'
 import gql from 'graphql-tag'
 import LightButton from 'components/LightButton'
 const pageName = 'profile/forgot'
+
 @withMutation(gql`
   mutation forgotPassword($email: String) {
     forgotPassword(email: $email)
