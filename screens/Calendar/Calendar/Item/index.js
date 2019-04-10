@@ -79,16 +79,16 @@ class Item extends React.Component {
               >
                 {item.name}
               </Subtitle>
-              {item.description && (
+              {item.description ? (
                 <Text
                   numberOfLines={3}
                   style={{ ...textStyles.rowText, paddingTop: 10, paddingRight: 5 }}
                 >
                   {item.description}
                 </Text>
-              )}
+              ) : null}
 
-              {item.address && (
+              {item.address ? (
                 <Text
                   numberOfLines={3}
                   style={{ ...textStyles.rowText, ...styles.itemSubtitle, paddingTop: 10 }}
@@ -97,12 +97,12 @@ class Item extends React.Component {
                     item.address.city
                   }`}
                 </Text>
-              )}
+              ) : null}
             </View>
 
-            {item.externalUrl && item.externalUrl.trim() !== '' && (
+            {item.externalUrl && item.externalUrl.trim() !== '' ? (
               <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
-            )}
+            ) : null}
           </Row>
         </TouchableOpacity>
       </View>

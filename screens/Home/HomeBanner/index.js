@@ -3,6 +3,7 @@ import styles from './styles'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { ListItem } from 'react-native-elements'
+import * as Animatable from 'react-native-animatable'
 
 /**
   ANIMATION
@@ -10,7 +11,8 @@ import { ListItem } from 'react-native-elements'
   - https://medium.com/@sgroff04/get-started-with-react-native-animations-23ffa1850f9
   - https://react-native-training.github.io/react-native-elements/docs/listitem.html
  */
-export default class HomeBanner extends React.Component {
+
+class HomeBanner extends React.Component {
   static propTypes = {
     style: PropTypes.any,
   }
@@ -34,7 +36,8 @@ export default class HomeBanner extends React.Component {
             containerStyle={{ height: '100%', backgroundColor: '#dbdbdb' }}
           />
         </View>
-        <View
+        <Animatable.View
+          animation='fadeIn'
           style={{
             flexDirection: 'column',
             flex: 0.3,
@@ -44,9 +47,19 @@ export default class HomeBanner extends React.Component {
             backgroundColor: '#ff0648',
           }}
         >
-          <Text style={{ color: 'white', fontSize: 20 }}> + INFO </Text>
-        </View>
+          <Animatable.Text
+            animation='pulse'
+            easing='ease-out'
+            iterationCount='infinite'
+            style={{ textAlign: 'center', color: 'white', fontSize: 20, fontWeight: 'bold' }}
+          >
+            + INFO
+          </Animatable.Text>
+        </Animatable.View>
       </View>
     )
   }
 }
+
+HomeBanner = Animatable.createAnimatableComponent(HomeBanner)
+export default HomeBanner

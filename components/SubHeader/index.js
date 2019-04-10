@@ -69,7 +69,7 @@ class SubHeader extends React.Component {
                   style={styles.container}
                 >
                   <ImageBackground styleName='large-banner' source={img} style={styles.image}>
-                    {!bannerBySection && (
+                    {!bannerBySection ? (
                       <Tile style={styles.tile}>
                         <Overlay styleName='image-overlay'>
                           <Subtitle numberOfLines={2} style={styles.subTitle}>
@@ -77,7 +77,7 @@ class SubHeader extends React.Component {
                           </Subtitle>
                         </Overlay>
                       </Tile>
-                    )}
+                    ) : null}
                   </ImageBackground>
                 </TouchableOpacity>
               )

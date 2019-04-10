@@ -79,12 +79,21 @@ export default class Directory extends React.Component {
   }
 
   renderDirectoryItem(item) {
+    const address =
+      item.contactInformation && item.contactInformation.address
+        ? item.contactInformation.address
+        : {}
+    const strAddress = `${address.streetName || ''} ${address.streetNumber || ''}, ${address.city ||
+      ''}`
     return (
       <TouchableOpacity key={item._id} onPress={() => this.showDetail(item)}>
         <Row style={{ marginBottom: 5 }}>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
+            <Text numberOfLines={3} style={{ ...textStyles.rowText, ...styles.itemSubtitle }}>
+              {strAddress}
+            </Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </Row>
