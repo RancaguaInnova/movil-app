@@ -131,7 +131,7 @@ class Subscriptions extends React.Component {
     pageHit('subscriptions')
     return (
       <View style={styles.container}>
-        <SectionDivider title='Suscripciones' />
+        <SectionDivider title='Suscripciones' modal={true} />
         <ScrollView style={styles.content}>
           <Text style={{ padding: 15 }}>Marque las notificaciones de su interés</Text>
           {/* <Field fieldName='profile.subscriptions.absence' type={Toggle} label='Ausencia escolar' /> */}
