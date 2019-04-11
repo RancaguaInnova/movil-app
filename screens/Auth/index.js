@@ -56,7 +56,7 @@ export default class Auth extends React.Component {
     const current = this.sections.find(s => s.id == this.state.current)
     return (
       <View style={styles.container}>
-        <SectionDivider title={current.title} />
+        <SectionDivider title={current.title} modal={true} />
         <ScrollView>
           {current.component}
 

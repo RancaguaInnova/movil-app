@@ -1,6 +1,9 @@
 import React from 'react'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
+import * as Animatable from 'react-native-animatable'
+import { NavigationEvents } from 'react-navigation'
+import TimerMixin from 'react-timer-mixin'
 import {
   View,
   Text,
@@ -11,10 +14,11 @@ import {
   ImageBackground,
 } from '@shoutem/ui'
 
-export default class SectionDivider extends React.Component {
+class SectionDivider extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     menu: PropTypes.array,
+    modal: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -22,7 +26,13 @@ export default class SectionDivider extends React.Component {
     menu: [],
   }
 
+  animation = {
+    in: 'fadeInRight',
+    out: '',
+  }
+
   state = {
+    animation: this.animation.in,
     menu: [],
     current: 0,
   }
@@ -36,11 +46,24 @@ export default class SectionDivider extends React.Component {
     const menu = this.state.menu || []
     return (
       <View>
+        {!this.props.modal ? (
+          <NavigationEvents
+            onWillFocus={payload => {
+              this.setState({ animation: this.animation.in })
+              TimerMixin.setTimeout(() => {
+                return this.setState({ animation: this.animation.out })
+              }, 250)
+            }}
+          />
+        ) : null}
+
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
-              {title}
-            </Caption>
+            <Animatable.View animation={this.state.animation} iterationCount={1} duration={200}>
+              <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
+                {title}
+              </Caption>
+            </Animatable.View>
           </Divider>
         ) : null}
 
@@ -75,3 +98,6 @@ export default class SectionDivider extends React.Component {
     )
   }
 }
+
+SectionDivider = Animatable.createAnimatableComponent(SectionDivider)
+export default SectionDivider

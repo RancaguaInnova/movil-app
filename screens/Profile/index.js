@@ -196,7 +196,7 @@ class Profile extends React.Component {
     if (this.props.loading) return <Loading />
     return (
       <View style={styles.container}>
-        <SectionDivider title='Editar Perfil' />
+        <SectionDivider title='Editar Perfil' modal={true} />
         <ScrollView styleNames='fill-container' style={styles.content}>
           <Form state={this.state} onChange={change => this.onChange(change)}>
             <Identification active={true} />

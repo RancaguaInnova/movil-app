@@ -129,9 +129,10 @@ class MainMenu extends React.Component {
         <View style={{ alignItems: 'center', marginBottom: 10 }}>
           <Avatar
             rounded
-            size='large'
+            size='xlarge'
             icon={{ name: 'user', type: 'font-awesome' }}
             onPress={() => console.log('Works!')}
+            source={require('assets/images/icon.png')}
             activeOpacity={0.7}
           />
 
@@ -162,7 +163,7 @@ class MainMenu extends React.Component {
                   titleStyle={{ fontSize: 14, color: '#5e5f5f' }}
                   bottomDivider={true}
                   leftIcon={<Ionicons name={item.icon} size={28} color='#5e5f5f' />}
-                  rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#ff1248' />}
+                  rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#5e5f5f' />}
                 />
               </TouchableOpacity>
             ))}
