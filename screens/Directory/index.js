@@ -103,17 +103,7 @@ export default class Directory extends React.Component {
   }
 
   renderDirectoryList(list) {
-    return (
-      <View style={styles.container}>
-        <SubHeader
-          view='directory'
-          title='Contacto con los departamentos comunales'
-          navigation={this.props.navigation}
-        />
-        <SectionDivider title='Departamentos' />
-        <ScrollView>{list.map(directory => this.renderDirectoryItem(directory))}</ScrollView>
-      </View>
-    )
+    return <ScrollView>{list.map(directory => this.renderDirectoryItem(directory))}</ScrollView>
   }
 
   render() {
@@ -125,17 +115,25 @@ export default class Directory extends React.Component {
         {this.state.selected ? (
           <DepartmentDetail department={this.state.selected} close={this.closeDetail} />
         ) : (
-          <Query query={directoryListQry} pollInterval={pollInterval}>
-            {({ loading, error, data, refetch }) => {
-              if (loading) return <Loading />
-              if (error) return <Retry callback={refetch} />
-              const directory =
-                data && data.departmentsList && data.departmentsList.items
-                  ? data.departmentsList.items
-                  : []
-              return this.renderDirectoryList(directory)
-            }}
-          </Query>
+          <View style={styles.container}>
+            <SubHeader
+              view='directory'
+              title='Contacto con los departamentos comunales'
+              navigation={this.props.navigation}
+            />
+            <SectionDivider title='Departamentos' />
+            <Query query={directoryListQry}>
+              {({ loading, error, data, refetch }) => {
+                if (loading) return <Loading />
+                if (error) return <Retry callback={refetch} />
+                const directory =
+                  data && data.departmentsList && data.departmentsList.items
+                    ? data.departmentsList.items
+                    : []
+                return this.renderDirectoryList(directory)
+              }}
+            </Query>
+          </View>
         )}
       </View>
     )

@@ -13,7 +13,7 @@ class HomeBanner extends React.Component {
     out: 'fadeOutLeft',
   }
 
-  state = { current: 0, previous: 0, hide: -1 }
+  state = { current: 0, previous: 0, hide: -1, timer: [] }
 
   list = [
     { type: 'card', icon: '', unit: '', title: 'Temperatura' },
@@ -25,11 +25,12 @@ class HomeBanner extends React.Component {
   }
 
   @autobind
-  nextBanner() {
+  nextBanner(timer) {
     const next = this.state.current < this.list.length - 1 ? this.state.current + 1 : 0
     const state = this.state
     state.previous = state.current
     state.current = next
+    state.timer.push(timer)
     this.setState(state)
   }
 
@@ -38,6 +39,12 @@ class HomeBanner extends React.Component {
     const state = this.state
     state.hide = idx
     this.setState(state)
+  }
+
+  componentWillUnmount() {
+    this.state.timer.map(timer => {
+      TimerMixin.clearTimeout(timer)
+    })
   }
 
   renderBanner(banner, idx) {
@@ -56,8 +63,8 @@ class HomeBanner extends React.Component {
           style={styles.bannerContainer}
           onAnimationEnd={() => {
             if (effect === this.effect.in) {
-              TimerMixin.setTimeout(() => {
-                this.nextBanner()
+              const timer = TimerMixin.setTimeout(() => {
+                this.nextBanner(timer)
               }, 5000)
             } else {
               this.hideBanner(idx)
@@ -88,8 +95,8 @@ class HomeBanner extends React.Component {
             }}
           >
             <Animatable.Text
-              animation='pulse'
-              easing='ease-out'
+              animation='bounceIn'
+              /* easing='ease-out' */
               iterationCount='infinite'
               style={{ textAlign: 'center', color: 'white', fontSize: 20, fontWeight: 'bold' }}
             >
@@ -99,7 +106,7 @@ class HomeBanner extends React.Component {
         </Animatable.View>
       )
     } else {
-      return <View />
+      return <View key={idx} />
     }
   }
 
