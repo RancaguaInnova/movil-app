@@ -16,11 +16,10 @@ import Profile from 'screens/Profile'
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import { openModal } from 'providers/StateProvider/Modal/actions'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
-import { logout } from 'providers/StateProvider/Auth/actions'
+import { sessionError, logout } from 'providers/StateProvider/Auth/actions'
 import { parseUrl } from 'helpers/url'
 
 import styles from './styles.js'
-import { sessionError } from '../../providers/StateProvider/Auth/actions/session'
 
 class MainMenu extends React.Component {
   static propTypes = {

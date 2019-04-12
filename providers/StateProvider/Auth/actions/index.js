@@ -24,7 +24,7 @@ import {
   sessionResponse,
   sessionError,
   requestSession,
-} from './session'
+} from './getSession'
 
 import {
   profileUpdateRequest,
