@@ -1,25 +1,28 @@
 import React from 'react'
+import { View, Text } from 'react-native'
 //import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 import TabBarOptions from './TabBarOptions'
-
+import Tab from 'components/Tab'
 import TabBarIcon from 'components/TabBarIcon'
 import Home from 'screens/Home'
 import Calendar from 'screens/Calendar'
 import Services from 'screens/Services'
 import Directory from 'screens/Directory'
-import Profile from 'screens/Profile'
+/* import Profile from 'screens/Profile'
 import Register from 'screens/Profile/Register'
-import Forgot from 'screens/Profile/Forgot'
+import Forgot from 'screens/Profile/Forgot' */
 
 const HomeStack = createStackNavigator({
   Home,
 })
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Inicio',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name='ios-home' />,
+  tabBarLabel: <View />,
+  tabBarIcon: ({ focused, tintColor }) => (
+    <Tab color={tintColor} focused={focused} icon='ios-home' title='Inicio' />
+  ),
   tabBarOptions: TabBarOptions,
 }
 
@@ -28,9 +31,9 @@ const CalendarStack = createStackNavigator({
 })
 
 CalendarStack.navigationOptions = {
-  tabBarLabel: 'Calendario',
+  tabBarLabel: <View />, //'Calendario',
   tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-calendar' />
+    <Tab color={tintColor} focused={focused} icon='ios-calendar' title='Calendario' />
   ),
   tabBarOptions: TabBarOptions,
 }
@@ -40,9 +43,9 @@ const ServicesStack = createStackNavigator({
 })
 
 ServicesStack.navigationOptions = {
-  tabBarLabel: 'Servicios',
+  tabBarLabel: <View />,
   tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-apps' />
+    <Tab color={tintColor} focused={focused} icon='ios-apps' title='Servicios' />
   ),
   tabBarOptions: TabBarOptions,
 }
@@ -52,31 +55,31 @@ const DirectoryStack = createStackNavigator({
 })
 
 DirectoryStack.navigationOptions = {
-  tabBarLabel: 'Directorio',
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-call' />
-  ),
+  tabBarLabel: <View />, //'Directorio',
+  tabBarIcon: ({ focused, tintColor }) => {
+    return <Tab color={tintColor} focused={focused} icon='ios-call' title='Directorio' />
+  },
   tabBarOptions: TabBarOptions,
 }
 
-const ProfileStack = createStackNavigator({
+/* const ProfileStack = createStackNavigator({
   Profile,
   Register,
   Forgot,
-})
+}) */
 
-ProfileStack.navigationOptions = {
+/* ProfileStack.navigationOptions = {
   tabBarLabel: 'Perfil',
   tabBarIcon: ({ focused, tintColor }) => (
     <TabBarIcon color={tintColor} focused={focused} name='ios-person' />
   ),
   tabBarOptions: TabBarOptions,
-}
+} */
 
 export default createBottomTabNavigator({
   HomeStack,
   CalendarStack,
   ServicesStack,
   DirectoryStack,
-  ProfileStack,
+  //ProfileStack,
 })

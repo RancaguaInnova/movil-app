@@ -5,8 +5,9 @@ import {
 } from './types'
 import { removeTypenameDeep, cleanErrorMessage } from '../../helpers'
 
-import { client } from 'providers/ApolloProvider/client'
+import { client, saveSession } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
+import cloneDeep from 'lodash/cloneDeep'
 
 export const profileUpdateRequest = () => {
   return {
@@ -75,12 +76,12 @@ export const updateProfile = userInput => {
 
       // Merge the User type with the Session type
       const currentState = getState()
-      const session = Object.assign({}, currentState, user, {userId: user._id})
+      const newSession = cloneDeep(currentState.auth.session)
+      newSession.user = user
+      await saveSession(newSession)
       // Dispatch sync action to "notify" the store we finnished the async action
-      dispatch(profileUpdateResponse(session))
-      // return user
+      dispatch(profileUpdateResponse(newSession))
     } catch (error) {
-      console.log('Error at profileUpdate action:', error)
       dispatch(profileUpdateError(cleanErrorMessage(error)))
     }
   }

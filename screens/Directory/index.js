@@ -4,17 +4,23 @@ import { NavigationEvents } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { pageHit } from '/helpers/analytics'
 import { View, Text, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
-import styles from './styles'
-import Loading from 'providers/ApolloProvider/Loading'
-import textStyles from './../../styles/texts'
-import PropTypes from 'prop-types'
-import moment from '../../helpers/date/moment'
-import SubHeader from './../../components/SubHeader'
-import SectionDivider from '../../components/SectionDivider'
-import DepartmentDetail from './DepartmentDetail'
-import autobind from 'autobind-decorator'
-import { directoryListQry } from 'providers/ApolloProvider/queries'
 import { Query } from 'react-apollo'
+import autobind from 'autobind-decorator'
+import PropTypes from 'prop-types'
+
+import styles from './styles'
+import textStyles from 'styles/texts'
+
+import Loading from 'providers/ApolloProvider/Loading'
+import { directoryListQry } from 'providers/ApolloProvider/queries'
+
+import moment from 'helpers/date/moment'
+
+import SubHeader from 'components/SubHeader'
+import SectionDivider from 'components/SectionDivider'
+import CustomHeader from 'components/CustomHeader'
+import DepartmentDetail from './DepartmentDetail'
+
 const pageName = 'directory/list'
 export default class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -24,7 +30,7 @@ export default class Directory extends React.Component {
       }
     } else {
       return {
-        title: navigation.getParam('title') || 'Directorio',
+        header: <CustomHeader type='main' />,
       }
     }
   }
@@ -40,12 +46,9 @@ export default class Directory extends React.Component {
           style={{
             flex: 0.2,
             paddingTop: 25,
-            backgroundColor: 'white',
-            /* borderColor: 'green',
-            borderWidth: 1, */
           }}
         >
-          <Row styleName='small'>
+          <Row>
             <TouchableOpacity
               style={{
                 width: 60,
@@ -76,12 +79,21 @@ export default class Directory extends React.Component {
   }
 
   renderDirectoryItem(item) {
+    const address =
+      item.contactInformation && item.contactInformation.address
+        ? item.contactInformation.address
+        : {}
+    const strAddress = `${address.streetName || ''} ${address.streetNumber || ''}, ${address.city ||
+      ''}`
     return (
       <TouchableOpacity key={item._id} onPress={() => this.showDetail(item)}>
-        <Row styleName='small'>
+        <Row style={{ marginBottom: 5 }}>
           <Ionicons name={item.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             <Subtitle style={textStyles.rowSubtitle}>{item.name}</Subtitle>
+            <Text numberOfLines={3} style={{ ...textStyles.rowText, ...styles.itemSubtitle }}>
+              {strAddress}
+            </Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </Row>
@@ -91,17 +103,7 @@ export default class Directory extends React.Component {
   }
 
   renderDirectoryList(list) {
-    return (
-      <View style={styles.container}>
-        <SubHeader
-          view='directory'
-          title='Contacto con los departamentos comunales'
-          navigation={this.props.navigation}
-        />
-        <SectionDivider title='Departamentos' />
-        <ScrollView>{list.map(directory => this.renderDirectoryItem(directory))}</ScrollView>
-      </View>
-    )
+    return <ScrollView>{list.map(directory => this.renderDirectoryItem(directory))}</ScrollView>
   }
 
   render() {
@@ -113,17 +115,25 @@ export default class Directory extends React.Component {
         {this.state.selected ? (
           <DepartmentDetail department={this.state.selected} close={this.closeDetail} />
         ) : (
-          <Query query={directoryListQry} pollInterval={pollInterval}>
-            {({ loading, error, data, refetch }) => {
-              if (loading) return <Loading />
-              if (error) return <Retry callback={refetch} />
-              const directory =
-                data && data.departmentsList && data.departmentsList.items
-                  ? data.departmentsList.items
-                  : []
-              return this.renderDirectoryList(directory)
-            }}
-          </Query>
+          <View style={styles.container}>
+            <SubHeader
+              view='directory'
+              title='Contacto con los departamentos comunales'
+              navigation={this.props.navigation}
+            />
+            <SectionDivider title='Departamentos' />
+            <Query query={directoryListQry}>
+              {({ loading, error, data, refetch }) => {
+                if (loading) return <Loading />
+                if (error) return <Retry callback={refetch} />
+                const directory =
+                  data && data.departmentsList && data.departmentsList.items
+                    ? data.departmentsList.items
+                    : []
+                return this.renderDirectoryList(directory)
+              }}
+            </Query>
+          </View>
         )}
       </View>
     )

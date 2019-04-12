@@ -68,10 +68,10 @@ class Tickets extends React.Component {
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
-        {!this.props.userId && (
+        {!this.props.userId ? (
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
-        )}
-        {this.props.userId && (
+        ) : null}
+        {this.props.userId ? (
           <Query query={ticketsQry(this.props.userId)} fetchPolicy='network-only'>
             {({ loading, error, data, refetch }) => {
               if (loading) return <Loading />
@@ -89,7 +89,7 @@ class Tickets extends React.Component {
               )
             }}
           </Query>
-        )}
+        ) : null}
       </View>
     )
   }

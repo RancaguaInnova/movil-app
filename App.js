@@ -1,18 +1,36 @@
 import React from 'react'
-import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native'
+import { Platform, StatusBar, StyleSheet, View, YellowBox, Text } from 'react-native'
 import { AppLoading, Asset, Font, Icon } from 'expo'
-import WebView from 'components/WebView'
 import AppNavigator from './navigation/AppNavigator'
 import { ApolloProvider } from 'react-apollo'
+import autobind from 'autobind-decorator'
+import { connect, Provider } from 'react-redux'
+import Drawer from 'react-native-drawer'
+import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
+import WebView from 'components/WebView'
+import CustomModal from 'components/CustomModal'
 import { recoverSession, client } from 'providers/ApolloProvider'
-import { Provider } from 'react-redux'
+import MainMenu from 'components/MainMenu'
 import store from 'providers/StateProvider'
 
 YellowBox.ignoreWarnings(['Require cycle:'])
-
+YellowBox.ignoreWarnings(['Setting a timer'])
+console.ignoredYellowBox = ['Setting a timer']
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    drawerOpen: false,
+  }
+
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({ drawerOpen: store.getState().drawer.open })
+    })
+  }
+
+  @autobind
+  onDrawerClose() {
+    store.dispatch(closeDrawer())
   }
 
   render() {
@@ -28,11 +46,23 @@ export default class App extends React.Component {
       return (
         <ApolloProvider client={client}>
           <Provider store={store}>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-              <AppNavigator />
-              <WebView />
-            </View>
+            <Drawer
+              open={this.state.drawerOpen}
+              openDrawerOffset={0.2}
+              side='right'
+              acceptTap={true}
+              onClose={this.onDrawerClose}
+              useInteractionManager={true}
+              ref={ref => (this._drawer = ref)}
+              content={<MainMenu />}
+            >
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+                <AppNavigator />
+                <WebView />
+                <CustomModal />
+              </View>
+            </Drawer>
           </Provider>
         </ApolloProvider>
       )

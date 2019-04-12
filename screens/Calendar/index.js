@@ -12,12 +12,13 @@ import autobind from 'autobind-decorator'
 import { ObjectComponent } from 'simple-react-form'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import Loading from 'providers/ApolloProvider/Loading'
+import CustomHeader from 'components/CustomHeader'
 import Error from 'providers/ApolloProvider/ApolloError'
 import { getMeQry } from 'providers/ApolloProvider/queries'
 import { event } from '/helpers/analytics'
 export default class CalendarScreen extends React.Component {
   static navigationOptions = {
-    title: 'Calendario',
+    header: <CustomHeader type='main' />,
   }
 
   state = {
@@ -37,18 +38,18 @@ export default class CalendarScreen extends React.Component {
   }
 
   render() {
-    const menu = [
+    /* const menu = [
       { title: 'Calendario', action: this.showCalendar },
       { title: 'Mis Entradas', action: this.showTickets },
-    ]
+    ] */
     return (
       <View style={styles.container}>
-        <SubHeader
+        <SectionDivider title='Calendario' />
+        {/* <SubHeader
           view='calendar'
           title='Eventos y actividades comunales'
           navigation={this.props.navigation}
-        />
-        <SectionDivider title='' menu={menu} />
+        /> */}
 
         {this.state.current === 'calendar' ? (
           <Calendar navigation={this.props.navigation} />

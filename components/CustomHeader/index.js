@@ -3,6 +3,7 @@ import styles from './styles.js'
 import PropTypes from 'prop-types'
 import { WebView } from 'react-native'
 import autobind from 'autobind-decorator'
+import { connect } from 'react-redux'
 import {
   Modal,
   View,
@@ -16,23 +17,32 @@ import {
 import { Header } from 'react-native-elements'
 import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
 import { event } from '/helpers/analytics'
+import { openDrawer } from 'providers/StateProvider/Drawer/actions'
+import { openModal } from 'providers/StateProvider/Modal/actions'
 
-export default class CustomHeader extends React.Component {
+import Notifications from 'screens/Notifications'
+
+class CustomHeader extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
     type: PropTypes.string,
+    openDrawer: PropTypes.func,
+    openModal: PropTypes.func,
   }
 
   static defaultProps = {
     onClose: () => {},
     type: 'main',
   }
+
+  @autobind
   showMenu() {
-    console.log('show menu')
+    this.props.openDrawer()
   }
 
+  @autobind
   showNotifications() {
-    console.log('show notifications')
+    this.props.openModal(<Notifications />)
   }
 
   renderLogo() {
@@ -63,7 +73,7 @@ export default class CustomHeader extends React.Component {
     return (
       <Header
         leftComponent={this.renderLogo()}
-        centerComponent={this.renderNotifications()}
+        /* centerComponent={this.renderNotifications()} */
         /* centerComponent={{
           icon: 'menu',
           color: 'red',
@@ -76,7 +86,7 @@ export default class CustomHeader extends React.Component {
           size: 35,
           onPress: this.showMenu,
         }}
-        rightContainerStyle={{ fontSize: 20 }}
+        /* rightContainerStyle=""*/
         containerStyle={styles.header}
       />
     )
@@ -106,3 +116,28 @@ export default class CustomHeader extends React.Component {
     }
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openDrawer: () => {
+      dispatch(openDrawer())
+    },
+    openModal: child => {
+      dispatch(openModal(child))
+    },
+  }
+}
+
+const mapStateToProps = state => {
+  const {
+    auth: { session, loading },
+  } = state
+  return {
+    session,
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomHeader)

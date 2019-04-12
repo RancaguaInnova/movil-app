@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableWithoutFeedback } from 'react-native'
-import { View, Text, TextInput, Subtitle } from '@shoutem/ui'
+import { TouchableWithoutFeedback, Text } from 'react-native'
+import { View, TextInput, Subtitle } from '@shoutem/ui'
 import autobind from 'autobind-decorator'
 import rut from 'rut.js'
 import styles from './styles'
@@ -14,33 +14,31 @@ export default class TextInputField extends React.Component {
     passProps: PropTypes.object,
     bottom: PropTypes.bool,
     errorMessage: PropTypes.string,
-    rut: PropTypes.bool
+    rut: PropTypes.bool,
   }
 
   static defaultProps = {
-    label: 'Input'
+    label: 'Input',
   }
 
-  renderErrorMessage () {
+  renderErrorMessage() {
     if (!this.props.errorMessage) return
     return <Text>{this.props.errorMessage}</Text>
   }
 
   @autobind
-  handleChange (change) {
+  handleChange(change) {
     if (this.props.rut) {
       return this.props.onChange(rut.format(change))
     }
     return this.props.onChange(change)
   }
 
-  render () {
+  render() {
     return (
       <View>
-        <View>
-          <View>
-            <Subtitle>{this.props.label}</Subtitle>
-          </View>
+        <View style={{ flex: 1 }}>
+          <Text>{this.props.label}</Text>
           <TextInput
             autoCapitalize='none'
             autoCorrect={false}

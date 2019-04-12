@@ -89,10 +89,10 @@ class WebViewComponent extends React.Component {
                 onNavigationStateChange={this.onNavigationStateChange}
               />
             </View>
-            <WebViewFooter
+            {/*  <WebViewFooter
               goBack={this.goBack}
               title={this.props.closeOnBack ? 'Cerrar' : 'Atrás'}
-            />
+            /> */}
           </View>
         </Modal>
       </View>

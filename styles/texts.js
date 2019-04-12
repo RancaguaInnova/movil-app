@@ -13,12 +13,13 @@ export default {
     ...iOSUIKit.bodyObject,
   },
   rowSubtitle: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   rowText: {
-    fontSize: 12,
+    fontSize: 14,
   },
   rowCaption: {
-    fontSize: 10,
+    fontSize: 12,
   },
 }

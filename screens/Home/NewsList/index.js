@@ -1,5 +1,6 @@
 import React from 'react'
-import { View } from '@shoutem/ui'
+//import { View } from '@shoutem/ui'
+import { View } from 'react-native'
 import NewsListItem from './NewsListItem/index'
 import { WebBrowser } from 'expo'
 import autobind from 'autobind-decorator'
@@ -35,10 +36,15 @@ class NewsList extends React.Component {
       <Query query={newsListQry} pollInterval={pollInterval}>
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
-          if (error) return <Retry callback={refetch} />
+          if (error) {
+            console.log('ERROR', error)
+            return <Retry callback={refetch} />
+          }
 
           return data.newsList.map(news => (
-            <NewsListItem key={news._id} data={news} onClickNews={this.onClickNews} />
+            <View key={news._id}>
+              <NewsListItem data={news} onClickNews={this.onClickNews} />
+            </View>
           ))
         }}
       </Query>

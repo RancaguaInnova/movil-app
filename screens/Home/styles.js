@@ -4,11 +4,11 @@ export default StyleSheet.create({
   mainContainer: {
     flex: 1,
     //backgroundColor: '#4fb2e3',
-    paddingTop: 30,
+    //paddingTop: 30,
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,

@@ -15,4 +15,10 @@ export default {
     data: null,
     error: null,
   },
+  drawer: {
+    open: false,
+  },
+  modal: {
+    child: null,
+  },
 }

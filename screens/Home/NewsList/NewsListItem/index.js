@@ -27,7 +27,7 @@ export default class NewsListItem extends React.Component {
     }
     return (
       <TouchableOpacity onPress={() => this.props.onClickNews(newsData)}>
-        <Row>
+        <Row style={{ marginBottom: 5 }}>
           <Image styleName='small rounded-corners' source={newsData.image} />
           <View styleName='vertical stretch space-between'>
             <Subtitle style={textStyles.rowSubtitle}>{newsData.title}</Subtitle>

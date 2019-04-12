@@ -1,13 +1,15 @@
 export default {
   input: {
     margin: 5,
-    marginLeft: 10,
+    marginLeft: 0,
+    borderWidth: 2,
+    borderColor: '#ebebeb',
     marginBottom: 10,
     height: 35,
     padding: 5,
     fontSize: 15,
-    color: '#444',
-    borderRadius: 5,
-    backgroundColor: '#eee'
-  }
+    color: 'black',
+    borderRadius: 10,
+    backgroundColor: 'white',
+  },
 }

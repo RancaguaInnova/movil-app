@@ -1,6 +1,9 @@
 import React from 'react'
 import styles from './styles.js'
 import PropTypes from 'prop-types'
+import * as Animatable from 'react-native-animatable'
+import { NavigationEvents } from 'react-navigation'
+import TimerMixin from 'react-timer-mixin'
 import {
   View,
   Text,
@@ -11,10 +14,11 @@ import {
   ImageBackground,
 } from '@shoutem/ui'
 
-export default class SectionDivider extends React.Component {
+class SectionDivider extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     menu: PropTypes.array,
+    modal: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -22,13 +26,29 @@ export default class SectionDivider extends React.Component {
     menu: [],
   }
 
+  animation = {
+    in: 'fadeInRight',
+    out: '',
+  }
+
   state = {
+    animation: this.animation.in,
     menu: [],
+    timer: [],
     current: 0,
   }
 
   componentDidMount() {
-    this.setState({ menu: this.props.menu })
+    const state = this.state
+    state.menu = this.props.menu
+    state.timer = this.state.timer || []
+    this.setState(state)
+  }
+
+  componentWillUnmount() {
+    this.state.timer.map(timer => {
+      TimerMixin.clearTimeout(timer)
+    })
   }
 
   render() {
@@ -36,11 +56,30 @@ export default class SectionDivider extends React.Component {
     const menu = this.state.menu || []
     return (
       <View>
+        {!this.props.modal ? (
+          <NavigationEvents
+            onWillFocus={payload => {
+              const state = this.state
+              state.animation = this.animation.in
+              state.timer.push(
+                TimerMixin.setTimeout(() => {
+                  const st = this.state
+                  st.animation = this.animation.out
+                  this.setState(st)
+                }, 250)
+              )
+              this.setState(state)
+            }}
+          />
+        ) : null}
+
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
-              {title}
-            </Caption>
+            <Animatable.View animation={this.state.animation} iterationCount={1} duration={200}>
+              <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
+                {title}
+              </Caption>
+            </Animatable.View>
           </Divider>
         ) : null}
 
@@ -63,7 +102,7 @@ export default class SectionDivider extends React.Component {
                     this.setState({ current: key })
                   }}
                 >
-                  <Text styleName='h-center' style={{ color: 'white', fontSize: 16 }}>
+                  <Text styleName='h-center' style={{ color: 'white', fontSize: 14 }}>
                     {item.title}
                   </Text>
                 </TouchableOpacity>
@@ -75,3 +114,6 @@ export default class SectionDivider extends React.Component {
     )
   }
 }
+
+SectionDivider = Animatable.createAnimatableComponent(SectionDivider)
+export default SectionDivider

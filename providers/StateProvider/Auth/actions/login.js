@@ -1,8 +1,4 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_RESPONSE,
-  LOGIN_ERROR,
-} from './types'
+import { LOGIN_REQUEST, LOGIN_RESPONSE, LOGIN_ERROR } from './types'
 
 import { client } from 'providers/ApolloProvider/client'
 import gql from 'graphql-tag'
@@ -11,7 +7,8 @@ import { saveSession } from 'providers/ApolloProvider/client'
 export const loginRequest = () => {
   return {
     type: LOGIN_REQUEST,
-    loading: true
+    loading: true,
+    error: null,
   }
 }
 
@@ -19,7 +16,8 @@ export const loginResponse = session => {
   return {
     type: LOGIN_RESPONSE,
     loading: false,
-    session
+    error: null,
+    session,
   }
 }
 
@@ -28,7 +26,7 @@ export const loginError = error => {
   return {
     type: LOGIN_ERROR,
     loading: false,
-    error
+    error,
   }
 }
 
@@ -38,7 +36,9 @@ export const login = (email, password) => {
     dispatch(loginRequest())
     // Call Apollo client with the login mutation here
     try {
-      const { data: { session } } = await client.mutate({
+      const {
+        data: { session },
+      } = await client.mutate({
         mutation: gql`mutation loginWithPassword($email: String, $password: String) {
           session: loginWithPassword(email: $email, password: $password) {
             _id
@@ -51,6 +51,8 @@ export const login = (email, password) => {
             emailVerified
             user {
               _id
+              email
+              userToken
               emails {
                 address
                 verified
@@ -76,12 +78,11 @@ export const login = (email, password) => {
                   mobilePhone
                 }
               }
-              email
-              userToken
             }
           }
-        }`,
-        variables: { email, password }
+        }
+        `,
+        variables: { email, password },
       })
 
       await saveSession(session)
