@@ -13,7 +13,7 @@ import { Permissions, Notifications } from 'expo'
 
 import styles from './styles.js'
 import SectionDivider from 'components/SectionDivider'
-import { registerDevice } from 'providers/StateProvider/Auth/actions'
+import { registerDevice, updateProfile } from 'providers/StateProvider/Auth/actions'
 
 class Subscriptions extends React.Component {
   static propTypes = {
@@ -51,7 +51,7 @@ class Subscriptions extends React.Component {
     userProfile.profile.subscriptions = this.state.subscriptions
     let userInput = Object.assign({}, userProfile)
     try {
-      const response = await this.props.updateProfile(userInput)
+      await this.props.updateProfile(userInput)
       event('subscriptions_update_success', JSON.stringify(userInput))
       // if (!this.props.error) Alert.alert('Datos actualizados con éxito')
     } catch ({ response, operation, graphQLErrors, networkError }) {
@@ -134,7 +134,6 @@ class Subscriptions extends React.Component {
         <SectionDivider title='Suscripciones' modal={true} />
         <ScrollView style={styles.content}>
           <Text style={{ padding: 15 }}>Marque las notificaciones de su interés</Text>
-          {/* <Field fieldName='profile.subscriptions.absence' type={Toggle} label='Ausencia escolar' /> */}
           <CheckBox
             title='Ausencia escolar'
             checked={this.state.subscriptions.absence}

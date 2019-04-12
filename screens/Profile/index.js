@@ -114,7 +114,7 @@ class Profile extends React.Component {
       }
     )
     try {
-      const response = await this.props.updateProfile(userInput)
+      await this.props.updateProfile(userInput)
       event('profile_update_success', JSON.stringify(userInput))
     } catch ({ response, operation, graphQLErrors, networkError }) {
       // TODO: Use this in redux actions as a helper for displaying error messages
