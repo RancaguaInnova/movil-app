@@ -34,11 +34,21 @@ class SectionDivider extends React.Component {
   state = {
     animation: this.animation.in,
     menu: [],
+    timer: [],
     current: 0,
   }
 
   componentDidMount() {
-    this.setState({ menu: this.props.menu })
+    const state = this.state
+    state.menu = this.props.menu
+    state.timer = this.state.timer || []
+    this.setState(state)
+  }
+
+  componentWillUnmount() {
+    this.state.timer.map(timer => {
+      TimerMixin.clearTimeout(timer)
+    })
   }
 
   render() {
@@ -49,10 +59,16 @@ class SectionDivider extends React.Component {
         {!this.props.modal ? (
           <NavigationEvents
             onWillFocus={payload => {
-              this.setState({ animation: this.animation.in })
-              TimerMixin.setTimeout(() => {
-                return this.setState({ animation: this.animation.out })
-              }, 250)
+              const state = this.state
+              state.animation = this.animation.in
+              state.timer.push(
+                TimerMixin.setTimeout(() => {
+                  const st = this.state
+                  st.animation = this.animation.out
+                  this.setState(st)
+                }, 250)
+              )
+              this.setState(state)
             }}
           />
         ) : null}

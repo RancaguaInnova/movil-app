@@ -14,7 +14,8 @@ import MainMenu from 'components/MainMenu'
 import store from 'providers/StateProvider'
 
 YellowBox.ignoreWarnings(['Require cycle:'])
-
+YellowBox.ignoreWarnings(['Setting a timer'])
+console.ignoredYellowBox = ['Setting a timer']
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
