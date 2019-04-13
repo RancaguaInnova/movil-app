@@ -52,15 +52,15 @@ export default class App extends React.Component {
               side='right'
               acceptTap={true}
               onClose={this.onDrawerClose}
-              useInteractionManager={true}
+              /* useInteractionManager={true} */
               ref={ref => (this._drawer = ref)}
               content={<MainMenu />}
             >
+              <WebView />
+              <CustomModal />
               <View style={styles.container}>
-                {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+                {Platform.OS === 'ios' ? <StatusBar barStyle='default' /> : null}
                 <AppNavigator />
-                <WebView />
-                <CustomModal />
               </View>
             </Drawer>
           </Provider>

@@ -43,13 +43,14 @@ class CustomModal extends React.Component {
     return (
       <View>
         <Modal
-          animationType='slide'
+          /* animationType='slide' */
           transparent={false}
           visible={visible}
+          style={{ paddingTop: 0 }}
           onRequestClose={this.onRequestClose}
         >
+          <CustomHeader onClose={this.close} type='popup' />
           <View style={styles.container}>
-            <CustomHeader onClose={this.close} type='popup' />
             <View style={styles.modalContainer}>{this.props.child}</View>
           </View>
         </Modal>

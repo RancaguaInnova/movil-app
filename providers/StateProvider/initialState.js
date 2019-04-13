@@ -21,4 +21,11 @@ export default {
   modal: {
     child: null,
   },
+  banner: {
+    type: '',
+    section: '',
+    loading: false,
+    data: null,
+    error: null,
+  },
 }
