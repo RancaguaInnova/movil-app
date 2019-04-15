@@ -2,6 +2,7 @@ import { CARDS_REQUEST, CARDS_RESPONSE, CARDS_ERROR } from './types'
 import { client } from 'providers/ApolloProvider/client'
 import { cardListQry } from 'providers/ApolloProvider/queries'
 import gql from 'graphql-tag'
+import _compact from 'lodash/compact'
 
 export const cardsRequest = (type, data = null, error = null) => {
   return {
@@ -27,10 +28,12 @@ export const cards = () => {
         data.cardsList = data.cardsList || []
         data.cardsList = data.cardsList.map(card => {
           card.type = 'indicator'
-          return card
+          if (card.icon || card.iconUrl) return card
         })
+
+        data.cardsList = _compact(data.cardsList)
       }
-      console.log('CARDS!!!!!!!!', data)
+      //console.log('CARDS!!!!!!!!', data)
       dispatch(cardsRequest(CARDS_RESPONSE, data))
       return data
     } catch (error) {
