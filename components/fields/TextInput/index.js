@@ -5,6 +5,7 @@ import { View, TextInput, Subtitle } from '@shoutem/ui'
 import autobind from 'autobind-decorator'
 import rut from 'rut.js'
 import styles from './styles'
+import _ from 'lodash'
 
 export default class TextInputField extends React.Component {
   static propTypes = {
@@ -16,7 +17,10 @@ export default class TextInputField extends React.Component {
     errorMessage: PropTypes.string,
     rut: PropTypes.bool,
   }
-
+  constructor(props) {
+    super(props)
+    this.state = { value: this.props.value }
+  }
   static defaultProps = {
     label: 'Input',
   }
@@ -25,13 +29,18 @@ export default class TextInputField extends React.Component {
     if (!this.props.errorMessage) return
     return <Text>{this.props.errorMessage}</Text>
   }
+  @autobind
+  handleBlur() {
+    if (this.props.rut) {
+      let r = rut.format(this.state.value)
+      this.setState({ value: r })
+    }
+    return this.props.onChange(this.state.value)
+  }
 
   @autobind
   handleChange(change) {
-    if (this.props.rut) {
-      return this.props.onChange(rut.format(change))
-    }
-    return this.props.onChange(change)
+    this.setState({ value: change })
   }
 
   render() {
@@ -42,9 +51,10 @@ export default class TextInputField extends React.Component {
           <TextInput
             autoCapitalize='none'
             autoCorrect={false}
+            onBlur={this.handleBlur}
             blurOnSubmit
             onChangeText={this.handleChange}
-            value={this.props.value}
+            value={this.state.value}
             {...this.props.passProps}
             style={styles.input}
           />
