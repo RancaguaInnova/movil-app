@@ -28,4 +28,10 @@ export default {
     data: null,
     error: null,
   },
+  cards: {
+    type: '',
+    loading: false,
+    data: null,
+    error: null,
+  },
 }

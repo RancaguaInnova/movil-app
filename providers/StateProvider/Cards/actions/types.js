@@ -1,0 +1,3 @@
+export const CARDS_REQUEST = 'CARDS_REQUEST'
+export const CARDS_RESPONSE = 'CARDS_RESPONSE'
+export const CARDS_ERROR = 'CARDS_ERROR'

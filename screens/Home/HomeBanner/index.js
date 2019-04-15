@@ -9,6 +9,7 @@ import autobind from 'autobind-decorator'
 import { Image } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { banners } from 'providers/StateProvider/Banner/actions'
+import { cards } from 'providers/StateProvider/Cards/actions'
 import Loading from 'providers/ApolloProvider/Loading'
 class HomeBanner extends React.Component {
   effect = {
@@ -26,12 +27,14 @@ class HomeBanner extends React.Component {
   static propTypes = {
     style: PropTypes.any,
     banners: PropTypes.func,
-    banner: PropTypes.any,
+    cards: PropTypes.func,
+    list: PropTypes.array,
+    loading: PropTypes.bool,
   }
 
   async componentDidMount() {
     try {
-      await this.props.banners('home')
+      await Promise.all([this.props.banners('home'), this.props.cards()])
     } catch (error) {
       console.log('Error getting services:', error)
     }
@@ -54,7 +57,6 @@ class HomeBanner extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('this.state.timer', this.state.timer)
     this.state.timer.map(timer => {
       TimerMixin.clearTimeout(timer)
     })
@@ -77,13 +79,16 @@ class HomeBanner extends React.Component {
           style={styles.bannerContainer}
           onAnimationEnd={() => {
             if (effect === this.effect.in) {
-              const state = this.state
-              state.timer.push(
-                TimerMixin.setTimeout(() => {
-                  this.nextBanner()
-                }, 5000)
-              )
-              this.setState(state)
+              // If have > 1 banners
+              if (this.list.length > 1) {
+                const state = this.state
+                state.timer.push(
+                  TimerMixin.setTimeout(() => {
+                    this.nextBanner()
+                  }, 5000)
+                )
+                this.setState(state)
+              }
             } else {
               this.hideBanner(idx)
             }
@@ -139,29 +144,18 @@ class HomeBanner extends React.Component {
   }
 
   render() {
-    if (this.props.banner.data) {
+    //console.log('LOADING!!', this.props)
+    if (this.props.list && this.props.list.length > 0) {
       return (
         <View style={styles.container}>
           {this.list.map((banner, idx) => this.renderBanner(banner, idx))}
         </View>
       )
-    } else if (this.props.banner.loading) {
+    } else if (this.props.loading) {
       return <View style={styles.container} />
     } else {
       return <View />
     }
-    /* return (
-      <View style={styles.container}>
-        {// Ready
-        this.props.banner.data
-          ? this.list.map((banner, idx) => this.renderBanner(banner, idx))
-          : null}
-        {// Loading
-        this.props.banner.loading ? <ActivityIndicator /> : null}
-        {// Error
-        this.props.banner.loading ? <ActivityIndicator /> : null}
-      </View>
-    ) */
   }
 }
 
@@ -172,13 +166,22 @@ const mapDispatchToProps = dispatch => {
     banners: section => {
       dispatch(banners(section))
     },
+    cards: () => {
+      dispatch(cards())
+    },
   }
 }
 
 const mapStateToProps = state => {
-  const { banner } = state
+  const { banner, cards } = state
+  const bannerList =
+    banner && banner.data && banner.data.bannersBySection ? banner.data.bannersBySection : []
+  const cardsList = cards && cards.data && cards.data.cardsList ? cards.data.cardsList : []
+
   return {
-    banner,
+    list: bannerList.concat(cardsList),
+    loading:
+      (banner && banner.loading === true) || (cards && cards.loading === true) ? true : false,
   }
 }
 

@@ -1,6 +1,6 @@
 import { BANNER_REQUEST, BANNER_RESPONSE, BANNER_ERROR } from './types'
 import { client } from 'providers/ApolloProvider/client'
-import { bannerBySectionQry } from 'providers/ApolloProvider/queries'
+import { bannersBySectionQry } from 'providers/ApolloProvider/queries'
 import gql from 'graphql-tag'
 
 export const bannerRequest = (type, section = '', data = null, error = null) => {
@@ -20,11 +20,18 @@ export const banners = section => {
     // Call Apollo client
     try {
       const { data } = await client.query({
-        query: bannerBySectionQry(section),
+        query: bannersBySectionQry(section),
       })
 
       // Dispatch sync action to "notify" the store we finnished the async action
-      console.log('bannerBySection data', data)
+      if (data) {
+        data.bannersBySection = data.bannersBySection || []
+        data.bannersBySection = data.bannersBySection.map(banner => {
+          banner.type = 'banner'
+          return banner
+        })
+      }
+
       dispatch(bannerRequest(BANNER_RESPONSE, section, data))
       return data
     } catch (error) {
