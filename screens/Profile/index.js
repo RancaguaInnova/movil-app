@@ -86,7 +86,7 @@ class Profile extends React.Component {
       await this.props.logout(this.props.session._id)
       //this.props.navigation.navigate('Home')
     } catch (error) {
-      console.log('Error loging out:', error)
+      console.error('Error loging out:', error)
     }
   }
 

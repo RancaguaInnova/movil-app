@@ -46,7 +46,7 @@ class Login extends React.Component {
       await this.props.login(email, password)
     } catch (error) {
       event('login_error', error)
-      console.log('login_error:', error)
+      console.error('login_error:', error)
     }
   }
 

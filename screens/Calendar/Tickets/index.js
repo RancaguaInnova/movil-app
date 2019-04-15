@@ -37,7 +37,7 @@ class Tickets extends React.Component {
         event('click_ticket', url)
       }
     } catch (error) {
-      console.log('Error handling onClickItem', error)
+      console.error('Error handling onClickItem', error)
       this.setState({ result: null })
     }
   }

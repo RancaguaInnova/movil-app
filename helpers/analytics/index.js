@@ -8,11 +8,9 @@ export const pageHit = function(pageName) {
   if (!analytics) analytics = new Analytics(analyticsId)
   analytics
     .hit(new PageHit(pageName))
-    .then(result => {
-      //console.log('result pageHit', result)
-    })
+    .then(result => {})
     .catch(error => {
-      console.log('error pageHit!', error)
+      console.error('error pageHit!', error)
     })
 }
 
@@ -20,11 +18,9 @@ export const screenHit = function(pageName) {
   if (!analytics) analytics = new Analytics(analyticsId)
   analytics
     .hit(new ScreenHit(pageName))
-    .then(result => {
-      //console.log('result screenHit', result)
-    })
+    .then(result => {})
     .catch(error => {
-      console.log('error screenHit!', error)
+      console.error('error screenHit!', error)
     })
 }
 
@@ -32,10 +28,8 @@ export const event = function(event, action) {
   if (!analytics) analytics = new Analytics(analyticsId)
   analytics
     .event(new Event(event, action))
-    .then(result => {
-      //console.log('result event', result)
-    })
+    .then(result => {})
     .catch(error => {
-      console.log('error event!', error)
+      console.error('error event!', error)
     })
 }

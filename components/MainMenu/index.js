@@ -47,7 +47,6 @@ class MainMenu extends React.Component {
         const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
           token: user.userToken,
         })
-        console.log('url', url)
         this.props.openWebView(url)
       },
     },
@@ -130,7 +129,6 @@ class MainMenu extends React.Component {
             rounded
             size='xlarge'
             icon={{ name: 'user', type: 'font-awesome' }}
-            onPress={() => console.log('Works!')}
             source={require('assets/images/icon.png')}
             activeOpacity={0.7}
           />

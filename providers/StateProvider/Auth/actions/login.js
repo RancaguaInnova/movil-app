@@ -39,48 +39,49 @@ export const login = (email, password) => {
       const {
         data: { session },
       } = await client.mutate({
-        mutation: gql`mutation loginWithPassword($email: String, $password: String) {
-          session: loginWithPassword(email: $email, password: $password) {
-            _id
-            userId
-            publicKey
-            secretKey
-            userId
-            locale
-            roles
-            emailVerified
-            user {
+        mutation: gql`
+          mutation loginWithPassword($email: String, $password: String) {
+            session: loginWithPassword(email: $email, password: $password) {
               _id
-              email
-              userToken
-              emails {
-                address
-                verified
-              }
-              profile {
-                identifier
-                firstName
-                lastName
-                gender
-                birthdate
-                educationalLevel
-                subscriptions {
-                  absence
+              userId
+              publicKey
+              secretKey
+              userId
+              locale
+              roles
+              emailVerified
+              user {
+                _id
+                email
+                userToken
+                emails {
+                  address
+                  verified
                 }
-                address {
-                  streetName
-                  streetNumber
-                  departmentNumber
-                  city
-                  postalCode
-                }
-                phone {
-                  mobilePhone
+                profile {
+                  identifier
+                  firstName
+                  lastName
+                  gender
+                  birthdate
+                  educationalLevel
+                  subscriptions {
+                    absence
+                  }
+                  address {
+                    streetName
+                    streetNumber
+                    departmentNumber
+                    city
+                    postalCode
+                  }
+                  phone {
+                    mobilePhone
+                  }
                 }
               }
             }
           }
-        }
         `,
         variables: { email, password },
       })
@@ -89,7 +90,7 @@ export const login = (email, password) => {
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(loginResponse(session))
     } catch (error) {
-      console.log('Error login in:', error)
+      console.error('Error login in:', error)
       dispatch(loginError(error))
     }
   }

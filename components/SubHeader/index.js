@@ -35,9 +35,9 @@ class SubHeader extends React.Component {
         const finalUrl = parseUrl(banner.targetUrl, { token: this.props.userToken })
         this.props.openWebView(finalUrl)
         event(`click_banner_${this.props.view}_online`, banner.targetUrl)
-      } else if (!this.props.session) {
+      } else if (!this.props.userToken) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
-          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Cancelar', style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
         ])
         event(`click_banner_${this.props.view}_offline`, banner.targetUrl)

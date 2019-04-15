@@ -33,11 +33,10 @@ export const cards = () => {
 
         data.cardsList = _compact(data.cardsList)
       }
-      //console.log('CARDS!!!!!!!!', data)
       dispatch(cardsRequest(CARDS_RESPONSE, data))
       return data
     } catch (error) {
-      console.log('Error querying services in:', error)
+      console.error('Error querying services in:', error)
       dispatch(cardsRequest(CARDS_ERROR, null, error))
     }
   }

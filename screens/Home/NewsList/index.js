@@ -37,7 +37,6 @@ class NewsList extends React.Component {
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
           if (error) {
-            console.log('ERROR', error)
             return <Retry callback={refetch} />
           }
 

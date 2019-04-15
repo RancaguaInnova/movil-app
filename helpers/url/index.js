@@ -17,7 +17,7 @@ export const parseUrl = (url, params = {}) => {
     queryParams.v = Math.random()
     return buildUrl(basePath, { queryParams })
   } catch (error) {
-    console.log('error!', error)
+    console.error('error!', error)
     return url
   }
 }

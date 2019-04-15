@@ -20,7 +20,7 @@ export const registrationResponse = session => {
 }
 
 export const registrationError = error => {
-  console.log('registrationError:', error)
+  console.error('registrationError:', error)
   return {
     type: REGISTRATION_ERROR,
     loading: false,
