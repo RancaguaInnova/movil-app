@@ -40,7 +40,7 @@ export default class Home extends React.Component {
       <View style={styles.mainContainer}>
         <NavigationEvents onWillFocus={payload => pageHit(this.pageName)} />
         {/* <SectionDivider title={title} /> */}
-        {<HomeBanner />}
+        <HomeBanner />
         {/* <HomeOverlay navigation={this.props.navigation} /> */}
         <ScrollView style={styles.container}>
           <NewsList />

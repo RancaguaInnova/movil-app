@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { TextInput } from 'components/fields'
 import LightButton from 'components/LightButton'
 import SectionDivider from 'components/SectionDivider'
-
+import TimerMixin from 'react-timer-mixin'
 import { login } from 'providers/StateProvider/Auth/actions'
 import { closeModal } from 'providers/StateProvider/Modal/actions'
 
@@ -46,7 +46,7 @@ class Login extends React.Component {
       await this.props.login(email, password)
     } catch (error) {
       event('login_error', error)
-      console.error('login_error:', error)
+      console.log('login_error:', error)
     }
   }
 
@@ -57,9 +57,9 @@ class Login extends React.Component {
         user: { email },
       } = this.props.session
       event('registry_success', email)
-      setTimeout(() => {
-        this.props.closeModal()
-      }, 100)
+      /* TimerMixin.setTimeout(() => { */
+      this.props.closeModal()
+      /* }, 100) */
     }
   }
 

@@ -35,7 +35,7 @@ export const banners = section => {
       dispatch(bannerRequest(BANNER_RESPONSE, section, data))
       return data
     } catch (error) {
-      console.error('Error querying services in:', error)
+      console.log('Error querying services in:', error)
       dispatch(bannerRequest(BANNER_ERROR, section, null, error))
     }
   }

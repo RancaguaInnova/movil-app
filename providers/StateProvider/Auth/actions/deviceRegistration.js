@@ -43,7 +43,7 @@ export const registerDevice = ({ userId, deviceToken }) => {
       })
       dispatch(deviceRegistrationResponse())
     } catch (error) {
-      console.error('Error on notifications action:', error)
+      console.log('Error on notifications action:', error)
       dispatch(deviceRegistrationError(error))
     }
   }

@@ -55,7 +55,7 @@ export default class Calendar extends React.Component {
         this.addEvents(this.formatEvents(events), mKey)
       }
     } catch (error) {
-      console.error('[loadItemsForMonth]:', error)
+      console.log('[loadItemsForMonth]:', error)
     }
   }
 

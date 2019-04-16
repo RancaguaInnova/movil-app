@@ -42,7 +42,7 @@ export const logout = sessionId => {
       await removeSession()
       dispatch(logoutResponse())
     } catch (error) {
-      console.error('Error on logout action:', error)
+      console.log('Error on logout action:', error)
       dispatch(logoutError(error))
     }
   }
