@@ -37,7 +37,13 @@ class Register extends React.Component {
     navigation: PropTypes.object,
   }
 
-  state = {}
+  state = {
+    profile: {
+      subscriptions: {
+        absence: false,
+      },
+    },
+  }
 
   componentDidMount() {
     store.subscribe(() => {
