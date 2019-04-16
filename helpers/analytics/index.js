@@ -10,7 +10,7 @@ export const pageHit = function(pageName) {
     .hit(new PageHit(pageName))
     .then(result => {})
     .catch(error => {
-      console.error('error pageHit!', error)
+      console.log('error pageHit!', error)
     })
 }
 
@@ -20,7 +20,7 @@ export const screenHit = function(pageName) {
     .hit(new ScreenHit(pageName))
     .then(result => {})
     .catch(error => {
-      console.error('error screenHit!', error)
+      console.log('error screenHit!', error)
     })
 }
 
@@ -30,6 +30,6 @@ export const event = function(event, action) {
     .event(new Event(event, action))
     .then(result => {})
     .catch(error => {
-      console.error('error event!', error)
+      console.log('error event!', error)
     })
 }

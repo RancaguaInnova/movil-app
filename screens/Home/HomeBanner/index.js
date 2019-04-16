@@ -42,7 +42,7 @@ class HomeBanner extends React.Component {
     try {
       await Promise.all([this.props.banners('home'), this.props.cards()])
     } catch (error) {
-      console.error('Error getting services:', error)
+      console.log('Error getting services:', error)
     }
   }
   @autobind

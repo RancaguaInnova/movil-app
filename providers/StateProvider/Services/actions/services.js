@@ -53,7 +53,7 @@ export const services = () => {
       dispatch(servicesResponse(services))
       return services
     } catch (error) {
-      console.error('Error querying services in:', error)
+      console.log('Error querying services in:', error)
       dispatch(servicesError(error))
     }
   }

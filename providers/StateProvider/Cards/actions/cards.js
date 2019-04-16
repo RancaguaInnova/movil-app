@@ -36,7 +36,7 @@ export const cards = () => {
       dispatch(cardsRequest(CARDS_RESPONSE, data))
       return data
     } catch (error) {
-      console.error('Error querying services in:', error)
+      console.log('Error querying services in:', error)
       dispatch(cardsRequest(CARDS_ERROR, null, error))
     }
   }

@@ -38,7 +38,7 @@ export default class Services extends React.Component {
     try {
       await this.props.getServices()
     } catch (error) {
-      console.error('Error getting services:', error)
+      console.log('Error getting services:', error)
     }
   }
 
@@ -66,7 +66,7 @@ export default class Services extends React.Component {
       } = await response.json()
       return url
     } catch (error) {
-      console.error('Error getting magic link:', error)
+      console.log('Error getting magic link:', error)
     }
   }
 

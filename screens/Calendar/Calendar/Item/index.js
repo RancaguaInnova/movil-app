@@ -54,7 +54,7 @@ class Item extends React.Component {
         event('click_calendar_offline_event', item.externalUrl)
       }
     } catch (error) {
-      console.error('Error handling onClickItem', error)
+      console.log('Error handling onClickItem', error)
       this.setState({ result: null })
     }
   }

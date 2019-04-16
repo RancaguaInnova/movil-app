@@ -90,7 +90,7 @@ export const login = (email, password) => {
       // Dispatch sync action to "notify" the store we finnished the async action
       dispatch(loginResponse(session))
     } catch (error) {
-      console.error('Error login in:', error)
+      console.log('Error login in:', error)
       dispatch(loginError(error))
     }
   }

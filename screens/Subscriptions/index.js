@@ -123,7 +123,7 @@ class Subscriptions extends React.Component {
       // Call the GraphQL API to save the users device push token.
       await this.props.registerDevice({ userId, token })
     } catch (error) {
-      console.error('Error registering device token:', error)
+      console.log('Error registering device token:', error)
     }
   }
 
