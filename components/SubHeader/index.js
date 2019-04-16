@@ -51,10 +51,9 @@ class SubHeader extends React.Component {
     const view = this.props.view
     const imageUrl = this.props.imageUrl
     let img = ''
-    const pollInterval = 100 * 60 * 30 // 30 min
     return (
       <View>
-        <Query query={bannersBySectionQry(view)} pollInterval={pollInterval}>
+        <Query query={bannersBySectionQry(view)} notifyOnNetworkStatusChange>
           {({ loading, error, data, refetch }) => {
             if (loading) return <View /> //<Loading />
             if (error) return <View /> //<Retry callback={refetch} />

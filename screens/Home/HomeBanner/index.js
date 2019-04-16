@@ -225,7 +225,6 @@ class HomeBanner extends React.Component {
           style={styles.bannerContainer}
           onAnimationEnd={() => {
             if (effect === this.effect.in) {
-              // If have > 1 banners
               if (this.props.list.length > 1) {
                 const state = this.state
                 state.timer.push(

@@ -31,9 +31,8 @@ class NewsList extends React.Component {
   }
 
   renderNews() {
-    const pollInterval = 100 * 60 * 30 // 30 min
     return (
-      <Query query={newsListQry} pollInterval={pollInterval}>
+      <Query query={newsListQry} notifyOnNetworkStatusChange>
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
           if (error) {

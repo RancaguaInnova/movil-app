@@ -12,6 +12,7 @@ import styles from './styles'
 import textStyles from 'styles/texts'
 
 import Loading from 'providers/ApolloProvider/Loading'
+import Retry from 'providers/ApolloProvider/Retry'
 import { directoryListQry } from 'providers/ApolloProvider/queries'
 
 import moment from 'helpers/date/moment'
@@ -108,7 +109,6 @@ export default class Directory extends React.Component {
 
   render() {
     pageHit(pageName)
-    const pollInterval = 100 * 60 * 60 // 60 min
     return (
       <View style={styles.container}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
@@ -122,7 +122,7 @@ export default class Directory extends React.Component {
               navigation={this.props.navigation}
             />
             <SectionDivider title='Departamentos' />
-            <Query query={directoryListQry}>
+            <Query query={directoryListQry} notifyOnNetworkStatusChange>
               {({ loading, error, data, refetch }) => {
                 if (loading) return <Loading />
                 if (error) return <Retry callback={refetch} />

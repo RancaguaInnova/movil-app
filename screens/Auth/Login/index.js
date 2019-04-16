@@ -13,7 +13,7 @@ import SectionDivider from 'components/SectionDivider'
 import TimerMixin from 'react-timer-mixin'
 import { login } from 'providers/StateProvider/Auth/actions'
 import { closeModal } from 'providers/StateProvider/Modal/actions'
-
+import store from 'providers/StateProvider'
 import { pageHit, event } from '/helpers/analytics'
 import styles from './styles.js'
 
@@ -50,17 +50,14 @@ class Login extends React.Component {
     }
   }
 
-  @autobind
-  checkSession() {
-    if (this.props.session && this.props.session.user) {
-      const {
-        user: { email },
-      } = this.props.session
-      event('registry_success', email)
-      /* TimerMixin.setTimeout(() => { */
-      this.props.closeModal()
-      /* }, 100) */
-    }
+  componentDidMount() {
+    store.subscribe(() => {
+      const auth = store.getState().auth
+      console.log('auth', auth)
+      if (auth && auth.session && auth.session.userId) {
+        this.props.closeModal()
+      }
+    })
   }
 
   renderErrorMessage() {
@@ -71,7 +68,6 @@ class Login extends React.Component {
 
   render() {
     pageHit(pageName)
-    this.checkSession()
     return (
       <View style={styles.container}>
         <View style={styles.content}>

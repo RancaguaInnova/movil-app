@@ -138,9 +138,8 @@ class HomeOverlay extends React.Component {
   }
 
   renderCards() {
-    const pollInterval = 100 * 60 * 60 // 1 hr
     return (
-      <Query query={cardListQry} pollInterval={pollInterval}>
+      <Query query={cardListQry} notifyOnNetworkStatusChange>
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
           if (error) return <Retry callback={refetch} />
