@@ -55,6 +55,7 @@ class Login extends React.Component {
       const auth = store.getState().auth
       console.log('auth', auth)
       if (auth && auth.session && auth.session.userId) {
+        store.unsubscribe()
         this.props.closeModal()
       }
     })
