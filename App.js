@@ -51,6 +51,7 @@ export default class App extends React.Component {
               menuPosition='right'
               autoClosing={true}
               disableGestures={true}
+              onChange={isOpen => (!isOpen && this.state.drawerOpen ? this.onDrawerClose() : null)}
             >
               <WebView />
               <CustomModal />
