@@ -20,7 +20,6 @@ export const registrationResponse = session => {
 }
 
 export const registrationError = error => {
-  console.error('registrationError:', error)
   return {
     type: REGISTRATION_ERROR,
     loading: false,
@@ -46,13 +45,14 @@ export const register = ({ email, password, profile }) => {
               locale
               roles
               emailVerified
-              subscriptions {
-                absence
-              }
+
               user {
                 _id
                 profile {
                   identifier
+                  subscriptions {
+                    absence
+                  }
                 }
                 email
                 userToken
