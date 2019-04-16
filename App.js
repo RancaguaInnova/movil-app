@@ -5,17 +5,17 @@ import AppNavigator from './navigation/AppNavigator'
 import { ApolloProvider } from 'react-apollo'
 import autobind from 'autobind-decorator'
 import { connect, Provider } from 'react-redux'
-import Drawer from 'react-native-drawer'
+/* import Drawer from 'react-native-drawer' */
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import WebView from 'components/WebView'
 import CustomModal from 'components/CustomModal'
 import { recoverSession, client } from 'providers/ApolloProvider'
 import MainMenu from 'components/MainMenu'
 import store from 'providers/StateProvider'
+import SideMenu from 'react-native-side-menu'
 
 YellowBox.ignoreWarnings(['Require cycle:'])
 YellowBox.ignoreWarnings(['Setting a timer'])
-console.ignoredYellowBox = ['Setting a timer']
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
@@ -32,7 +32,6 @@ export default class App extends React.Component {
   onDrawerClose() {
     store.dispatch(closeDrawer())
   }
-
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -46,15 +45,13 @@ export default class App extends React.Component {
       return (
         <ApolloProvider client={client}>
           <Provider store={store}>
-            <Drawer
-              open={this.state.drawerOpen}
-              openDrawerOffset={0.2}
-              side='right'
-              acceptTap={true}
-              onClose={this.onDrawerClose}
-              /* useInteractionManager={true} */
-              ref={ref => (this._drawer = ref)}
-              content={<MainMenu />}
+            <SideMenu
+              menu={<MainMenu />}
+              isOpen={this.state.drawerOpen}
+              menuPosition='right'
+              autoClosing={true}
+              disableGestures={true}
+              onChange={isOpen => (!isOpen ? this.onDrawerClose() : null)}
             >
               <WebView />
               <CustomModal />
@@ -62,7 +59,7 @@ export default class App extends React.Component {
                 {Platform.OS === 'ios' ? <StatusBar barStyle='default' /> : null}
                 <AppNavigator />
               </View>
-            </Drawer>
+            </SideMenu>
           </Provider>
         </ApolloProvider>
       )
