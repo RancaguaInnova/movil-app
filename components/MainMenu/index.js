@@ -5,6 +5,8 @@ import { Avatar, Text, ListItem } from 'react-native-elements'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures'
+
 // Screens
 import Auth from 'screens/Auth'
 import Notifications from 'screens/Notifications'
@@ -47,7 +49,6 @@ class MainMenu extends React.Component {
         const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
           token: user.userToken,
         })
-        console.log('url', url)
         this.props.openWebView(url)
       },
     },
@@ -119,9 +120,15 @@ class MainMenu extends React.Component {
   render() {
     const auth = this.props.session && this.props.session.userId ? true : false
     const { user } = this.props.session
-
+    const config = {
+      velocityThreshold: 0.1,
+    }
     return (
-      <View style={styles.container}>
+      <GestureRecognizer
+        onSwipeRight={this.props.closeDrawer}
+        config={config}
+        style={styles.container}
+      >
         <TouchableOpacity onPress={this.props.closeDrawer}>
           <Ionicons name='ios-arrow-back' size={30} color='#969696' style={{ padding: 10 }} />
         </TouchableOpacity>
@@ -130,7 +137,6 @@ class MainMenu extends React.Component {
             rounded
             size='xlarge'
             icon={{ name: 'user', type: 'font-awesome' }}
-            onPress={() => console.log('Works!')}
             source={require('assets/images/icon.png')}
             activeOpacity={0.7}
           />
@@ -167,7 +173,7 @@ class MainMenu extends React.Component {
               </TouchableOpacity>
             ))}
         </ScrollView>
-      </View>
+      </GestureRecognizer>
     )
   }
 }

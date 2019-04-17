@@ -72,7 +72,11 @@ class Tickets extends React.Component {
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
         ) : null}
         {this.props.userId ? (
-          <Query query={ticketsQry(this.props.userId)} fetchPolicy='network-only'>
+          <Query
+            query={ticketsQry(this.props.userId)}
+            fetchPolicy='network-only'
+            notifyOnNetworkStatusChange
+          >
             {({ loading, error, data, refetch }) => {
               if (loading) return <Loading />
               if (error) return <Retry callback={refetch} />

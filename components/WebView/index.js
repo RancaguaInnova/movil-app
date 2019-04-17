@@ -74,7 +74,8 @@ class WebViewComponent extends React.Component {
     return (
       <View>
         <Modal
-          animationType='slide'
+          /* animationType='slide' */
+          duration={0}
           transparent={false}
           visible={visible}
           onRequestClose={this.onRequestClose}

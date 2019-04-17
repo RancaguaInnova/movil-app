@@ -21,4 +21,17 @@ export default {
   modal: {
     child: null,
   },
+  banner: {
+    type: '',
+    section: '',
+    loading: false,
+    data: null,
+    error: null,
+  },
+  cards: {
+    type: '',
+    loading: false,
+    data: null,
+    error: null,
+  },
 }

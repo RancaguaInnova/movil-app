@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-const bannerBySectionQry = section => gql`
+const bannersBySectionQry = section => gql`
   {
-  bannerBySection (section: "${section}") {
+  bannersBySection (section: "${section}") {
     _id
     targetUrl
     imageUrl
@@ -10,4 +10,4 @@ const bannerBySectionQry = section => gql`
 }
 `
 
-export { bannerBySectionQry }
+export { bannersBySectionQry }

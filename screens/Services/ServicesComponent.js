@@ -64,7 +64,6 @@ export default class Services extends React.Component {
           attributes: { url },
         },
       } = await response.json()
-      console.log('url:', url)
       return url
     } catch (error) {
       console.log('Error getting magic link:', error)
@@ -89,10 +88,7 @@ export default class Services extends React.Component {
         } else {
           finalUrl = parseUrl(app.applicationURL, { token: session.user.userToken })
         }
-        console.log('finalUrl', finalUrl)
         this.props.openWebView(finalUrl, false)
-        //let result = await WebBrowser.openBrowserAsync(finalUrl)
-        //this.setState({ result })
         event('click_service_online', app.applicationURL)
       } else if (!session || !session.user || !seshágalesion.user.userToken) {
         Alert.alert('Debe iniciar sesión para acceder al servicio', null, [

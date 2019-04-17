@@ -5,7 +5,7 @@ import { NavigationEvents } from 'react-navigation'
 import { Form, Field } from 'simple-react-form'
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types'
-
+import store from 'providers/StateProvider'
 import { TextInput } from 'components/fields'
 import { Button } from 'react-native-elements'
 
@@ -37,7 +37,26 @@ class Register extends React.Component {
     navigation: PropTypes.object,
   }
 
-  state = {}
+  state = {
+    profile: {
+      subscriptions: {
+        absence: false,
+      },
+    },
+  }
+
+  componentDidUpdate() {
+    if (this.props.session && this.props.session.userId) {
+      const { email } = this.props.session.user
+      Alert.alert(
+        'Registro exitoso',
+        `Hemos enviado un email a ${email}, siga las instrucciones que ahí se indican para completar su registro`,
+        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
+      )
+      event('registry_success', email)
+      this.props.closeModal()
+    }
+  }
 
   @autobind
   focusEmail() {
@@ -147,7 +166,7 @@ class Register extends React.Component {
     return <Text style={styles.errorMessage}>{errorMessage}</Text>
   }
 
-  @autobind
+  /* @autobind
   checkSession() {
     if (this.props.session && this.props.session.user) {
       const {
@@ -160,11 +179,11 @@ class Register extends React.Component {
       )
       event('registry_success', email)
     }
-  }
+  } */
 
   render() {
     pageHit(pageName)
-    this.checkSession()
+    //this.checkSession()
     return (
       <View style={styles.container}>
         <View style={styles.content}>

@@ -12,15 +12,13 @@ import moment from 'helpers/date/moment'
 import SectionDivider from 'components/SectionDivider'
 import CustomHeader from 'components/CustomHeader'
 import Loading from 'components/Loading'
-
+const pageName = 'Home'
 export default class Home extends React.Component {
   static propTypes = {
     requestSession: PropTypes.func.isRequired,
     session: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
   }
-
-  static pageName = 'Home'
 
   static navigationOptions = {
     header: <CustomHeader type='main' />,
@@ -31,14 +29,14 @@ export default class Home extends React.Component {
   }
 
   render() {
-    pageHit(this.pageName)
+    pageHit(pageName)
     const title = `RANCAGUA, ${moment()
       .format('DD MMMM [DE] YYYY')
       .toUpperCase()}`
     if (this.props.loading) return <Loading />
     return (
       <View style={styles.mainContainer}>
-        <NavigationEvents onWillFocus={payload => pageHit(this.pageName)} />
+        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
         {/* <SectionDivider title={title} /> */}
         <HomeBanner />
         {/* <HomeOverlay navigation={this.props.navigation} /> */}

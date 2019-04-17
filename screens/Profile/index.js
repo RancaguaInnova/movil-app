@@ -113,9 +113,12 @@ class Profile extends React.Component {
         profile: this.state.profile,
       }
     )
+
+    let updateProfile = false
     try {
       await this.props.updateProfile(userInput)
       event('profile_update_success', JSON.stringify(userInput))
+      updateProfile = true
     } catch ({ response, operation, graphQLErrors, networkError }) {
       // TODO: Use this in redux actions as a helper for displaying error messages
       const errMsj = []
@@ -153,6 +156,10 @@ class Profile extends React.Component {
         loading: false,
       })
       event('profile_update_error', JSON.stringify(errMsj))
+    } finally {
+      if (updateProfile) {
+        Alert.alert('Información actualizada con éxito', '', [{ text: 'Aceptar', style: 'cancel' }])
+      }
     }
   }
 

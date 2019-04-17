@@ -14,7 +14,7 @@ import {
   ImageBackground,
 } from '@shoutem/ui'
 
-class SectionDivider extends React.Component {
+export default class SectionDivider extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     menu: PropTypes.array,
@@ -46,9 +46,9 @@ class SectionDivider extends React.Component {
   }
 
   componentWillUnmount() {
-    this.state.timer.map(timer => {
+    /* this.state.timer.map(timer => {
       TimerMixin.clearTimeout(timer)
-    })
+    }) */
   }
 
   render() {
@@ -56,7 +56,7 @@ class SectionDivider extends React.Component {
     const menu = this.state.menu || []
     return (
       <View>
-        {!this.props.modal ? (
+        {/* !this.props.modal ? (
           <NavigationEvents
             onWillFocus={payload => {
               const state = this.state
@@ -71,15 +71,15 @@ class SectionDivider extends React.Component {
               this.setState(state)
             }}
           />
-        ) : null}
+        ) : null */}
 
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            <Animatable.View animation={this.state.animation} iterationCount={1} duration={200}>
-              <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
-                {title}
-              </Caption>
-            </Animatable.View>
+            {/* <Animatable.View animation={this.state.animation} iterationCount={1} duration={200}> */}
+            <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
+              {title}
+            </Caption>
+            {/* </Animatable.View> */}
           </Divider>
         ) : null}
 
@@ -115,5 +115,5 @@ class SectionDivider extends React.Component {
   }
 }
 
-SectionDivider = Animatable.createAnimatableComponent(SectionDivider)
-export default SectionDivider
+//SectionDivider = Animatable.createAnimatableComponent(SectionDivider)
+//export default SectionDivider

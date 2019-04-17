@@ -10,10 +10,10 @@ import PropTypes from 'prop-types'
 import { TextInput } from 'components/fields'
 import LightButton from 'components/LightButton'
 import SectionDivider from 'components/SectionDivider'
-
+import TimerMixin from 'react-timer-mixin'
 import { login } from 'providers/StateProvider/Auth/actions'
 import { closeModal } from 'providers/StateProvider/Modal/actions'
-
+import store from 'providers/StateProvider'
 import { pageHit, event } from '/helpers/analytics'
 import styles from './styles.js'
 
@@ -50,16 +50,9 @@ class Login extends React.Component {
     }
   }
 
-  @autobind
-  checkSession() {
-    if (this.props.session && this.props.session.user) {
-      const {
-        user: { email },
-      } = this.props.session
-      event('registry_success', email)
-      setTimeout(() => {
-        this.props.closeModal()
-      }, 100)
+  componentDidUpdate() {
+    if (this.props.session && this.props.session.userId) {
+      this.props.closeModal()
     }
   }
 
@@ -71,7 +64,6 @@ class Login extends React.Component {
 
   render() {
     pageHit(pageName)
-    this.checkSession()
     return (
       <View style={styles.container}>
         <View style={styles.content}>

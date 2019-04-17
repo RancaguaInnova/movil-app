@@ -31,7 +31,6 @@ class Item extends React.Component {
     try {
       if (item.externalUrl && item.externalUrl.trim() !== '' && this.props.userToken) {
         let url = parseUrl(item.externalUrl, { token: this.props.userToken })
-        //console.log('EXTERNAL_URL', url)
         this.props.openWebView(url)
         event('click_calendar_online_event', item.externalUrl)
       } else if (item.externalUrl && item.externalUrl.trim() !== '' && !this.props.userToken) {

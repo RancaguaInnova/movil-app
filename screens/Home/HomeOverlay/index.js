@@ -58,7 +58,7 @@ class HomeOverlay extends React.Component {
         event('click_card_online', finalUrl)
       } else if (!this.props.userToken) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
-          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Cancelar', style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
         ])
         event('click_card_offline', card.targetUrl)
@@ -138,9 +138,8 @@ class HomeOverlay extends React.Component {
   }
 
   renderCards() {
-    const pollInterval = 100 * 60 * 60 // 1 hr
     return (
-      <Query query={cardListQry} pollInterval={pollInterval}>
+      <Query query={cardListQry} notifyOnNetworkStatusChange>
         {({ loading, error, data, refetch }) => {
           if (loading) return <Loading />
           if (error) return <Retry callback={refetch} />

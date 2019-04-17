@@ -10,7 +10,7 @@ import styles from './styles.js'
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
 import Error from 'providers/ApolloProvider/ApolloError'
-import { bannerBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
+import { bannersBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 
 import { parseUrl } from '/helpers/url'
@@ -35,9 +35,9 @@ class SubHeader extends React.Component {
         const finalUrl = parseUrl(banner.targetUrl, { token: this.props.userToken })
         this.props.openWebView(finalUrl)
         event(`click_banner_${this.props.view}_online`, banner.targetUrl)
-      } else if (!this.props.session) {
+      } else if (!this.props.userToken) {
         Alert.alert('Debe iniciar sesión para acceder', null, [
-          { text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+          { text: 'Cancelar', style: 'cancel' },
           { text: 'Iniciar', onPress: () => this.props.navigation.navigate('Profile') },
         ])
         event(`click_banner_${this.props.view}_offline`, banner.targetUrl)
@@ -51,10 +51,9 @@ class SubHeader extends React.Component {
     const view = this.props.view
     const imageUrl = this.props.imageUrl
     let img = ''
-    const pollInterval = 100 * 60 * 30 // 30 min
     return (
       <View>
-        <Query query={bannerBySectionQry(view)} pollInterval={pollInterval}>
+        <Query query={bannersBySectionQry(view)} notifyOnNetworkStatusChange>
           {({ loading, error, data, refetch }) => {
             if (loading) return <View /> //<Loading />
             if (error) return <View /> //<Retry callback={refetch} />
