@@ -36,8 +36,6 @@ class CustomModal extends React.Component {
     this.props.closeModal()
   }
 
-  onRequestClose() {}
-
   render() {
     const visible = this.props.child !== null ? true : false
     return (
@@ -47,7 +45,7 @@ class CustomModal extends React.Component {
           transparent={false}
           visible={visible}
           style={{ paddingTop: 0 }}
-          onRequestClose={this.onRequestClose}
+          onRequestClose={this.close}
         >
           <CustomHeader onClose={this.close} type='popup' />
           <View style={styles.container}>

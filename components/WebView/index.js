@@ -28,7 +28,6 @@ class WebViewComponent extends React.Component {
   }
 
   static defaultProps = {
-    closeWebView: () => {},
     closeOnBack: true,
   }
 
@@ -67,8 +66,6 @@ class WebViewComponent extends React.Component {
     }
   }
 
-  onRequestClose() {}
-
   render() {
     const visible = this.props.url && this.props.url.trim() !== '' ? true : false
     return (
@@ -78,7 +75,7 @@ class WebViewComponent extends React.Component {
           duration={0}
           transparent={false}
           visible={visible}
-          onRequestClose={this.onRequestClose}
+          onRequestClose={this.close}
         >
           <View style={styles.container}>
             <CustomHeader onClose={this.close} type='popup' />
@@ -115,6 +112,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     closeWebView: () => {
+      console.log('CLOSE!!!')
       dispatch(closeWebView())
     },
   }
