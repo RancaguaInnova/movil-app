@@ -13,7 +13,7 @@ export const openWebView = (url, closeOnBack = true) => {
 export const closeWebView = () => {
   return (dispatch, getState) => {
     dispatch({
-      type: OPEN_WEBVIEW,
+      type: CLOSE_WEBVIEW,
       url: '',
       closeOnBack: true,
     })

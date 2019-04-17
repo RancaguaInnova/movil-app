@@ -31,7 +31,6 @@ class CustomHeader extends React.Component {
   }
 
   static defaultProps = {
-    onClose: () => {},
     type: 'main',
   }
 
@@ -79,7 +78,7 @@ class CustomHeader extends React.Component {
           color: 'red',
           onPress: this.showMenu,
         }} */
-        centerContainerStyle={{ paddingLeft: 200 }}
+        centerContainerStyle={{ paddingLeft: 100 }}
         rightComponent={{
           icon: 'menu',
           color: '#969696',
