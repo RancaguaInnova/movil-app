@@ -83,7 +83,7 @@ class CustomHeader extends React.Component {
         rightComponent={{
           icon: 'menu',
           color: '#969696',
-          size: 35,
+          size: 40,
           onPress: this.showMenu,
         }}
         /* rightContainerStyle=""*/
@@ -99,7 +99,8 @@ class CustomHeader extends React.Component {
         /* centerComponent={{ text: 'MY TITLE', style: { color: 'black' } }} */
         rightComponent={{
           icon: 'close',
-          color: 'black',
+          color: '#969696',
+          size: 40,
           onPress: this.props.onClose,
         }}
         containerStyle={styles.header}

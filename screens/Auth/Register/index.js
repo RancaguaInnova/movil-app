@@ -45,21 +45,17 @@ class Register extends React.Component {
     },
   }
 
-  componentDidMount() {
-    store.subscribe(() => {
-      const auth = store.getState().auth
-      if (auth && auth.session && auth.session.user) {
-        const { email } = this.props.session.user
-        Alert.alert(
-          'Registro exitoso',
-          `Hemos enviado un email a ${email}, siga las instrucciones para completar su registro`,
-          [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
-        )
-        event('registry_success', email)
-        store.unsubscribe()
-        this.props.closeModal()
-      }
-    })
+  componentDidUpdate() {
+    if (this.props.session && this.props.session.userId) {
+      const { email } = this.props.session.user
+      Alert.alert(
+        'Registro exitoso',
+        `Hemos enviado un email a ${email}, siga las instrucciones que ahí se indican para completar su registro`,
+        [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
+      )
+      event('registry_success', email)
+      this.props.closeModal()
+    }
   }
 
   @autobind

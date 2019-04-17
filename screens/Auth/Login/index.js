@@ -50,15 +50,10 @@ class Login extends React.Component {
     }
   }
 
-  componentDidMount() {
-    store.subscribe(() => {
-      const auth = store.getState().auth
-      console.log('auth', auth)
-      if (auth && auth.session && auth.session.userId) {
-        store.unsubscribe()
-        this.props.closeModal()
-      }
-    })
+  componentDidUpdate() {
+    if (this.props.session && this.props.session.userId) {
+      this.props.closeModal()
+    }
   }
 
   renderErrorMessage() {
