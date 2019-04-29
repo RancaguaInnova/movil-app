@@ -25,12 +25,18 @@ export default class TextInputField extends React.Component {
     if (!this.props.errorMessage) return
     return <Text>{this.props.errorMessage}</Text>
   }
+  @autobind
+  handleBlur() {
+    if (this.props.rut) {
+      return this.props.onChange(rut.format(this.props.value))
+    }
+    {
+      return null
+    }
+  }
 
   @autobind
   handleChange(change) {
-    if (this.props.rut) {
-      return this.props.onChange(rut.format(change))
-    }
     return this.props.onChange(change)
   }
 
@@ -43,6 +49,7 @@ export default class TextInputField extends React.Component {
             autoCapitalize='none'
             autoCorrect={false}
             blurOnSubmit
+            onBlur={this.handleBlur}
             onChangeText={this.handleChange}
             value={this.props.value}
             {...this.props.passProps}
