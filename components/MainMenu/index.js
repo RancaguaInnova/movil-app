@@ -46,9 +46,11 @@ class MainMenu extends React.Component {
       icon: 'ios-pricetags',
       requireAuth: true,
       onPress: (user = {}) => {
-        const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
+        //  const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
+        const url = parseUrl('http://localhost:4200/mytickets', {
           token: user.userToken,
         })
+        console.log(url)
         this.props.openWebView(url)
       },
     },
