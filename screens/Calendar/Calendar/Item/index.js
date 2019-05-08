@@ -86,17 +86,17 @@ class Item extends React.Component {
                   {item.description}
                 </Text>
               ) : null}
-
               {item.address ? (
                 <Text
                   numberOfLines={3}
                   style={{ ...textStyles.rowText, ...styles.itemSubtitle, paddingTop: 10 }}
                 >
-                  {`${item.address.streetName} ${item.address.streetNumber || ''}, ${
-                    item.address.city
-                  }`}
+                  {`${item.address.streetName || ''} ${item.address.streetNumber || ''} ${item
+                    .address.city || ''}`}
                 </Text>
-              ) : null}
+              ) : (
+                ''
+              )}
             </View>
 
             {item.externalUrl && item.externalUrl.trim() !== '' ? (
