@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case CLOSE_MODAL:
       return {
         ...state,
-        child: action.child,
+        child: null,
       }
     default:
       return state

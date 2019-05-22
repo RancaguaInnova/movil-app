@@ -54,7 +54,6 @@ class Register extends React.Component {
         [{ text: 'Aceptar', onPress: () => this.props.closeModal() }]
       )
       event('registry_success', email)
-      this.props.closeModal()
     }
   }
 

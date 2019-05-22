@@ -18,7 +18,7 @@ import Error from 'providers/ApolloProvider/ApolloError'
 import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
 import { getMeQry } from 'providers/ApolloProvider/queries'
 import { connect } from 'react-redux'
-import { requestSession } from 'providers/StateProvider/Auth/actions'
+import { requestSession, registerDevice } from 'providers/StateProvider/Auth/actions'
 import { Permissions, Notifications } from 'expo'
 
 const pageName = 'Home'
@@ -41,9 +41,9 @@ class Home extends React.Component {
 
   async registerForPushNotificationsAsync() {
     try {
-      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+      const permissions = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+      const { status: existingStatus } = permissions
       let finalStatus = existingStatus
-
       // only ask if permissions have not already been determined, because
       // iOS won't necessarily prompt the user a second time.
       if (existingStatus !== 'granted') {
@@ -57,10 +57,10 @@ class Home extends React.Component {
       if (finalStatus !== 'granted') return
 
       // Get the token that uniquely identifies this device
-      let token = await Notifications.getExpoPushTokenAsync()
-      let userId = this.props.userId
+      let deviceToken = await Notifications.getExpoPushTokenAsync()
+      let userId = this.props.session.userId
       // Call the GraphQL API to save the users device push token.
-      await this.props.registerDevice({ userId, token })
+      if (userId && deviceToken) await this.props.registerDevice({ userId, deviceToken })
     } catch (error) {
       console.log('Error registering device token:', error)
     }
@@ -90,6 +90,9 @@ const mapDispatchToProps = dispatch => {
   return {
     requestSession: () => {
       dispatch(requestSession())
+    },
+    registerDevice: (userId, token) => {
+      dispatch(registerDevice(userId, token))
     },
   }
 }
