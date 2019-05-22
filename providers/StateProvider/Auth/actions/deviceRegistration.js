@@ -35,8 +35,8 @@ export const registerDevice = ({ userId, deviceToken }) => {
     try {
       const response = await client.mutate({
         mutation: gql`
-          mutation registerDevice($userId: ID!, $deviceToken: ID!) {
-            success: registerDevice(userId: $userId, deviceToken: $deviceToken)
+          mutation registerDevice($userId: ID!, $deviceToken: String!) {
+            success: registerDevice(userId: $userId, pushToken: $deviceToken)
           }
         `,
         variables: { userId, deviceToken },
