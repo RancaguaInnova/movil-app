@@ -45,6 +45,8 @@ export default class App extends React.Component {
       return (
         <ApolloProvider client={client}>
           <Provider store={store}>
+            <WebView />
+            <CustomModal />
             <SideMenu
               menu={<MainMenu />}
               isOpen={this.state.drawerOpen}
@@ -53,8 +55,6 @@ export default class App extends React.Component {
               disableGestures={true}
               onChange={isOpen => (!isOpen && this.state.drawerOpen ? this.onDrawerClose() : null)}
             >
-              <WebView />
-              <CustomModal />
               <View style={styles.container}>
                 {Platform.OS === 'ios' ? <StatusBar barStyle='default' /> : null}
                 <AppNavigator />
