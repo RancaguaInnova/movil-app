@@ -43,6 +43,12 @@ export const services = () => {
                 description
                 applicationURL
                 appToken
+                appMovil
+                urlApp
+                appName
+                appStoreId
+                appStoreLocale
+                playStoreId
               }
             }
           }

@@ -16,6 +16,7 @@ import SubHeader from 'components/SubHeader'
 import SectionDivider from 'components/SectionDivider'
 import Loading from 'components/Loading'
 import CustomHeader from 'components/CustomHeader'
+import AppLink from 'react-native-app-link'
 
 const pageName = 'services'
 
@@ -73,42 +74,80 @@ export default class Services extends React.Component {
   async openApp(app) {
     const { session } = this.props
     try {
-      if (
-        app.applicationURL &&
-        app.applicationURL.trim() !== '' &&
-        session &&
-        session.user &&
-        session.user.userToken
-      ) {
-        let finalUrl
-        // TODO: Change this condition to check a more general flag
-        if (app.name === 'Libreta Educativa') {
-          const userUrl = await this.getMagicLink(app)
-          finalUrl = parseUrl(userUrl)
-        } else {
-          finalUrl = parseUrl(app.applicationURL, { token: session.user.userToken })
+      if ((app.appMovil && !app.appMovil) || !app.appMovil) {
+        if (
+          app.applicationURL &&
+          app.applicationURL.trim() !== '' &&
+          session &&
+          session.user &&
+          session.user.userToken
+        ) {
+          let finalUrl
+          // TODO: Change this condition to check a more general flag
+          if (app.name === 'Libreta Educativa') {
+            const userUrl = await this.getMagicLink(app)
+            finalUrl = parseUrl(userUrl)
+          } else {
+            finalUrl = parseUrl(app.applicationURL, {
+              token: session.user.userToken,
+            })
+          }
+          this.props.openWebView(finalUrl, false)
+          event('click_service_online', app.applicationURL)
+        } else if (!session || !session.user || !seshágalesion.user.userToken) {
+          Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
+            {
+              text: 'Cancelar',
+              onPress: () => {
+                event('click_service_login', 'cancel')
+              },
+              style: 'cancel',
+            },
+            {
+              text: 'Iniciar',
+              onPress: () => {
+                this.props.openModal(<Auth show='login' />)
+                //this.props.navigation.navigate('Profile')
+                event('click_service_login', 'login')
+              },
+            },
+          ])
+          event('click_service_offline', app.applicationURL)
         }
-        this.props.openWebView(finalUrl, false)
-        event('click_service_online', app.applicationURL)
-      } else if (!session || !session.user || !seshágalesion.user.userToken) {
-        Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
-          {
-            text: 'Cancelar',
-            onPress: () => {
-              event('click_service_login', 'cancel')
-            },
-            style: 'cancel',
-          },
-          {
-            text: 'Iniciar',
-            onPress: () => {
-              this.props.openModal(<Auth show='login' />)
-              //this.props.navigation.navigate('Profile')
-              event('click_service_login', 'login')
-            },
-          },
-        ])
-        event('click_service_offline', app.applicationURL)
+      } else {
+        try {
+          const url = app.urlApp
+          const appName = app.appName
+          const appStoreId = app.appStoreId
+          const appStoreLocale = app.appStoreLocale
+          const playStoreId = app.playStoreId
+
+          AppLink.maybeOpenURL(url, {
+            appName,
+            appStoreId,
+            appStoreLocale,
+            playStoreId,
+          })
+            .then(() => {
+              // do stuff
+            })
+            .catch(err => {
+              AppLink.openInStore({
+                appName,
+                appStoreId,
+                appStoreLocale,
+                playStoreId,
+              })
+                .then(() => {
+                  // do stuff
+                })
+                .catch(err => {
+                  // handle error
+                })
+            })
+        } catch (error) {
+          //this.setState({ result: null })
+        }
       }
     } catch (error) {
       //this.setState({ result: null })
@@ -124,7 +163,12 @@ export default class Services extends React.Component {
             <Subtitle style={{ ...textStyles.rowSubtitle, marginTop: 5 }}>{app.name}</Subtitle>
             <Text
               numberOfLines={3}
-              style={{ ...textStyles.rowText, paddingTop: 10, paddingLeft: 5, paddingRight: 5 }}
+              style={{
+                ...textStyles.rowText,
+                paddingTop: 10,
+                paddingLeft: 5,
+                paddingRight: 5,
+              }}
             >
               {app.description}
             </Text>
