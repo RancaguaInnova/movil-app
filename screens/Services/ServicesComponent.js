@@ -125,12 +125,14 @@ export default class Services extends React.Component {
             playStoreId,
           })
         } catch (error) {
-          await AppLink.openInStore({
-            appName,
-            appStoreId,
-            appStoreLocale,
-            playStoreId,
-          })
+          try {
+            await AppLink.openInStore({
+              appName,
+              appStoreId,
+              appStoreLocale,
+              playStoreId,
+            })
+          } catch (error) {}
         }
       }
     } catch (error) {}
