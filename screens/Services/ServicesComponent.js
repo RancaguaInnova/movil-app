@@ -74,7 +74,7 @@ export default class Services extends React.Component {
   async openApp(app) {
     const { session } = this.props
     try {
-      if ((app.appMovil && !app.appMovil) || !app.appMovil) {
+      if (!app.appMovil || app.appMovil === null) {
         if (
           app.applicationURL &&
           app.applicationURL.trim() !== '' &&
@@ -115,43 +115,25 @@ export default class Services extends React.Component {
           event('click_service_offline', app.applicationURL)
         }
       } else {
-        try {
-          const url = app.urlApp
-          const appName = app.appName
-          const appStoreId = app.appStoreId
-          const appStoreLocale = app.appStoreLocale
-          const playStoreId = app.playStoreId
+        const { url, appName, appStoreId, appStoreLocale, playStoreId } = app
 
-          AppLink.maybeOpenURL(url, {
+        try {
+          await AppLink.maybeOpenURL(url, {
             appName,
             appStoreId,
             appStoreLocale,
             playStoreId,
           })
-            .then(() => {
-              // do stuff
-            })
-            .catch(err => {
-              AppLink.openInStore({
-                appName,
-                appStoreId,
-                appStoreLocale,
-                playStoreId,
-              })
-                .then(() => {
-                  // do stuff
-                })
-                .catch(err => {
-                  // handle error
-                })
-            })
         } catch (error) {
-          //this.setState({ result: null })
+          await AppLink.openInStore({
+            appName,
+            appStoreId,
+            appStoreLocale,
+            playStoreId,
+          })
         }
       }
-    } catch (error) {
-      //this.setState({ result: null })
-    }
+    } catch (error) {}
   }
 
   renderRow(app) {
