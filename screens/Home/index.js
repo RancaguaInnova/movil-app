@@ -3,20 +3,15 @@ import PropTypes from 'prop-types'
 import { ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { pageHit, screenHit } from '/helpers/analytics'
-import { View, Divider, Caption, Text, Icon } from '@shoutem/ui'
+import { View } from '@shoutem/ui'
 import styles from './styles'
 import HomeOverlay from './HomeOverlay'
 import NewsList from './NewsList'
 import moment from '../../helpers/date/moment'
 import SectionDivider from '../../components/SectionDivider'
-import WebView from 'components/WebView'
-import SubHeader from './../../components/SubHeader'
 import HomeBanner from './HomeBanner'
 import CustomHeader from 'components/CustomHeader'
 import Loading from 'components/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
-import withGraphQL from 'react-apollo-decorators/lib/withGraphQL'
-import { getMeQry } from 'providers/ApolloProvider/queries'
 import { connect } from 'react-redux'
 import { requestSession, registerDevice } from 'providers/StateProvider/Auth/actions'
 import { Permissions, Notifications } from 'expo'
@@ -36,7 +31,12 @@ class Home extends React.Component {
 
   async componentDidMount() {
     this.props.requestSession()
-    this.registerForPushNotificationsAsync()
+    try {
+      await this.registerForPushNotificationsAsync()
+    } catch (error) {
+      console.log('Error registering for push notifications:', error)
+
+    }
   }
 
   async registerForPushNotificationsAsync() {
@@ -44,6 +44,8 @@ class Home extends React.Component {
       const permissions = await Permissions.getAsync(Permissions.NOTIFICATIONS)
       const { status: existingStatus } = permissions
       let finalStatus = existingStatus
+      console.log('STATUS:', existingStatus)
+
       // only ask if permissions have not already been determined, because
       // iOS won't necessarily prompt the user a second time.
       if (existingStatus !== 'granted') {
@@ -51,6 +53,8 @@ class Home extends React.Component {
         // install, so this will only ask on iOS
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
         finalStatus = status
+        console.log('FINAL STATUS:', finalStatus)
+
       }
 
       // Stop here if the user did not grant permissions
