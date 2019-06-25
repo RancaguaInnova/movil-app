@@ -2,13 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ScrollView } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
-import { pageHit, screenHit } from '/helpers/analytics'
+import { pageHit } from '/helpers/analytics'
 import { View } from '@shoutem/ui'
 import styles from './styles'
-import HomeOverlay from './HomeOverlay'
 import NewsList from './NewsList'
 import moment from '../../helpers/date/moment'
-import SectionDivider from '../../components/SectionDivider'
 import HomeBanner from './HomeBanner'
 import CustomHeader from 'components/CustomHeader'
 import Loading from 'components/Loading'
@@ -42,6 +40,8 @@ class Home extends React.Component {
   async registerForPushNotificationsAsync() {
     try {
       const permissions = await Permissions.getAsync(Permissions.NOTIFICATIONS)
+      console.log('permissions:', permissions);
+
       const { status: existingStatus } = permissions
       let finalStatus = existingStatus
       console.log('STATUS:', existingStatus)
@@ -79,9 +79,7 @@ class Home extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
-        {/* <SectionDivider title={title} /> */}
         <HomeBanner />
-        {/* <HomeOverlay navigation={this.props.navigation} /> */}
         <ScrollView style={styles.container}>
           <NewsList />
         </ScrollView>
