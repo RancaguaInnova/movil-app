@@ -1,7 +1,6 @@
 import { BANNER_REQUEST, BANNER_RESPONSE, BANNER_ERROR } from './types'
 import { client } from 'providers/ApolloProvider/client'
 import { bannersBySectionQry } from 'providers/ApolloProvider/queries'
-import gql from 'graphql-tag'
 
 export const bannerRequest = (type, section = '', data = null, error = null) => {
   return {

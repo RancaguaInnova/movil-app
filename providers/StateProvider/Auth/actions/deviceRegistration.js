@@ -41,6 +41,7 @@ export const registerDevice = ({ userId, deviceToken }) => {
         `,
         variables: { userId, deviceToken },
       })
+
       dispatch(deviceRegistrationResponse())
     } catch (error) {
       console.log('Error on notifications action:', error)

@@ -30,21 +30,19 @@ class Home extends React.Component {
   async componentDidMount() {
     this.props.requestSession()
     try {
-      await this.registerForPushNotificationsAsync()
+      await this.registerForPushNotifications()
     } catch (error) {
       console.log('Error registering for push notifications:', error)
 
     }
   }
 
-  async registerForPushNotificationsAsync() {
+  async registerForPushNotifications() {
     try {
       const permissions = await Permissions.getAsync(Permissions.NOTIFICATIONS)
-      console.log('permissions:', permissions);
 
       const { status: existingStatus } = permissions
       let finalStatus = existingStatus
-      console.log('STATUS:', existingStatus)
 
       // only ask if permissions have not already been determined, because
       // iOS won't necessarily prompt the user a second time.
@@ -53,8 +51,6 @@ class Home extends React.Component {
         // install, so this will only ask on iOS
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
         finalStatus = status
-        console.log('FINAL STATUS:', finalStatus)
-
       }
 
       // Stop here if the user did not grant permissions
@@ -63,6 +59,7 @@ class Home extends React.Component {
       // Get the token that uniquely identifies this device
       let deviceToken = await Notifications.getExpoPushTokenAsync()
       let userId = this.props.session.userId
+
       // Call the GraphQL API to save the users device push token.
       if (userId && deviceToken) await this.props.registerDevice({ userId, deviceToken })
     } catch (error) {

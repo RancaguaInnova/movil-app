@@ -12,7 +12,6 @@ let introVisualization = null; */
 
 const recoverSession = async () => {
   try {
-    console.log('RECOVER SESSION!')
     const json = await AsyncStorage.getItem(sessionKey)
     session = JSON.parse(json)
   } catch (e) {
@@ -21,7 +20,6 @@ const recoverSession = async () => {
 }
 
 const getSession = () => {
-  console.log('session')
   return session
 }
 
