@@ -1,22 +1,21 @@
-import React from 'react'
-import { View, Text, Divider, Caption, Subtitle, TouchableOpacity, Row } from '@shoutem/ui'
 import { Alert, ScrollView } from 'react-native'
-import { NavigationEvents } from 'react-navigation'
-import { Ionicons } from '@expo/vector-icons'
-import { WebBrowser } from 'expo'
-import PropTypes from 'prop-types'
-import Auth from 'screens/Auth'
-import textStyles from 'styles/texts'
-import styles from './styles'
+import { Caption, Divider, Row, Subtitle, Text, TouchableOpacity, View } from '@shoutem/ui'
+import { event, pageHit } from '/helpers/analytics'
 
-import { pageHit, event } from '/helpers/analytics'
-import { parseUrl } from '/helpers/url'
-
-import SubHeader from 'components/SubHeader'
-import SectionDivider from 'components/SectionDivider'
-import Loading from 'components/Loading'
-import CustomHeader from 'components/CustomHeader'
 import AppLink from 'react-native-app-link'
+import Auth from 'screens/Auth'
+import CustomHeader from 'components/CustomHeader'
+import { Ionicons } from '@expo/vector-icons'
+import Loading from 'components/Loading'
+import { NavigationEvents } from 'react-navigation'
+import PropTypes from 'prop-types'
+import React from 'react'
+import SectionDivider from 'components/SectionDivider'
+import SubHeader from 'components/SubHeader'
+import { WebBrowser } from 'expo'
+import { parseUrl } from '/helpers/url'
+import styles from './styles'
+import textStyles from 'styles/texts'
 
 const pageName = 'services'
 
@@ -115,10 +114,9 @@ export default class Services extends React.Component {
           event('click_service_offline', app.applicationURL)
         }
       } else {
-        const { url, appName, appStoreId, appStoreLocale, playStoreId } = app
-
+        const { urlApp, appName, appStoreId, appStoreLocale, playStoreId } = app
         try {
-          await AppLink.maybeOpenURL(url, {
+          await AppLink.maybeOpenURL(urlApp, {
             appName,
             appStoreId,
             appStoreLocale,
