@@ -1,18 +1,20 @@
-import React from 'react'
-import { Platform, StatusBar, StyleSheet, View, YellowBox, Text } from 'react-native'
-import { AppLoading, Asset, Font, Icon } from 'expo'
-import AppNavigator from './navigation/AppNavigator'
+import { AppLoading, Asset, Font, Icon, Linking } from 'expo'
+import { Platform, StatusBar, StyleSheet, Text, View, YellowBox } from 'react-native'
+import { Provider, connect } from 'react-redux'
+import { client, recoverSession } from 'providers/ApolloProvider'
+
 import { ApolloProvider } from 'react-apollo'
+import AppNavigator from './navigation/AppNavigator'
+import CustomModal from 'components/CustomModal'
+import MainMenu from 'components/MainMenu'
+import React from 'react'
+import SideMenu from 'react-native-side-menu'
+import WebView from 'components/WebView'
 import autobind from 'autobind-decorator'
-import { connect, Provider } from 'react-redux'
 /* import Drawer from 'react-native-drawer' */
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
-import WebView from 'components/WebView'
-import CustomModal from 'components/CustomModal'
-import { recoverSession, client } from 'providers/ApolloProvider'
-import MainMenu from 'components/MainMenu'
+import openApp from '/helpers/functions/openExternalApp/'
 import store from 'providers/StateProvider'
-import SideMenu from 'react-native-side-menu'
 
 YellowBox.ignoreWarnings(['Require cycle:'])
 YellowBox.ignoreWarnings(['Setting a timer'])
@@ -22,10 +24,25 @@ export default class App extends React.Component {
     drawerOpen: false,
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this._handleUrl)
+  }
+
+  async componentDidMount() {
+    Linking.addEventListener('url', this._handleUrl)
+
     store.subscribe(() => {
       this.setState({ drawerOpen: store.getState().drawer.open })
     })
+  }
+  _handleUrl = async event => {
+    try {
+      const { navigation } = this.props
+      let { path, queryParams } = Linking.parse(event.url)
+      if (path == 'openApp') {
+        await openApp(queryParams)
+      }
+    } catch (err) {}
   }
 
   @autobind
