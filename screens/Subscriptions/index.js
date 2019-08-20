@@ -14,8 +14,20 @@ import { Permissions, Notifications } from 'expo'
 import styles from './styles.js'
 import SectionDivider from 'components/SectionDivider'
 import { registerDevice, updateProfile } from 'providers/StateProvider/Auth/actions'
+import set from 'lodash/set'
 
 class Subscriptions extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      subscriptions: {
+        absence: false,
+        events: false,
+        news: false,
+      },
+    }
+  }
+
   static propTypes = {
     userId: PropTypes.string.isRequired,
     session: PropTypes.object.isRequired,
@@ -23,12 +35,6 @@ class Subscriptions extends React.Component {
     loading: PropTypes.bool,
     subscriptions: PropTypes.object,
     registerDevice: PropTypes.func.isRequired,
-  }
-
-  state = {
-    subscriptions: {
-      absence: false,
-    },
   }
 
   componentDidMount() {
@@ -118,13 +124,20 @@ class Subscriptions extends React.Component {
       if (finalStatus !== 'granted') return
 
       // Get the token that uniquely identifies this device
-      let token = await Notifications.getExpoPushTokenAsync()
+      let deviceToken = await Notifications.getExpoPushTokenAsync()
       let userId = this.props.userId
       // Call the GraphQL API to save the users device push token.
-      await this.props.registerDevice({ userId, token })
+      await this.props.registerDevice({ userId, deviceToken })
     } catch (error) {
       console.log('Error registering device token:', error)
     }
+  }
+
+  handleChange = subsType => {
+    let subsStatus = this.state.subscriptions[subsType]
+    const state = Object.assign({}, this.state)
+    set(state, `subscriptions.${subsType}`, !subsStatus)
+    this.setState(state)
   }
 
   render() {
@@ -136,14 +149,22 @@ class Subscriptions extends React.Component {
           <Text style={{ padding: 15 }}>Marque las notificaciones de su interés</Text>
           <CheckBox
             title='Ausencia escolar'
-            checked={this.state.subscriptions.absence}
-            onPress={() => {
-              this.setState({
-                subscriptions: {
-                  absence: !this.state.subscriptions.absence,
-                },
-              })
-            }}
+            checked={ this.state.subscriptions.absence }
+            onPress={ () => this.handleChange('absence') }
+            checkedColor='#ff1248'
+            containerStyle={styles.checkContainer}
+          />
+          <CheckBox
+            title='Eventos'
+            checked={ this.state.subscriptions.events }
+            onPress={ () => this.handleChange('events') }
+            checkedColor='#ff1248'
+            containerStyle={styles.checkContainer}
+          />
+          <CheckBox
+            title='Noticias'
+            checked={ this.state.subscriptions.news }
+            onPress={ () => this.handleChange('news') }
             checkedColor='#ff1248'
             containerStyle={styles.checkContainer}
           />
