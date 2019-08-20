@@ -7,7 +7,7 @@
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
     "githubUrl": "https://github.com/RancaguaInnova/app-movil",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.rancagua.digital",
-      "versionCode": 12,
+      "versionCode": 13,
       "permissions": []
     },
     "description": ""
