@@ -149,7 +149,7 @@ class DepartmentDetail extends React.Component {
 export default graphql(officialsByDepartmentQry, {
   options: ownProps => ({
     variables: {
-      department: ownProps.department && ownProps.department._id ? ownProps.department._id : '',
+      Category: null,
     },
   }),
 })(DepartmentDetail)
