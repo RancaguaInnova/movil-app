@@ -101,7 +101,7 @@ class MainMenu extends React.Component {
 			onPress: (user = {}) => {
 				this.props.openModal(<Auth show='register' />)
 			}
-		},
+		} /* ,
 		{
 			title: 'Escaner QR',
 			icon: 'ios-qr-scanner',
@@ -117,7 +117,7 @@ class MainMenu extends React.Component {
 			onPress: (user = {}) => {
 				this.props.openModal(<QrScanner />)
 			}
-		}
+		} */
 		/* {
       title: 'Contacto',
       icon: 'ios-chatboxes',
