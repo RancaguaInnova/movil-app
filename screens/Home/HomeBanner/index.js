@@ -110,7 +110,7 @@ class HomeBanner extends React.Component {
 						width='100%'
 						height='100%'
 						fill='#ff0648'
-						fillAll='true'
+						fillAll={true}
 						source={{
 							uri: card.iconUrl
 						}}
