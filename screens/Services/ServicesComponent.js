@@ -45,6 +45,9 @@ export default class Services extends React.Component {
   // TODO: move this to a Redux action?
   async getMagicLink(app) {
     const userEmail = this.props.session.user.email
+    if (!userEmail) {
+      this.showNoSessionAlert('Debes iniciar sesión para acceder al servicio')
+    }
     try {
       const response = await fetch(app.applicationURL, {
         method: 'POST',
@@ -66,12 +69,12 @@ export default class Services extends React.Component {
       } = await response.json()
       return url
     } catch (error) {
-      this.showNoSessionAlert()
+      this.showNoSessionAlert("Tu email no se encuentra registrado en Libreta Educativa!")
     }
   }
 
-  showNoSessionAlert() {
-    Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
+  showNoSessionAlert(message) {
+    Alert.alert(message, null, [
       {
         text: 'Cancelar',
         onPress: () => {
@@ -113,7 +116,7 @@ export default class Services extends React.Component {
           this.props.openWebView(finalUrl, false)
           event('click_service_online', app.applicationURL)
         } else if (!session || !session.user || !session.user.userToken) {
-          this.showNoSessionAlert()
+          this.showNoSessionAlert('Debes iniciar sesión para acceder al servicio')
           event('click_service_offline', app.applicationURL)
         }
       } else {
