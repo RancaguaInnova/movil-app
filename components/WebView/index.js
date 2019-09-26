@@ -112,7 +112,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     closeWebView: () => {
-      console.log('CLOSE!!!')
       dispatch(closeWebView())
     },
   }
