@@ -13,6 +13,7 @@ import Notifications from 'screens/Notifications'
 import Contact from 'screens/Contact'
 import Subscriptions from 'screens/Subscriptions'
 import Profile from 'screens/Profile'
+import QrScanner from 'screens/QrScanner'
 
 // Redux actions
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
@@ -24,35 +25,35 @@ import { parseUrl } from 'helpers/url'
 import styles from './styles.js'
 
 class MainMenu extends React.Component {
-  static propTypes = {
-    closeDrawer: PropTypes.func,
-    openWebView: PropTypes.func,
-    openModal: PropTypes.func,
-    logout: PropTypes.func,
-    session: PropTypes.object,
-  }
+	static propTypes = {
+		closeDrawer: PropTypes.func,
+		openWebView: PropTypes.func,
+		openModal: PropTypes.func,
+		logout: PropTypes.func,
+		session: PropTypes.object
+	}
 
-  menuItems = [
-    {
-      title: 'Editar Perfil',
-      icon: 'ios-contact',
-      requireAuth: true,
-      onPress: (user = {}) => {
-        this.props.openModal(<Profile />)
-      },
-    },
-    {
-      title: 'Mis Entradas',
-      icon: 'ios-pricetags',
-      requireAuth: true,
-      onPress: (user = {}) => {
-        const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
-          token: user.userToken,
-        })
-        this.props.openWebView(url)
-      },
-    },
-    /*    {
+	menuItems = [
+		{
+			title: 'Editar Perfil',
+			icon: 'ios-contact',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				this.props.openModal(<Profile />)
+			}
+		},
+		{
+			title: 'Mis Entradas',
+			icon: 'ios-pricetags',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				const url = parseUrl('https://tickets.smartrancagua.com/mytickets', {
+					token: user.userToken
+				})
+				this.props.openWebView(url)
+			}
+		},
+		/*    {
       title: 'Notificaciones',
       icon: 'ios-notifications-outline',
       requireAuth: true,
@@ -60,14 +61,14 @@ class MainMenu extends React.Component {
         this.props.openModal(<Notifications />)
       },
     }, */
-    {
-      title: 'Suscripciones',
-      icon: 'ios-checkbox-outline',
-      requireAuth: true,
-      onPress: (user = {}) => {
-        this.props.openModal(<Subscriptions />)
-      },
-    } /*  ,
+		{
+			title: 'Suscripciones',
+			icon: 'ios-checkbox-outline',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				this.props.openModal(<Subscriptions />)
+			}
+		} /*  ,
    {
       title: 'Contacto',
       icon: 'ios-chatboxes',
@@ -76,32 +77,48 @@ class MainMenu extends React.Component {
         this.props.openModal(<Contact />)
       },
     } */,
-    // Unnautenticated
-    {
-      title: 'Cerrar Sesión',
-      icon: 'ios-log-out',
-      requireAuth: true,
-      onPress: (user = {}) => {
-        this.props.logout(user._id)
-      },
-    },
-    {
-      title: 'Iniciar Sesión',
-      icon: 'ios-log-in',
-      requireAuth: false,
-      onPress: (user = {}) => {
-        this.props.openModal(<Auth show='login' />)
-      },
-    },
-    {
-      title: 'Registrarse',
-      icon: 'ios-person-add',
-      requireAuth: false,
-      onPress: (user = {}) => {
-        this.props.openModal(<Auth show='register' />)
-      },
-    },
-    /* {
+		// Unnautenticated
+		{
+			title: 'Cerrar Sesión',
+			icon: 'ios-log-out',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				this.props.logout(user._id)
+			}
+		},
+		{
+			title: 'Iniciar Sesión',
+			icon: 'ios-log-in',
+			requireAuth: false,
+			onPress: (user = {}) => {
+				this.props.openModal(<Auth show='login' />)
+			}
+		},
+		{
+			title: 'Registrarse',
+			icon: 'ios-person-add',
+			requireAuth: false,
+			onPress: (user = {}) => {
+				this.props.openModal(<Auth show='register' />)
+			}
+		},
+		{
+			title: 'Escaner QR',
+			icon: 'ios-qr-scanner',
+			requireAuth: false,
+			onPress: (user = {}) => {
+				this.props.openModal(<QrScanner />)
+			}
+		},
+		{
+			title: 'Escaner QR',
+			icon: 'ios-qr-scanner',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				this.props.openModal(<QrScanner />)
+			}
+		}
+		/* {
       title: 'Contacto',
       icon: 'ios-chatboxes',
       requireAuth: false,
@@ -109,103 +126,90 @@ class MainMenu extends React.Component {
         this.props.openModal(<Contact />)
       },
     }, */
-  ]
+	]
 
-  @autobind
-  openMenu(action, user) {
-    this.props.closeDrawer()
-    if (action) action(user)
-  }
+	@autobind
+	openMenu(action, user) {
+		this.props.closeDrawer()
+		if (action) action(user)
+	}
 
-  render() {
-    const auth = this.props.session && this.props.session.userId ? true : false
-    const { user } = this.props.session
-    const config = {
-      velocityThreshold: 0.1,
-    }
-    return (
-      <GestureRecognizer
-        onSwipeRight={this.props.closeDrawer}
-        config={config}
-        style={styles.container}
-      >
-        <TouchableOpacity onPress={this.props.closeDrawer}>
-          <Ionicons name='ios-arrow-back' size={30} color='#969696' style={{ padding: 10 }} />
-        </TouchableOpacity>
-        <View style={{ alignItems: 'center', marginBottom: 10 }}>
-          <Avatar
-            rounded
-            size='xlarge'
-            icon={{ name: 'user', type: 'font-awesome' }}
-            source={require('assets/images/icon.png')}
-            activeOpacity={0.7}
-          />
+	render() {
+		const auth = this.props.session && this.props.session.userId ? true : false
+		const { user } = this.props.session
+		const config = {
+			velocityThreshold: 0.1
+		}
+		return (
+			<GestureRecognizer onSwipeRight={this.props.closeDrawer} config={config} style={styles.container}>
+				<TouchableOpacity onPress={this.props.closeDrawer}>
+					<Ionicons name='ios-arrow-back' size={30} color='#969696' style={{ padding: 10 }} />
+				</TouchableOpacity>
+				<View style={{ alignItems: 'center', marginBottom: 10 }}>
+					<Avatar
+						rounded
+						size='xlarge'
+						icon={{ name: 'user', type: 'font-awesome' }}
+						source={require('assets/images/icon.png')}
+						activeOpacity={0.7}
+					/>
 
-          {auth && (
-            <Text style={{ fontWeight: 'bold', paddingTop: 10 }}>
-              {`${
-                user && user.profile && user.profile.firstName
-                  ? user.profile.firstName.toUpperCase()
-                  : ''
-              } ${
-                user && user.profile && user.profile.lastName
-                  ? user.profile.lastName.toUpperCase()
-                  : ''
-              }`}
-            </Text>
-          )}
-          {auth && <Text>{user && user.email ? user.email : ''}</Text>}
-        </View>
-        <ScrollView style={{ padding: 5, marginTop: 15 }}>
-          {this.menuItems
-            .filter(item => {
-              return (item.requireAuth && auth) || (!item.requireAuth && !auth)
-            })
-            .map((item, i) => (
-              <TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress, user)}>
-                <ListItem
-                  title={item.title}
-                  titleStyle={{ fontSize: 14, color: '#5e5f5f' }}
-                  bottomDivider={true}
-                  leftIcon={<Ionicons name={item.icon} size={28} color='#5e5f5f' />}
-                  rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#5e5f5f' />}
-                />
-              </TouchableOpacity>
-            ))}
-        </ScrollView>
-      </GestureRecognizer>
-    )
-  }
+					{auth && (
+						<Text style={{ fontWeight: 'bold', paddingTop: 10 }}>
+							{`${user && user.profile && user.profile.firstName
+								? user.profile.firstName.toUpperCase()
+								: ''} ${user && user.profile && user.profile.lastName
+								? user.profile.lastName.toUpperCase()
+								: ''}`}
+						</Text>
+					)}
+					{auth && <Text>{user && user.email ? user.email : ''}</Text>}
+				</View>
+				<ScrollView style={{ padding: 5, marginTop: 15 }}>
+					{this.menuItems
+						.filter((item) => {
+							return (item.requireAuth && auth) || (!item.requireAuth && !auth)
+						})
+						.map((item, i) => (
+							<TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress, user)}>
+								<ListItem
+									title={item.title}
+									titleStyle={{ fontSize: 14, color: '#5e5f5f' }}
+									bottomDivider={true}
+									leftIcon={<Ionicons name={item.icon} size={28} color='#5e5f5f' />}
+									rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#5e5f5f' />}
+								/>
+							</TouchableOpacity>
+						))}
+				</ScrollView>
+			</GestureRecognizer>
+		)
+	}
 }
 
 // Redux
-const mapDispatchToProps = dispatch => {
-  return {
-    closeDrawer: () => {
-      dispatch(closeDrawer())
-    },
-    openModal: child => {
-      dispatch(openModal(child))
-    },
-    openWebView: url => {
-      dispatch(openWebView(url))
-    },
-    logout: sessionId => {
-      dispatch(logout(sessionId))
-    },
-  }
+const mapDispatchToProps = (dispatch) => {
+	return {
+		closeDrawer: () => {
+			dispatch(closeDrawer())
+		},
+		openModal: (child) => {
+			dispatch(openModal(child))
+		},
+		openWebView: (url) => {
+			dispatch(openWebView(url))
+		},
+		logout: (sessionId) => {
+			dispatch(logout(sessionId))
+		}
+	}
 }
 
-const mapStateToProps = state => {
-  const {
-    auth: { session, loading },
-  } = state
-  return {
-    session,
-  }
+const mapStateToProps = (state) => {
+	const { auth: { session, loading } } = state
+	return {
+		session
+	}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainMenu)
+export default connect(mapStateToProps, mapDispatchToProps)(MainMenu)
