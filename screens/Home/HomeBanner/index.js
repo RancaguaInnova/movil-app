@@ -13,8 +13,6 @@ import { cards } from 'providers/StateProvider/Cards/actions'
 import { event } from '/helpers/analytics'
 import { openModal } from 'providers/StateProvider/Modal/actions'
 import { parseUrl } from '/helpers/url'
-import Loading from 'providers/ApolloProvider/Loading'
-import Image from 'react-native-remote-svg'
 import SvgUri from 'expo-svg-uri'
 
 import { Ionicons } from '@expo/vector-icons'
