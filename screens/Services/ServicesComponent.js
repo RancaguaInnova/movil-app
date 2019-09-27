@@ -45,6 +45,9 @@ export default class Services extends React.Component {
   // TODO: move this to a Redux action?
   async getMagicLink(app) {
     const userEmail = this.props.session.user.email
+    if (!userEmail) {
+      this.showNoSessionAlert('Debes iniciar sesión para acceder al servicio')
+    }
     try {
       const response = await fetch(app.applicationURL, {
         method: 'POST',
@@ -66,14 +69,33 @@ export default class Services extends React.Component {
       } = await response.json()
       return url
     } catch (error) {
-      console.log('Error getting magic link:', error)
+      this.showNoSessionAlert("Tu email no se encuentra registrado en Libreta Educativa!")
     }
+  }
+
+  showNoSessionAlert(message) {
+    Alert.alert(message, null, [
+      {
+        text: 'Cancelar',
+        onPress: () => {
+          event('click_service_login', 'cancel')
+        },
+        style: 'cancel',
+      },
+      {
+        text: 'Iniciar',
+        onPress: () => {
+          this.props.openModal(<Auth show='login' />)
+          event('click_service_login', 'login')
+        },
+      },
+    ])
   }
 
   async openApp(app) {
     const { session } = this.props
     try {
-      if (!app.appMovil || app.appMovil === null) {
+      if (!app.appMovil) {
         if (
           app.applicationURL &&
           app.applicationURL.trim() !== '' &&
@@ -93,24 +115,8 @@ export default class Services extends React.Component {
           }
           this.props.openWebView(finalUrl, false)
           event('click_service_online', app.applicationURL)
-        } else if (!session || !session.user || !seshágalesion.user.userToken) {
-          Alert.alert('Debe iniciar sesión para acceder al servicio', null, [
-            {
-              text: 'Cancelar',
-              onPress: () => {
-                event('click_service_login', 'cancel')
-              },
-              style: 'cancel',
-            },
-            {
-              text: 'Iniciar',
-              onPress: () => {
-                this.props.openModal(<Auth show='login' />)
-                //this.props.navigation.navigate('Profile')
-                event('click_service_login', 'login')
-              },
-            },
-          ])
+        } else if (!session || !session.user || !session.user.userToken) {
+          this.showNoSessionAlert('Debes iniciar sesión para acceder al servicio')
           event('click_service_offline', app.applicationURL)
         }
       } else {
