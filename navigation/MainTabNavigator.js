@@ -51,19 +51,7 @@ ServicesStack.navigationOptions = {
   ),
   tabBarOptions: TabBarOptions,
 }
-/*
-const DirectoryStack = createStackNavigator({
-  Directory,
-})
 
-DirectoryStack.navigationOptions = {
-  tabBarLabel: <View />, //'Directorio',
-  tabBarIcon: ({ focused, tintColor }) => {
-    return <Tab color={tintColor} focused={focused} icon='ios-call' title='Directorio' />
-  },
-  tabBarOptions: TabBarOptions,
-}
-*/
 const InformationStack = createStackNavigator({
   Information,
 })
@@ -71,24 +59,17 @@ const InformationStack = createStackNavigator({
 InformationStack.navigationOptions = {
   tabBarLabel: <View />, //'Information',
   tabBarIcon: ({ focused, tintColor }) => {
-    return <Tab color={tintColor} focused={focused} icon='ios-call' title='Información' />
+    return (
+      <Tab
+        color={tintColor}
+        focused={focused}
+        icon='ios-information-circle-outline'
+        title='Información'
+      />
+    )
   },
   tabBarOptions: TabBarOptions,
 }
-
-/* const ProfileStack = createStackNavigator({
-  Profile,
-  Register,
-  Forgot,
-}) */
-
-/* ProfileStack.navigationOptions = {
-  tabBarLabel: 'Perfil',
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-person' />
-  ),
-  tabBarOptions: TabBarOptions,
-} */
 
 export default createBottomTabNavigator({
   HomeStack,

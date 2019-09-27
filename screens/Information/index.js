@@ -18,8 +18,7 @@ export default class Information extends Component {
   static navigationOptions = {
     header: <CustomHeader type='main' />,
   }
-  mainUrl = 'https://rancagua-digital-webviews-cnhatmxud.now.sh/view/information'
-  //mainUrl = 'https://webviews.now.sh/view/information'
+  mainUrl = 'https://webviews.smartrancagua.com/view/information'
 
   constructor(props) {
     super(props)
