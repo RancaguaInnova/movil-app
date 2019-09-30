@@ -10,6 +10,8 @@ import Home from 'screens/Home'
 import Calendar from 'screens/Calendar'
 import Services from 'screens/Services'
 import Directory from 'screens/Directory'
+import Information from 'screens/Information'
+
 /* import Profile from 'screens/Profile'
 import Register from 'screens/Profile/Register'
 import Forgot from 'screens/Profile/Forgot' */
@@ -50,36 +52,29 @@ ServicesStack.navigationOptions = {
   tabBarOptions: TabBarOptions,
 }
 
-const DirectoryStack = createStackNavigator({
-  Directory,
+const InformationStack = createStackNavigator({
+  Information,
 })
 
-DirectoryStack.navigationOptions = {
-  tabBarLabel: <View />, //'Directorio',
+InformationStack.navigationOptions = {
+  tabBarLabel: <View />, //'Information',
   tabBarIcon: ({ focused, tintColor }) => {
-    return <Tab color={tintColor} focused={focused} icon='ios-call' title='Directorio' />
+    return (
+      <Tab
+        color={tintColor}
+        focused={focused}
+        icon='ios-information-circle-outline'
+        title='Información'
+      />
+    )
   },
   tabBarOptions: TabBarOptions,
 }
-
-/* const ProfileStack = createStackNavigator({
-  Profile,
-  Register,
-  Forgot,
-}) */
-
-/* ProfileStack.navigationOptions = {
-  tabBarLabel: 'Perfil',
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon color={tintColor} focused={focused} name='ios-person' />
-  ),
-  tabBarOptions: TabBarOptions,
-} */
 
 export default createBottomTabNavigator({
   HomeStack,
   CalendarStack,
   ServicesStack,
-  DirectoryStack,
+  InformationStack,
   //ProfileStack,
 })
