@@ -1,14 +1,13 @@
 import { createClient } from '@orion-js/graphql-client'
-import url from './url'
 import { AsyncStorage } from 'react-native'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import getEnvVars from 'environment'
+
+const env = getEnvVars()
 
 const sessionKey = '@rancagua_digital:session'
 let session = null
 let client = null
-
-/* const introKey = '@app:showIntro';
-let introVisualization = null; */
 
 const recoverSession = async () => {
   try {
@@ -33,27 +32,10 @@ const saveSession = async newSession => {
   await client.resetStore()
 }
 
-/* const getIntroVisualization = () => {
-  return introVisualization;
-};
-
-const setIntroVisualization = async value => {
-  introVisualization = value;
-  await AsyncStorage.setItem(introKey, value.toString());
-};
-
-const resetIntroVisualization = async () => {
-  await AsyncStorage.removeItem(introKey);
-  introVisualization = null;
-};
-
-const recoverIntroVisualization = async () => {
-  introVisualization = await AsyncStorage.getItem(introKey);
-}; */
 const cache = new InMemoryCache()
 
 client = createClient({
-  endpointURL: url,
+  endpointURL: env.apolloUrl,
   useSubscriptions: false,
   saveSession,
   getSession,
@@ -61,14 +43,4 @@ client = createClient({
   cache,
 })
 
-export {
-  getSession,
-  saveSession,
-  recoverSession,
-  removeSession,
-  client,
-  /*   getIntroVisualization,
-  setIntroVisualization,
-  resetIntroVisualization,
-  recoverIntroVisualization */
-}
+export { getSession, saveSession, recoverSession, removeSession, client }

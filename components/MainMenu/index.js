@@ -53,6 +53,14 @@ class MainMenu extends React.Component {
 				this.props.openWebView(url)
 			}
 		},
+		{
+			title: 'Escaner QR',
+			icon: 'ios-qr-scanner',
+			requireAuth: true,
+			onPress: (user = {}) => {
+				this.props.openModal(<QrScanner />)
+			}
+		},
 		/*    {
       title: 'Notificaciones',
       icon: 'ios-notifications-outline',
@@ -101,7 +109,7 @@ class MainMenu extends React.Component {
 			onPress: (user = {}) => {
 				this.props.openModal(<Auth show='register' />)
 			}
-		} /* ,
+		},
 		{
 			title: 'Escaner QR',
 			icon: 'ios-qr-scanner',
@@ -109,15 +117,7 @@ class MainMenu extends React.Component {
 			onPress: (user = {}) => {
 				this.props.openModal(<QrScanner />)
 			}
-		},
-		{
-			title: 'Escaner QR',
-			icon: 'ios-qr-scanner',
-			requireAuth: true,
-			onPress: (user = {}) => {
-				this.props.openModal(<QrScanner />)
-			}
-		} */
+		}
 		/* {
       title: 'Contacto',
       icon: 'ios-chatboxes',
