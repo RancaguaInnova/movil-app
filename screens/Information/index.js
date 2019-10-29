@@ -14,7 +14,15 @@ import { WebView } from 'react-native'
 import styles from './styles.js'
 import { NavigationEvents } from 'react-navigation'
 import autobind from 'autobind-decorator'
-export default class Information extends Component {
+import PropTypes from 'prop-types'
+import { parseUrl } from '/helpers/url'
+import { connect } from 'react-redux'
+
+class Information extends Component {
+  static propTypes = {
+    session: PropTypes.object,
+  }
+
   static navigationOptions = {
     header: <CustomHeader type='main' />,
   }
@@ -27,11 +35,27 @@ export default class Information extends Component {
       history: [],
     }
   }
+  componentDidMount() {
+    this.refresh()
+  }
 
   @autobind
   refresh() {
-    var newUrl = this.mainUrl + '?refhesh=' + Math.floor(Math.random() * 100 + 1)
-    this.setState({ url: newUrl })
+    let session = this.props.session
+    if (session && session.user && session.user.userToken) {
+      let finalUrl
+      finalUrl = parseUrl(this.mainUrl, {
+        token: session.user.userToken,
+        refhesh: Math.floor(Math.random() * 100 + 1),
+      })
+      this.setState({ url: finalUrl })
+    } else {
+      let finalUrl
+      finalUrl = parseUrl(this.mainUrl, {
+        refhesh: Math.floor(Math.random() * 100 + 1),
+      })
+      this.setState({ url: finalUrl })
+    }
   }
 
   render() {
@@ -53,3 +77,13 @@ export default class Information extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  const {
+    auth: { session },
+  } = state
+  return {
+    session,
+  }
+}
+
+export default connect(mapStateToProps)(Information)
