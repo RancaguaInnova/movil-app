@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 import { parseUrl } from '/helpers/url'
 import { connect } from 'react-redux'
 
- class Information extends Component {
+class Information extends Component {
   static propTypes = {
     session: PropTypes.object,
   }
@@ -41,18 +41,18 @@ import { connect } from 'react-redux'
 
   @autobind
   refresh() {
-    let session=this.props.session
+    let session = this.props.session
     if (session && session.user && session.user.userToken) {
       let finalUrl
       finalUrl = parseUrl(this.mainUrl, {
         token: session.user.userToken,
-        refhesh:Math.floor(Math.random() * 100 + 1)
+        refhesh: Math.floor(Math.random() * 100 + 1),
       })
       this.setState({ url: finalUrl })
-    }else{
+    } else {
       let finalUrl
       finalUrl = parseUrl(this.mainUrl, {
-        refhesh:Math.floor(Math.random() * 100 + 1)
+        refhesh: Math.floor(Math.random() * 100 + 1),
       })
       this.setState({ url: finalUrl })
     }
@@ -86,6 +86,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-)(Information)
+export default connect(mapStateToProps)(Information)
