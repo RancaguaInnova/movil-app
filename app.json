@@ -20,15 +20,15 @@
 			"checkAutomatically": "ON_LOAD",
 			"fallbackToCacheTimeout": 30000
 		},
-		"assetBundlePatterns": [ "**/*" ],
+		"assetBundlePatterns": [ "assets/*" ],
 		"ios": {
 			"supportsTablet": false,
 			"bundleIdentifier": "com.rancagua.digital",
-			"buildNumber": "0.0.1"
+			"buildNumber": "0.0.3"
 		},
 		"android": {
 			"package": "com.rancagua.digital",
-			"versionCode": 14,
+			"versionCode": 15,
 			"permissions": []
 		},
 		"description": ""
