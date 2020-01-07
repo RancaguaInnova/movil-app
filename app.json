@@ -24,7 +24,7 @@
 		"ios": {
 			"supportsTablet": false,
 			"bundleIdentifier": "com.rancagua.digital",
-			"buildNumber": "0.0.3"
+			"buildNumber": "0.0.4"
 		},
 		"android": {
 			"package": "com.rancagua.digital",
