@@ -82,6 +82,7 @@ class WebViewComponent extends React.Component {
             <View style={styles.webViewContainer}>
               <WebView
                 ref={r => (this.webViewRef = r)}
+                useWebKit={true}
                 source={{ uri: this.props.url }}
                 startInLoadingState={true}
                 onNavigationStateChange={this.onNavigationStateChange}
@@ -117,7 +118,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WebViewComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(WebViewComponent)
