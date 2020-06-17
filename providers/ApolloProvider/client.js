@@ -11,26 +11,26 @@ let client = null
 let introVisualization = null; */
 
 const recoverSession = async () => {
-  try {
-    const json = await AsyncStorage.getItem(sessionKey)
-    session = JSON.parse(json)
-  } catch (e) {
-    session = null
-  }
+    try {
+        const json = await AsyncStorage.getItem(sessionKey)
+        session = JSON.parse(json)
+    } catch (e) {
+        session = null
+    }
 }
 
 const getSession = () => {
-  return session
+    return session
 }
 
 const removeSession = async () => {
-  await saveSession(null)
+    await saveSession(null)
 }
 
 const saveSession = async newSession => {
-  session = newSession
-  await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
-  await client.resetStore()
+    session = newSession
+    await AsyncStorage.setItem(sessionKey, JSON.stringify(session, null, 2))
+    await client.resetStore()
 }
 
 /* const getIntroVisualization = () => {
@@ -52,22 +52,26 @@ const recoverIntroVisualization = async () => {
 }; */
 const cache = new InMemoryCache()
 
-client = createClient({
-  endpointURL: url,
-  useSubscriptions: false,
-  saveSession,
-  getSession,
-  removeSession,
-  cache,
-})
+const clientOpc = {
+    endpointURL: url,
+    useSubscriptions: false,
+    saveSession,
+    getSession,
+    removeSession,
+    cache
+}
+
+client = createClient(clientOpc)
 
 export {
-  getSession,
-  saveSession,
-  recoverSession,
-  removeSession,
-  client,
-  /*   getIntroVisualization,
+    getSession,
+    saveSession,
+    recoverSession,
+    removeSession,
+    client,
+    clientOpc,
+    createClient
+    /*   getIntroVisualization,
   setIntroVisualization,
   resetIntroVisualization,
   recoverIntroVisualization */
