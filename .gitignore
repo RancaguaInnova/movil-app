@@ -4,3 +4,11 @@
 *.swp
 node_modules/
 .expo/
+/.idea/codestream.xml
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/movil-app.iml
+/.idea/codeStyles/Project.xml
+/.idea/vcs.xml
+/.idea/.gitignore
