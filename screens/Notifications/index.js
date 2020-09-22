@@ -30,9 +30,9 @@ export default class Notifications extends React.Component {
           {list.map((item, i) => (
             <TouchableOpacity key={i}>
               <ListItem
-                title={item.title}
-                titleStyle={{ fontWeight: 'bold' }}
-                subtitle={item.subtitle}
+
+             /*
+
                 leftIcon={
                   <Ionicons name='ios-notifications-outline' size={26} color={item.color} />
                 }
@@ -42,8 +42,14 @@ export default class Notifications extends React.Component {
                   borderRadius: 10,
                   borderWidth: 3,
                   borderColor: '#ebebeb',
-                }}
-              />
+                }} */ >
+
+              <ListItem.Content>
+                <ListItem.Title    titleStyle={{ fontWeight: 'bold' }}>{item.title}</ListItem.Title>
+                <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
+              </ListItem.Content>
+              </ListItem>
+
             </TouchableOpacity>
           ))}
         </ScrollView>

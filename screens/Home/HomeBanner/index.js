@@ -135,8 +135,7 @@ class HomeBanner extends React.Component {
 				>
 					{
 						<ListItem
-							title={indicator.title}
-							subtitle={indicator.subtitle}
+						/*
 							containerStyle={{ height: '100%', backgroundColor: '#ff0648' }}
 							titleStyle={{ color: 'white', fontWeight: 'bold', fontSize: 18 }}
 							subtitleStyle={{ color: 'white' }}
@@ -147,8 +146,16 @@ class HomeBanner extends React.Component {
 										{indicator.measurementUnit}
 									</Text>
 								</View>
-							}
-						/>
+							}*/
+						>
+
+
+            <ListItem.Content>
+            <ListItem.Title>{indicator.title}</ListItem.Title>
+            <ListItem.Subtitle>{indicator.subtitle}</ListItem.Subtitle>
+            </ListItem.Content>
+            </ListItem>
+
 					}
 				</View>
 				<View

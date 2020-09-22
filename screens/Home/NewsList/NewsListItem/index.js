@@ -44,7 +44,7 @@ export default class NewsListItem extends React.Component {
             <Text numberOfLines={4} style={textStyles.rowText}>
               {newsData.subtitle}
             </Text>
-            <Tooltip style={textStyles.rowCaption}>{newsData.date}</Tooltip>
+            <Text style={textStyles.rowCaption}>{newsData.date}</Text>
           </View>
         </View>
         <Divider styleName='line' />

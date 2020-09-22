@@ -70,9 +70,9 @@ class Item extends React.Component {
     return (
       <View style={styles.container}>
         <Divider styleName='section-header'>
-          <Tooltip style={{ fontSize: 15 }}>
+          <Text style={{ fontSize: 15 }}>
             {date} / {item.time} HRS.
-          </Tooltip>
+          </Text>
         </Divider>
         <TouchableOpacity onPress={() => this.onClickItem(item)} style={styles.touchableRow}>
           <View style={styles.row}>

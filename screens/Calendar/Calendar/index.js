@@ -1,7 +1,6 @@
 import React from 'react'
 import { ScrollView,View } from 'react-native'
 import { pageHit } from '/helpers/analytics'
-import { NavigationEvents } from 'react-navigation'
 import styles from './styles'
 import { eventsByMonth } from 'providers/ApolloProvider/queries'
 import unionWith from 'lodash/unionWith'
@@ -76,7 +75,7 @@ export default class Calendar extends React.Component {
     const events = this.state.events
     return (
       <View style={styles.container}>
-        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
+        {/* <NavigationEvents onWillFocus={payload => pageHit(pageName)} />*/}
         <Agenda
           theme={{
             dotColor: '#fe0747',

@@ -39,9 +39,9 @@ export default class CalendarScreen extends React.Component {
         <SectionDivider title='Calendario' />
 
         {this.state.current === 'calendar' ? (
-          <Calendar navigation={this.props.navigation} />
+          <Calendar />
         ) : (
-          <Tickets navigation={this.props.navigation} />
+          <Tickets />
         )}
       </View>
     )

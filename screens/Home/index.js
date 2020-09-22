@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ScrollView,View } from 'react-native'
-import { NavigationEvents } from 'react-navigation'
+//import { NavigationEvents } from 'react-navigation'
 import { pageHit } from '/helpers/analytics'
 import styles from './styles'
 import NewsList from './NewsList'
@@ -72,7 +72,7 @@ class Home extends React.Component {
 		if (this.props.loading) return <Loading />
 		return (
 			<View style={styles.mainContainer}>
-				<NavigationEvents onWillFocus={(payload) => pageHit(pageName)} />
+        {/*<NavigationEvents onWillFocus={(payload) => pageHit( pageName )} />*/}
 				<HomeBanner />
 				<ScrollView style={styles.container}>
 					<NewsList />

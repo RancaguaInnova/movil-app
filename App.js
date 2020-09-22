@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux'
 import { client, recoverSession } from 'providers/ApolloProvider'
 
 import { ApolloProvider } from 'react-apollo'
-import AppNavigator from './navigation/AppNavigator'
+import AppNavigator from './navigation/NewNavigator'
 import CustomModal from 'components/CustomModal'
 import MainMenu from 'components/MainMenu'
 import React from 'react'
@@ -17,6 +17,10 @@ import autobind from 'autobind-decorator'
 import { closeDrawer } from 'providers/StateProvider/Drawer/actions'
 import openApp from '/helpers/functions/openExternalApp/'
 import store from 'providers/StateProvider'
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
 
 YellowBox.ignoreWarnings([ 'Require cycle:' ])
 YellowBox.ignoreWarnings([ 'Setting a timer' ])
@@ -62,6 +66,9 @@ export default class App extends React.Component {
 			)
 		} else {
 			return (
+        <>
+        <IconRegistry icons={EvaIconsPack}/>
+      <ApplicationProvider {...eva} theme={eva.light}>
 				<ApolloProvider client={client}>
 					<Provider store={store}>
 						<WebView />
@@ -82,6 +89,8 @@ export default class App extends React.Component {
 
 					</Provider>
 				</ApolloProvider>
+      </ApplicationProvider>
+        </>
 			)
 		}
 	}

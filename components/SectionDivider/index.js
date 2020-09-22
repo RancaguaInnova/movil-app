@@ -61,9 +61,9 @@ export default class SectionDivider extends React.Component {
 
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            <Tooltip styleName='h-center' style={styles.caption} numberOfLines={2}>
+            <Text styleName='h-center' style={styles.caption} numberOfLines={2}>
               {title}
-            </Tooltip>
+            </Text>
 
           </Divider>
         ) : null}

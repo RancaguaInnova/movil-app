@@ -52,7 +52,7 @@ class Information extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <NavigationEvents onWillFocus={this.refresh} />
+              {/*<NavigationEvents onWillFocus={this.refresh} />*/}
                 <View style={styles.webViewContainer}>
                     <WebView
                         key="comp1"

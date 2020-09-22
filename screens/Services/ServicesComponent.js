@@ -205,8 +205,7 @@ export default class Services extends React.Component {
         } else {
             return (
                 <View style={styles.container}>
-                    <NavigationEvents onWillFocus={this.onWillFocus} />
-                    <SectionDivider title="Servicios disponibles" />
+                  {/*}                    <SectionDivider title="Servicios disponibles" />*/}
                     <SubHeader
                         view="apps"
                         title="Seleccione el servicio"

@@ -6,10 +6,10 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarOptions from './TabBarOptions'
 import Tab from 'components/Tab'
 import TabBarIcon from 'components/TabBarIcon'
+import Directory from 'screens/Directory'
 import Home from 'screens/Home'
 import Calendar from 'screens/Calendar'
 import Services from 'screens/Services'
-import Directory from 'screens/Directory'
 import Information from 'screens/Information'
 
 /* import Profile from 'screens/Profile'
