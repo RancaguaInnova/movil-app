@@ -55,9 +55,10 @@ export default class NewsListItem extends React.Component {
 }
 */
 import React from 'react'
-import { Avatar, Button, Divider, ListItem } from '@ui-kitten/components'
-import { View } from 'react-native'
+import { Avatar, Button, Divider, ListItem,useTheme } from '@ui-kitten/components'
+import { Text, View ,StyleSheet} from 'react-native'
 import moment from 'moment'
+import { Ionicons } from '@expo/vector-icons'
 
 
 const ItemImage = (data) => (
@@ -71,8 +72,34 @@ const ButtonReadMore = (data, onClickNews) => {
       <Button onClick={() => onClickNews( data )} size='tiny'>Leer Mas</Button> : ''}</View>
   )
 }
-const NewsListItem = ({ data, onClickNews }) => {
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  textTitle: {
+    margin: 4,
+    fontSize:14,
+    color:"#FE0747",
+    fontWeight:"bold"
 
+  },
+  textSubTitle:{
+    margin: 4,
+    fontSize:13,
+    color:"#8f9bb3",
+    textAlign:"justify"
+  },
+  controlContainer: {
+    borderRadius: 4,
+    margin: 4,
+    padding: 4,
+    backgroundColor: '#3366FF',
+  },
+});
+const NewsListItem = ({ data, onClickNews }) => {
+  const theme = useTheme();
   const getImage = () => {
     const defaultImg = {
       uri: 'http://fecira.com/wp-content/uploads/2017/08/LOGOS-final-02-1-300x300.png',
@@ -87,13 +114,15 @@ const NewsListItem = ({ data, onClickNews }) => {
     externalUrl: data.externalUrl || '',
   }
   return (
-    <View>
+    <View >
       <ListItem
-        title={newsData.title}
-        description={data.subtitle}
+        title={(props)=><Text {...props} style={styles.textTitle} status='primary'>{newsData.title}</Text>}
+        description={(props)=><Text {...props} style={styles.textSubTitle} status='primary'>{data.subtitle}</Text>}
         accessoryLeft={() => ItemImage( newsData )}
         ItemSeparatorComponent={Divider}
-        accessoryRight={() => ButtonReadMore( newsData, onClickNews )}
+      //  accessoryRight={() => ButtonReadMore( newsData, onClickNews )}
+        accessoryRight={() => <Ionicons styleName="disclosure" name="ios-arrow-forward"
+                                        size={28} />}
       />
       <Divider styleName='line' />
     </View>
