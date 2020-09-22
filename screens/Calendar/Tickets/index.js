@@ -1,14 +1,13 @@
 import React from 'react'
-import { ScrollView, View ,TouchableOpacity,StyleSheet} from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {Text, Divider, Tooltip } from '@ui-kitten/components';
+import { Divider, Icon, ListItem, Text } from '@ui-kitten/components'
 import { Ionicons } from '@expo/vector-icons'
 import { Query } from 'react-apollo'
-import textStyles from 'styles/texts'
 import './styles'
-import { pageHit, event } from '/helpers/analytics'
+import { event, pageHit } from '/helpers/analytics'
 import { parseUrl } from '/helpers/url'
 import { ticketsQry } from 'providers/ApolloProvider/queries'
 import Retry from 'providers/ApolloProvider/Retry'
@@ -49,7 +48,7 @@ class Tickets extends React.Component {
       ''}`
     return (
       <TouchableOpacity key={ticket._id} onPress={() => this.onClickTicket(ticket)}>
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <View styleName='vertical'>
             <Text style={textStyles.rowSubtitle}>{ticket.event.name}</Text>
             <Text numberOfLines={2} style={textStyles.rowText}>
@@ -59,6 +58,28 @@ class Tickets extends React.Component {
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
         </View>
+        <Divider styleName='line' />
+        */}
+        <ListItem
+          title={ticket.event.name}
+          description={evaProps => (
+            <View styleName='vertical'>
+              <Text  {...evaProps}>{ticket.event.name}</Text>
+              <Text  {...evaProps}>
+                {srtAddress}
+              </Text>
+              <Text  {...evaProps} >{ticket.event.date}</Text>
+            </View>
+          )
+          }
+          accessoryLeft={() => <Icon
+            style={styles.icon}
+            fill='#FE0747'
+            name='browser-outline'
+          />}
+          ItemSeparatorComponent={Divider}
+          accessoryRight={() => <Ionicons styleName="disclosure" name="ios-arrow-forward" size={28} />}
+        />
         <Divider styleName='line' />
       </TouchableOpacity>
     )

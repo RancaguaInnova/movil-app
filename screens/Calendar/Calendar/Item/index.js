@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Divider, Tooltip } from '@ui-kitten/components';
+import { Text, Divider, Tooltip, ListItem, Icon } from '@ui-kitten/components'
 import { Alert,View ,TouchableOpacity,StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
@@ -21,6 +21,20 @@ const styles = StyleSheet.create({
   text: {
     margin: 2,
   },
+  itemName:{
+fontSize:13,
+    marginLeft:9,
+    marginRight:9,
+
+    fontWeight:"bold"
+
+  },
+  address:{
+    marginLeft:10,
+    marginRight:9,
+    fontSize: 11
+
+  }
 });
 
 class Item extends React.Component {
@@ -66,50 +80,57 @@ class Item extends React.Component {
 
   render() {
     const item = this.props.item || {}
+    console.log(item.time)
     const date = moment(item.date).format('DD-MM-YYYY')
     return (
       <View style={styles.container}>
-        <Divider styleName='section-header'>
-          <Text style={{ fontSize: 15 }}>
-            {date} / {item.time} HRS.
-          </Text>
-        </Divider>
         <TouchableOpacity onPress={() => this.onClickItem(item)} style={styles.touchableRow}>
-          <View style={styles.row}>
-            <View styleName='vertical' style={styles.itemContent}>
-              <Text
-                category='s1'
-                numberOfLines={2}
-                style={{ ...textStyles.rowSubtitle, ...styles.itemSubtitle }}
-              >
-                {item.name}
-              </Text>
-              {item.description ? (
-                <Text
-                  numberOfLines={3}
-                  style={{ ...textStyles.rowText, paddingTop: 10, paddingRight: 5 }}
-                >
-                  {item.description}
+        <ListItem
+          title={evaProps=>(
+            <Text  {...evaProps}> {date} {item.time && item.time!=="Invalid date"? (`/ ${item.time} HRS.`):''}</Text>
+          )}
+          description={evaProps => (
+            <View style={styles.row}>
+              <View styleName='vertical' style={styles.itemContent}>
+                <Text    {...evaProps}   style={styles.itemName}>
+                  {item.name}
                 </Text>
-              ) : null}
+                {item.description ? (
+                  <Text
+                    {...evaProps}
+                  >
+                    {item.description}
+                  </Text>
+                ) : null}
+                {item.address ? (
+                  <Text
+                    {...evaProps}
+                    status='info'
+                    style={styles.address}
+                  >
+                    {`${item.address.streetName} ${item.address.streetNumber || ''}, ${
+                      item.address.city
+                    }`}
+                  </Text>
+                ) : null}
+              </View>
 
-              {item.address ? (
-                <Text
-                  numberOfLines={3}
-                  style={{ ...textStyles.rowText, ...styles.itemSubtitle, paddingTop: 10 }}
-                >
-                  {`${item.address.streetName} ${item.address.streetNumber || ''}, ${
-                    item.address.city
-                  }`}
-                </Text>
-              ) : null}
+
             </View>
-
-            {item.externalUrl && item.externalUrl.trim() !== '' ? (
-              <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
-            ) : null}
-          </View>
-        </TouchableOpacity>
+          )
+          }
+          accessoryLeft={() => <Icon
+            style={styles.icon}
+            fill='#FE0747'
+            name='browser-outline'
+          />}
+          ItemSeparatorComponent={Divider}
+          accessoryRight={() => (<View>{item.externalUrl && item.externalUrl.trim() !== '' ? (
+            <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
+          ) : null}</View>)}
+        />
+          <Divider styleName='line' />
+      </TouchableOpacity>
       </View>
     )
   }

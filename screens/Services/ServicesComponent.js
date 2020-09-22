@@ -31,6 +31,12 @@ const styles = StyleSheet.create( {
     width: 32,
     height: 32,
   },
+  itemTitle:{
+    fontWeight:"bold",
+    fontSize:13,
+    marginLeft:4,
+    marginRight:4,
+  }
 });
 export default class Services extends React.Component {
     static propTypes = {
@@ -173,7 +179,9 @@ export default class Services extends React.Component {
             <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
          <View>
                 <ListItem
-                  title={app.name}
+                  title={evaProps=>(
+                    <Text {...evaProps} style={styles.itemTitle} > {app.name}</Text>
+                  )}
                   description={app.description}
                   accessoryLeft={() => <Icon
                     style={styles.icon}
