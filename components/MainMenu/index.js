@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, TouchableOpacity, ScrollView } from 'react-native'
-import { Avatar, Text, ListItem } from 'react-native-elements'
+import { ListItem } from '@ui-kitten/components';
+import { Avatar, Text } from 'react-native-elements'
 import autobind from 'autobind-decorator'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
@@ -174,10 +175,10 @@ class MainMenu extends React.Component {
 							<TouchableOpacity key={i} onPress={() => this.openMenu(item.onPress, user)}>
 								<ListItem
 									title={item.title}
-									titleStyle={{ fontSize: 14, color: '#5e5f5f' }}
-									bottomDivider={true}
-									leftIcon={<Ionicons name={item.icon} size={28} color='#5e5f5f' />}
-									rightIcon={<Ionicons name='ios-arrow-forward' size={20} color='#5e5f5f' />}
+
+
+                  accessoryLeft={()=><Ionicons name={item.icon} size={28} color='#5e5f5f' />}
+                  accessoryRight={()=><Ionicons name='ios-arrow-forward' size={20} color='#5e5f5f' />}
 								/>
 							</TouchableOpacity>
 						))}

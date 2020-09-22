@@ -18,7 +18,7 @@ export default StyleSheet.create({
     marginRight: 0,
     marginTop: 0,
     borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
+
   },
   image: { width: 180, height: 38, resizeMode: 'contain' },
   notificationImage: { height: 28, resizeMode: 'contain' },

@@ -66,7 +66,7 @@ class HomeBanner extends React.Component {
 		TimerMixin.clearTimeout(oldTimer)
 	}
 
-	componentWillUnmount() {
+  UNSAFE_componentWillMount() {
 		this.state.timer.map((timer) => {
 			TimerMixin.clearTimeout(timer)
 		})

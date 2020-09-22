@@ -15,7 +15,7 @@ import Loading from 'providers/ApolloProvider/Loading'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 
 const pageName = 'calendar/tickets'
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   text: {
     margin: 2,
   },
-});
+} )
+
 class Tickets extends React.Component {
   static propTypes = {
     userId: PropTypes.string,
@@ -32,22 +33,22 @@ class Tickets extends React.Component {
   onClickTicket = async ticket => {
     try {
       if (ticket.externalUrl && ticket.externalUrl.trim() !== '') {
-        let url = parseUrl(ticket.externalUrl, { ticket: ticket._id })
-        this.props.openWebView(url)
-        event('click_ticket', url)
+        let url = parseUrl( ticket.externalUrl, { ticket: ticket._id } )
+        this.props.openWebView( url )
+        event( 'click_ticket', url )
       }
     } catch (error) {
-      console.log('Error handling onClickItem', error)
-      this.setState({ result: null })
+      console.log( 'Error handling onClickItem', error )
+      this.setState( { result: null } )
     }
   }
 
   renderTicket(ticket) {
     const address = ticket.event && ticket.event.address ? ticket.event.address : {}
     const srtAddress = `${address.streetName || ''} ${address.streetNumber || ''}, ${address.city ||
-      ''}`
+    ''}`
     return (
-      <TouchableOpacity key={ticket._id} onPress={() => this.onClickTicket(ticket)}>
+      <TouchableOpacity key={ticket._id} onPress={() => this.onClickTicket( ticket )}>
         {/* <View style={styles.row}>
           <View styleName='vertical'>
             <Text style={textStyles.rowSubtitle}>{ticket.event.name}</Text>
@@ -78,7 +79,8 @@ class Tickets extends React.Component {
             name='browser-outline'
           />}
           ItemSeparatorComponent={Divider}
-          accessoryRight={() => <Ionicons styleName="disclosure" name="ios-arrow-forward" size={28} />}
+          accessoryRight={() => <Ionicons styleName="disclosure" name="ios-arrow-forward"
+                                          size={28} />}
         />
         <Divider styleName='line' />
       </TouchableOpacity>
@@ -86,16 +88,16 @@ class Tickets extends React.Component {
   }
 
   render() {
-    pageHit(pageName)
+    pageHit( pageName )
     return (
       <View style={styles.container}>
-        <NavigationEvents onWillFocus={payload => pageHit(pageName)} />
+        <NavigationEvents onWillFocus={payload => pageHit( pageName )} />
         {!this.props.userId ? (
           <Text styleName='h-center'>Debe iniciar sesión para visualizar sus entradas</Text>
         ) : null}
         {this.props.userId ? (
           <Query
-            query={ticketsQry(this.props.userId)}
+            query={ticketsQry( this.props.userId )}
             fetchPolicy='network-only'
             notifyOnNetworkStatusChange
           >
@@ -109,7 +111,7 @@ class Tickets extends React.Component {
                   {eventUserTicket && eventUserTicket.length === 0 && this.props.userId ? (
                     <Text styleName='h-center'>No posee entradas vigentes</Text>
                   ) : profile ? (
-                    eventUserTicket.map(ticket => this.renderTicket(ticket))
+                    eventUserTicket.map( ticket => this.renderTicket( ticket ) )
                   ) : null}
                 </ScrollView>
               )
@@ -134,12 +136,12 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     openWebView: url => {
-      dispatch(openWebView(url))
+      dispatch( openWebView( url ) )
     },
   }
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Tickets)
+  mapDispatchToProps,
+)( Tickets )

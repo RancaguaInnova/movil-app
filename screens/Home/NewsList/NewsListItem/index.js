@@ -67,7 +67,8 @@ const ItemImage = (data) => (
 )
 const ButtonReadMore = (data, onClickNews) => {
   return (
-    <View>{data && data.externalUrl?<Button onClick={() => onClickNews( data )} size='tiny'>Leer Mas</Button>:''}</View>
+    <View>{data && data.externalUrl ?
+      <Button onClick={() => onClickNews( data )} size='tiny'>Leer Mas</Button> : ''}</View>
   )
 }
 const NewsListItem = ({ data, onClickNews }) => {
