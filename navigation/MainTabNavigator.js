@@ -63,7 +63,7 @@ InformationStack.navigationOptions = {
       <Tab
         color={tintColor}
         focused={focused}
-        icon='ios-information-circle-outline'
+        icon='ios--circle-outline'
         title='Información'
       />
     )

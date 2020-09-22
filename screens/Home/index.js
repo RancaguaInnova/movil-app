@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ScrollView,View } from 'react-native'
+import { ScrollView,View,SafeAreaView } from 'react-native'
 //import { NavigationEvents } from 'react-navigation'
 import { pageHit } from '/helpers/analytics'
 import styles from './styles'

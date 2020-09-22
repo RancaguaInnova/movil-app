@@ -1,7 +1,7 @@
 import { AppLoading, Asset, Icon, Linking } from 'expo'
 import * as Font from 'expo-font'
 
-import { Platform, StatusBar, StyleSheet, Text, View, YellowBox } from 'react-native'
+import { Platform, StatusBar, StyleSheet, Text, View, YellowBox ,SafeAreaView} from 'react-native'
 import { Provider, connect } from 'react-redux'
 import { client, recoverSession } from 'providers/ApolloProvider'
 
@@ -20,6 +20,8 @@ import store from 'providers/StateProvider'
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { default as theme } from './theme.json'; // <-- Import app theme
+
 
 
 YellowBox.ignoreWarnings([ 'Require cycle:' ])
@@ -66,9 +68,10 @@ export default class App extends React.Component {
 			)
 		} else {
 			return (
-        <>
+        <SafeAreaView style={{ flex: 1 }}>
+
         <IconRegistry icons={EvaIconsPack}/>
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva}  theme={{ ...eva.light, ...theme }}>
 				<ApolloProvider client={client}>
 					<Provider store={store}>
 						<WebView />
@@ -90,7 +93,7 @@ export default class App extends React.Component {
 					</Provider>
 				</ApolloProvider>
       </ApplicationProvider>
-        </>
+        </SafeAreaView>
 			)
 		}
 	}

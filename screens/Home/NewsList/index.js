@@ -21,11 +21,13 @@ class NewsList extends React.Component {
 
   onClickNews = async news => {
     try {
+      alert(news.externalUrl)
       if (news.externalUrl && news.externalUrl.trim() !== '') {
         this.props.openWebView(news.externalUrl)
         event('click_news', news.externalUrl)
       }
     } catch (error) {
+      alert(error)
       this.setState({ currentNews: '' })
     }
   }

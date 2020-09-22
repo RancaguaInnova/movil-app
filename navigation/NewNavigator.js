@@ -10,18 +10,26 @@ import Information from 'screens/Information'
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const PersonIcon = (props) => (
-  <Icon {...props} name='person-outline'/>
+  <Icon {...props} name='home'/>
 );
-
+const InformationIcon = (props) => (
+  <Icon {...props} name='info'/>
+);
+const ServicesIcon = (props) => (
+  <Icon {...props} name='list'/>
+);
+const CalendarIcon = (props) => (
+  <Icon {...props} name='calendar'/>
+);
 
 const BottomTabBar = ({ navigation, state }) => (
   <BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
     <BottomNavigationTab title='Inicio'   icon={PersonIcon}/>
-    <BottomNavigationTab title='Calendario'  icon={PersonIcon}/>
-    <BottomNavigationTab title='Servicios'  icon={PersonIcon}/>
-    <BottomNavigationTab title='Información'  icon={PersonIcon}/>
+    <BottomNavigationTab title='Calendario'  icon={CalendarIcon}/>
+    <BottomNavigationTab title='Servicios'  icon={ServicesIcon}/>
+    <BottomNavigationTab title='Información'  icon={InformationIcon}/>
 
   </BottomNavigation>
 );

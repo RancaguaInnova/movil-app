@@ -1,30 +1,35 @@
-import { Alert, ScrollView ,TouchableOpacity,View,StyleSheet} from 'react-native'
-import { Divider, Text } from '@ui-kitten/components'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Divider, Icon, ListItem, Text } from '@ui-kitten/components'
 import { event, pageHit } from '/helpers/analytics'
 import moment from 'moment'
 import AppLink from 'react-native-app-link'
 import Auth from 'screens/Auth'
 import CustomHeader from 'components/CustomHeader'
 import { Ionicons } from '@expo/vector-icons'
+
 import Loading from 'components/Loading'
-import { NavigationEvents } from 'react-navigation'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SectionDivider from 'components/SectionDivider'
 import SubHeader from 'components/SubHeader'
 import { parseUrl } from '/helpers/url'
-import  './styles'
-import textStyles from 'styles/texts'
+import './styles'
+
+
 import autobind from 'autobind-decorator'
+
 const pageName = 'services'
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   row: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   text: {
     margin: 2,
+  },
+  icon: {
+    width: 32,
+    height: 32,
   },
 });
 export default class Services extends React.Component {
@@ -166,22 +171,23 @@ export default class Services extends React.Component {
     renderRow(app) {
         return (
             <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
-                <View style={styles.row}>
-                    <Ionicons name={app.icon || 'ios-apps'} size={30} style={styles.leftIcon} />
-                    <View styleName="vertical">
-                      <Text style={styles.text} category='s1'>
-                            {app.name}
-                        </Text>
-                        <Text
-                            numberOfLines={3}
-                            style={{ ...textStyles.rowText, paddingTop: 10, paddingLeft: 5, paddingRight: 5 }}
-                        >
-                            {app.description}
-                        </Text>
-                    </View>
-                    <Ionicons styleName="disclosure" name="ios-arrow-forward" size={28} />
-                </View>
-                <Divider styleName="line" />
+         <View>
+                <ListItem
+                  title={app.name}
+                  description={app.description}
+                  accessoryLeft={() => <Icon
+                    style={styles.icon}
+                    fill='#FE0747'
+                    name='browser-outline'
+                  />}
+                  ItemSeparatorComponent={Divider}
+                  accessoryRight={() => <Ionicons styleName="disclosure" name="ios-arrow-forward"
+                                                  size={28} />}
+                />
+                <Divider styleName='line' />
+              </View>
+
+
             </TouchableOpacity>
         )
     }
