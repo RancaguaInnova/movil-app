@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableWithoutFeedback } from 'react-native'
-import { View, Text, Switch, Subtitle } from '@shoutem/ui'
+import { View } from 'react-native'
+import {Text, Toggle, Subtitle } from '@ui-kitten/components'
 import autobind from 'autobind-decorator'
 import styles from './styles'
 
-export default class Toggle extends React.Component {
+export default class ToggleClass extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.bool,
@@ -34,10 +34,10 @@ export default class Toggle extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.label}>
-          <Subtitle>{this.props.label}</Subtitle>
+          <Text style={styles.text} category='h3'>{this.props.label}</Text>
         </View>
         <View style={styles.switch}>
-          <Switch
+          <Toggle
             style={styles.switch}
             value={this.props.value}
             onValueChange={this.handleChange}

@@ -1,22 +1,27 @@
 import React from 'react'
-import { View, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
-import { Alert, Text } from 'react-native'
+import { Text, Divider, Tooltip } from '@ui-kitten/components';
+import { Alert,View ,TouchableOpacity,StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
-
 import textStyles from 'styles/texts'
-import styles from './styles'
+import './styles'
 import Auth from 'screens/Auth'
 import { openModal } from 'providers/StateProvider/Modal/actions'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
-import { getSession } from 'providers/ApolloProvider'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
-
 import { parseUrl } from '/helpers/url'
 import moment from 'helpers/date/moment'
 import { event } from '/helpers/analytics'
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 
 class Item extends React.Component {
   static propTypes = {
@@ -65,19 +70,20 @@ class Item extends React.Component {
     return (
       <View style={styles.container}>
         <Divider styleName='section-header'>
-          <Caption style={{ fontSize: 15 }}>
+          <Tooltip style={{ fontSize: 15 }}>
             {date} / {item.time} HRS.
-          </Caption>
+          </Tooltip>
         </Divider>
         <TouchableOpacity onPress={() => this.onClickItem(item)} style={styles.touchableRow}>
-          <Row style={{ ...styles.container, marginBottom: 5 }}>
+          <View style={styles.row}>
             <View styleName='vertical' style={styles.itemContent}>
-              <Subtitle
+              <Text
+                category='s1'
                 numberOfLines={2}
                 style={{ ...textStyles.rowSubtitle, ...styles.itemSubtitle }}
               >
                 {item.name}
-              </Subtitle>
+              </Text>
               {item.description ? (
                 <Text
                   numberOfLines={3}
@@ -102,7 +108,7 @@ class Item extends React.Component {
             {item.externalUrl && item.externalUrl.trim() !== '' ? (
               <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
             ) : null}
-          </Row>
+          </View>
         </TouchableOpacity>
       </View>
     )

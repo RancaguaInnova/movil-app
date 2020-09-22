@@ -1,21 +1,16 @@
 import React from 'react'
 import {
-  ScrollView,
-  View,
   Text,
-  Title,
-  Subtitle,
-  Row,
   Divider,
-  TouchableOpacity,
-} from '@shoutem/ui'
+} from '@ui-kitten/components'
+import {  StyleSheet,View ,TouchableOpacity,ScrollView} from 'react-native';
+
 import { connect } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons'
 import { pageHit, event } from '/helpers/analytics'
-import { NavigationEvents } from 'react-navigation'
 import Identification from './Identification'
 import Contact from './Contact'
-import styles from './styles'
+import './styles'
 import textStyles from 'styles/texts'
 import PropTypes from 'prop-types'
 import { Form } from 'simple-react-form'
@@ -25,9 +20,17 @@ import LightButton from 'components/LightButton'
 import autobind from 'autobind-decorator'
 import { Alert } from 'react-native'
 import SectionDivider from 'components/SectionDivider'
-import { withNavigation } from 'react-navigation'
 
 import { updateProfile, logout } from 'providers/StateProvider/Auth/actions'
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 
 class Profile extends React.Component {
   static propTypes = {
@@ -173,7 +176,7 @@ class Profile extends React.Component {
   renderSection(section) {
     return (
       <TouchableOpacity key={section.name}>
-        <Row styleName='small'>
+        <View style={styles.row}>
           <Ionicons name={section.icon} size={30} style={styles.leftIcon} />
           <View styleName='vertical'>
             {/* <Subtitle style={textStyles.rowSubtitle}>{section.name}</Subtitle> */}
@@ -184,7 +187,7 @@ class Profile extends React.Component {
               {section.description}
             </Text>
           </View>
-        </Row>
+        </View>
         <Divider styleName='line' />
         {<section.component active={true} />}
       </TouchableOpacity>

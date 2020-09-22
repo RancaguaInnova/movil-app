@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './styles.js'
 import CustomHeader from '/components/CustomHeader'
-import WebViewFooter from './WebViewFooter'
 import PropTypes from 'prop-types'
 import { WebView } from 'react-native-webview'
 import autobind from 'autobind-decorator'
@@ -15,8 +14,6 @@ import {
   StyleSheet,
   Button,
 } from 'react-native'
-import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
-import { event } from '/helpers/analytics'
 import { connect } from 'react-redux'
 import { closeWebView } from 'providers/StateProvider/WebView/actions'
 

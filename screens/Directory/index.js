@@ -1,21 +1,17 @@
 import React from 'react'
-import { ScrollView, Button } from 'react-native'
+import { ScrollView, Button,View ,TouchableOpacity,StyleSheet} from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { Ionicons } from '@expo/vector-icons'
 import { pageHit } from '/helpers/analytics'
-import { View, Text, Subtitle, Row, Divider, TouchableOpacity, Caption } from '@shoutem/ui'
+import {Text, Divider  } from '@ui-kitten/components';
 import { Query } from 'react-apollo'
 import autobind from 'autobind-decorator'
-import PropTypes from 'prop-types'
-
-import styles from './styles'
+import './styles'
 import textStyles from 'styles/texts'
-
 import Loading from 'providers/ApolloProvider/Loading'
 import Retry from 'providers/ApolloProvider/Retry'
 import { directoryListQry } from 'providers/ApolloProvider/queries'
 
-import moment from 'helpers/date/moment'
 
 import SubHeader from 'components/SubHeader'
 import SectionDivider from 'components/SectionDivider'
@@ -23,6 +19,16 @@ import CustomHeader from 'components/CustomHeader'
 import DepartmentDetail from './DepartmentDetail'
 
 const pageName = 'directory/list'
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
+
 export default class Directory extends React.Component {
   static navigationOptions = ({ navigation }) => {
     if (navigation.getParam('header')) {
@@ -49,7 +55,7 @@ export default class Directory extends React.Component {
             paddingTop: 25,
           }}
         >
-          <Row>
+          <View style={styles.row}>
             <TouchableOpacity
               style={{
                 width: 60,
@@ -63,11 +69,11 @@ export default class Directory extends React.Component {
               <Ionicons name='ios-arrow-back' size={25} style={styles.leftIcon} />
             </TouchableOpacity>
             <View styleName='vertical'>
-              <Subtitle styleName='h-center' numberOfLines={2}>
+              <Text style={styles.text} category='h3'>
                 {item.name}
-              </Subtitle>
+              </Text>
             </View>
-          </Row>
+          </View>
         </View>
       ),
     })

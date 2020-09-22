@@ -1,21 +1,30 @@
 import React from 'react'
-import { ScrollView, Alert } from 'react-native'
+import { ScrollView, Alert,View,TouchableOpacity,StyleSheet } from 'react-native'
 import { pageHit, event } from '/helpers/analytics'
 import { NavigationEvents } from 'react-navigation'
-import { View, Text, Divider, Caption, Row, Subtitle, Image, TouchableOpacity } from '@shoutem/ui'
-import styles, { touchableIcons } from './styles'
+import { Text, Divider, Avatar,  } from '@ui-kitten/components';
+import { touchableIcons } from './styles'
 import textStyles from './../../../styles/texts'
 import PropTypes from 'prop-types'
-import moment from '../../../helpers/date/moment'
 import SubHeader from '../../../components/SubHeader'
 import SectionDivider from '../../../components/SectionDivider'
 import { Ionicons } from '@expo/vector-icons'
-import autobind from 'autobind-decorator'
 import email from 'react-native-email'
 import call from 'react-native-phone-call'
 import { graphql } from 'react-apollo'
 import { officialsByDepartmentQry } from 'providers/ApolloProvider/queries'
+
 const pageName = 'directory/detail'
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
+
 class DepartmentDetail extends React.Component {
   static propTypes = {
     department: PropTypes.object,
@@ -86,17 +95,17 @@ class DepartmentDetail extends React.Component {
       : `${phone.areaCode || ''}${phone.number || ''}`
     return (
       <View key={officer._id}>
-        <Row styleName='small'>
+        <View style={styles.row}>
           {officer.imageUrl ? (
-            <Image styleName='small rounded-corners' source={{ uri: officer.imageUrl }} />
+            <Avatar styleName='small rounded-corners' source={{ uri: officer.imageUrl }} />
           ) : (
             <Ionicons name='ios-contact' size={30} style={styles.leftIcon} />
           )}
 
           <View styleName='vertical'>
-            <Subtitle style={textStyles.rowSubtitle} numberOfLines={2}>
+            <Text style={styles.text} category='s1'>
               {fullName}
-            </Subtitle>
+            </Text>
             <Text numberOfLines={2} style={textStyles.rowText}>
               {officer.position}
             </Text>
@@ -105,7 +114,7 @@ class DepartmentDetail extends React.Component {
           {this.renderEmailIcon(officer.contactInformation.email)}
 
           {this.renderPhoneIcon(contactPhone)}
-        </Row>
+        </View>
         <Divider styleName='line' />
       </View>
     )

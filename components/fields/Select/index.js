@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from '@shoutem/ui'
-import { Dimensions, ScrollView } from 'react-native'
+import {  Text } from '@ui-kitten/components';
+import { Dimensions, ScrollView,TouchableOpacity,View } from 'react-native'
 import styles from './styles'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'

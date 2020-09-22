@@ -1,29 +1,30 @@
 import React from 'react'
-import { ScrollView, Alert } from 'react-native'
+import { ScrollView, View ,TouchableOpacity,StyleSheet} from 'react-native'
 import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { View, TouchableOpacity, Row, Subtitle, Text, Divider, Caption } from '@shoutem/ui'
+import {Text, Divider, Tooltip } from '@ui-kitten/components';
 import { Ionicons } from '@expo/vector-icons'
-import { WebBrowser } from 'expo'
 import { Query } from 'react-apollo'
-import autobind from 'autobind-decorator'
-
 import textStyles from 'styles/texts'
-import styles from './styles'
-
+import './styles'
 import { pageHit, event } from '/helpers/analytics'
-import moment from 'helpers/date/moment'
 import { parseUrl } from '/helpers/url'
-import { getSession } from 'providers/ApolloProvider'
 import { ticketsQry } from 'providers/ApolloProvider/queries'
-import { client } from 'providers/ApolloProvider/client'
 import Retry from 'providers/ApolloProvider/Retry'
 import Loading from 'providers/ApolloProvider/Loading'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
 
 const pageName = 'calendar/tickets'
-
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 class Tickets extends React.Component {
   static propTypes = {
     userId: PropTypes.string,
@@ -48,16 +49,16 @@ class Tickets extends React.Component {
       ''}`
     return (
       <TouchableOpacity key={ticket._id} onPress={() => this.onClickTicket(ticket)}>
-        <Row styleName='small'>
+        <View style={styles.row}>
           <View styleName='vertical'>
-            <Subtitle style={textStyles.rowSubtitle}>{ticket.event.name}</Subtitle>
+            <Text style={textStyles.rowSubtitle}>{ticket.event.name}</Text>
             <Text numberOfLines={2} style={textStyles.rowText}>
               {srtAddress}
             </Text>
-            <Caption style={textStyles.rowCaption}>{ticket.event.date}</Caption>
+            <Text style={textStyles.rowCaption} >{ticket.event.date}</Text>
           </View>
           <Ionicons styleName='disclosure' name='ios-arrow-forward' size={28} />
-        </Row>
+        </View>
         <Divider styleName='line' />
       </TouchableOpacity>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableWithoutFeedback, Text } from 'react-native'
-import { View, TextInput, Subtitle } from '@shoutem/ui'
+import {View ,TouchableWithoutFeedback, Text } from 'react-native'
+import {Input } from '@ui-kitten/components';
 import autobind from 'autobind-decorator'
 import rut from 'rut.js'
 import styles from './styles'
@@ -45,7 +45,7 @@ export default class TextInputField extends React.Component {
       <View>
         <View style={{ flex: 1 }}>
           <Text>{this.props.label}</Text>
-          <TextInput
+          <Input
             autoCapitalize='none'
             autoCorrect={false}
             blurOnSubmit

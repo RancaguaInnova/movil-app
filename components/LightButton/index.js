@@ -1,11 +1,22 @@
 import React from 'react'
-import { View, Text, Caption } from '@shoutem/ui'
+import { Text, Tooltip } from '@ui-kitten/components';
 import { TouchableWithoutFeedback } from 'react-native'
-import styles from './styles.js'
+import './styles.js'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
 import { Circle } from 'react-native-progress'
+import { StyleSheet, View } from 'react-native';
 
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 export default class AppButton extends React.Component {
   static propTypes = {
     title: PropTypes.string,
@@ -80,7 +91,7 @@ export default class AppButton extends React.Component {
   renderText () {
     if (this.props.loading) return
     const textStyles = this.getTextStyles()
-    return <Caption style={textStyles}>{this.props.title}</Caption>
+    return <Text style={textStyles} >{this.props.title}</Text>
   }
 
   render () {

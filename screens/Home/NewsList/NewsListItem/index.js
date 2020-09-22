@@ -2,8 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import textStyles from '../../../../styles/texts'
 import moment from '../../../../helpers/date/moment'
-import { Image, View, Row, Subtitle, Caption, TouchableOpacity, Text, Divider } from '@shoutem/ui'
+import { Avatar, Text, Divider, Tooltip } from '@ui-kitten/components'
+import { StyleSheet,View,TouchableOpacity } from 'react-native'
 
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 export default class NewsListItem extends React.Component {
   static propTypes = {
     data: PropTypes.object,
@@ -27,16 +37,16 @@ export default class NewsListItem extends React.Component {
     }
     return (
       <TouchableOpacity onPress={() => this.props.onClickNews(newsData)}>
-        <Row style={{ marginBottom: 5 }}>
-          <Image styleName='small rounded-corners' source={newsData.image} />
+        <View style={styles.row}>
+          <Avatar styleName='small rounded-corners' source={newsData.image} />
           <View styleName='vertical stretch space-between'>
-            <Subtitle style={textStyles.rowSubtitle}>{newsData.title}</Subtitle>
+            <Text style={styles.text} category='s1'>{newsData.title}</Text>
             <Text numberOfLines={4} style={textStyles.rowText}>
               {newsData.subtitle}
             </Text>
-            <Caption style={textStyles.rowCaption}>{newsData.date}</Caption>
+            <Tooltip style={textStyles.rowCaption}>{newsData.date}</Tooltip>
           </View>
-        </Row>
+        </View>
         <Divider styleName='line' />
       </TouchableOpacity>
     )

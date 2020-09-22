@@ -1,20 +1,26 @@
 import React from 'react'
-import { Alert } from 'react-native'
+import { Alert ,View,TouchableOpacity,ImageBackground,StyleSheet} from 'react-native'
 import { connect } from 'react-redux'
 import { Query } from 'react-apollo'
 import PropTypes from 'prop-types'
-import { View, Tile, Subtitle, Overlay, ImageBackground, TouchableOpacity } from '@shoutem/ui'
-
-import styles from './styles.js'
-
-import Retry from 'providers/ApolloProvider/Retry'
-import Loading from 'providers/ApolloProvider/Loading'
-import Error from 'providers/ApolloProvider/ApolloError'
+import {Text } from  '@ui-kitten/components';
+import './styles.js'
 import { bannersBySectionQry, getMeQry } from 'providers/ApolloProvider/queries'
 import { openWebView } from 'providers/StateProvider/WebView/actions'
-
+import {  Overlay } from 'react-native-elements';
 import { parseUrl } from '/helpers/url'
 import { event } from '/helpers/analytics'
+
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 
 class SubHeader extends React.Component {
   static propTypes = {
@@ -69,13 +75,13 @@ class SubHeader extends React.Component {
                 >
                   <ImageBackground styleName='large-banner' source={img} style={styles.image}>
                     {!bannerBySection ? (
-                      <Tile style={styles.tile}>
-                        <Overlay styleName='image-overlay'>
-                          <Subtitle numberOfLines={2} style={styles.subTitle}>
+                      <Text style={styles.text} category='h1'>
+                        <Overlay styleName='image-overlay' isVisible>
+                          <Text style={styles.text} category='s1'>
                             {this.props.title}
-                          </Subtitle>
+                          </Text>
                         </Overlay>
-                      </Tile>
+                      </Text>
                     ) : null}
                   </ImageBackground>
                 </TouchableOpacity>

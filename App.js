@@ -66,7 +66,7 @@ export default class App extends React.Component {
 					<Provider store={store}>
 						<WebView />
 						<CustomModal />
-						<SideMenu
+       		<SideMenu
 							menu={<MainMenu />}
 							isOpen={this.state.drawerOpen}
 							menuPosition='right'
@@ -79,6 +79,7 @@ export default class App extends React.Component {
 								<AppNavigator />
 							</View>
 						</SideMenu>
+
 					</Provider>
 				</ApolloProvider>
 			)

@@ -3,7 +3,6 @@ import styles from './styles.js'
 import CustomHeader from '/components/CustomHeader'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { WebView } from 'react-native'
 import autobind from 'autobind-decorator'
 import { closeModal } from 'providers/StateProvider/Modal/actions'
 import {
@@ -16,8 +15,6 @@ import {
   StyleSheet,
   Button,
 } from 'react-native'
-import { Text, TouchableOpacity, NavigationBar, Title } from '@shoutem/ui'
-import { event } from '/helpers/analytics'
 
 class CustomModal extends React.Component {
   static propTypes = {

@@ -1,5 +1,5 @@
-import { Alert, ScrollView } from 'react-native'
-import { Caption, Divider, Row, Subtitle, Text, TouchableOpacity, View } from '@shoutem/ui'
+import { Alert, ScrollView ,TouchableOpacity,View,StyleSheet} from 'react-native'
+import { Divider, Text } from '@ui-kitten/components'
 import { event, pageHit } from '/helpers/analytics'
 import moment from 'moment'
 import AppLink from 'react-native-app-link'
@@ -12,13 +12,21 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import SectionDivider from 'components/SectionDivider'
 import SubHeader from 'components/SubHeader'
-import { WebBrowser } from 'expo'
 import { parseUrl } from '/helpers/url'
-import styles from './styles'
+import  './styles'
 import textStyles from 'styles/texts'
 import autobind from 'autobind-decorator'
 const pageName = 'services'
 
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 export default class Services extends React.Component {
     static propTypes = {
         session: PropTypes.object,
@@ -158,12 +166,12 @@ export default class Services extends React.Component {
     renderRow(app) {
         return (
             <TouchableOpacity key={app.name} onPress={() => this.openApp(app)}>
-                <Row style={{ marginBottom: 5 }}>
+                <View style={styles.row}>
                     <Ionicons name={app.icon || 'ios-apps'} size={30} style={styles.leftIcon} />
                     <View styleName="vertical">
-                        <Subtitle style={{ ...textStyles.rowSubtitle, marginTop: 5 }}>
+                      <Text style={styles.text} category='s1'>
                             {app.name}
-                        </Subtitle>
+                        </Text>
                         <Text
                             numberOfLines={3}
                             style={{ ...textStyles.rowText, paddingTop: 10, paddingLeft: 5, paddingRight: 5 }}
@@ -172,7 +180,7 @@ export default class Services extends React.Component {
                         </Text>
                     </View>
                     <Ionicons styleName="disclosure" name="ios-arrow-forward" size={28} />
-                </Row>
+                </View>
                 <Divider styleName="line" />
             </TouchableOpacity>
         )

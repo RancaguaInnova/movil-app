@@ -1,6 +1,6 @@
 import React from 'react'
-import { TouchableWithoutFeedback } from 'react-native'
-import { View, Text, TextInput } from '@shoutem/ui'
+import { View,TouchableWithoutFeedback } from 'react-native'
+import {  Text, Input } from '@ui-kitten/components';
 import styles from './styles.js'
 import PropTypes from 'prop-types'
 import autobind from 'autobind-decorator'
@@ -42,7 +42,7 @@ export default class TableTextInput extends React.Component {
             <View style={styles.labelContainer}>
               <Text style={styles.label}>{this.props.label}</Text>
             </View>
-            <TextInput
+            <Input
               ref='input'
               style={styles.input}
               autoCapitalize='none'

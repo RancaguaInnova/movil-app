@@ -1,18 +1,24 @@
 import React from 'react'
-import styles from './styles.js'
+import  './styles.js'
 import PropTypes from 'prop-types'
-import * as Animatable from 'react-native-animatable'
-import { NavigationEvents } from 'react-navigation'
-import TimerMixin from 'react-timer-mixin'
+
 import {
-  View,
+
   Text,
-  TouchableOpacity,
   Divider,
-  Caption,
-  Overlay,
-  ImageBackground,
-} from '@shoutem/ui'
+  Tooltip,
+} from '@ui-kitten/components';
+import { StyleSheet, View ,TouchableOpacity} from 'react-native';
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 
 export default class SectionDivider extends React.Component {
   static propTypes = {
@@ -45,41 +51,20 @@ export default class SectionDivider extends React.Component {
     this.setState(state)
   }
 
-  componentWillUnmount() {
-    /* this.state.timer.map(timer => {
-      TimerMixin.clearTimeout(timer)
-    }) */
-  }
+
 
   render() {
     const title = this.props.title.toUpperCase()
     const menu = this.state.menu || []
     return (
       <View>
-        {/* !this.props.modal ? (
-          <NavigationEvents
-            onWillFocus={payload => {
-              const state = this.state
-              state.animation = this.animation.in
-              state.timer.push(
-                TimerMixin.setTimeout(() => {
-                  const st = this.state
-                  st.animation = this.animation.out
-                  this.setState(st)
-                }, 250)
-              )
-              this.setState(state)
-            }}
-          />
-        ) : null */}
 
         {this.props.title !== '' ? (
           <Divider styleName='section-header' style={styles.divider}>
-            {/* <Animatable.View animation={this.state.animation} iterationCount={1} duration={200}> */}
-            <Caption styleName='h-center' style={styles.caption} numberOfLines={2}>
+            <Tooltip styleName='h-center' style={styles.caption} numberOfLines={2}>
               {title}
-            </Caption>
-            {/* </Animatable.View> */}
+            </Tooltip>
+
           </Divider>
         ) : null}
 
@@ -114,6 +99,3 @@ export default class SectionDivider extends React.Component {
     )
   }
 }
-
-//SectionDivider = Animatable.createAnimatableComponent(SectionDivider)
-//export default SectionDivider

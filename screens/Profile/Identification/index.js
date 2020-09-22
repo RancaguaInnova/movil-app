@@ -1,12 +1,21 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View,StyleSheet } from 'react-native'
 import { Divider } from 'react-native-elements'
-import { Subtitle } from '@shoutem/ui'
+import { Text } from '@ui-kitten/components'
 import { Field } from 'simple-react-form'
 import { TextInput, Select, DateInput } from 'components/fields'
 import PropTypes from 'prop-types'
-import styles from './styles'
+import  './styles'
 
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    margin: 2,
+  },
+});
 export default class IdentificationInformation extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
@@ -26,7 +35,7 @@ export default class IdentificationInformation extends React.Component {
             placeHolder='Ingrese su nombre'
           />
           <Field fieldName='profile.lastName' type={TextInput} label='Apellido:' />
-          <Subtitle>Fecha de nacimiento</Subtitle>
+          <Text style={styles.text} category='h3'>Fecha de nacimiento</Text>
           <Field
             fieldName='profile.birthdate'
             type={DateInput}
