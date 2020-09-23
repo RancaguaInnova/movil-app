@@ -15,6 +15,8 @@ import { Provider } from 'react-redux'
 import store from './providers/StateProvider'
 import AppNavigator from './navigation/NewNavigator'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
+import WebView from './components/WebView'
+import CustomModal from './components/CustomModal'
 
 
 const styles = StyleSheet.create({
@@ -50,6 +52,8 @@ const renderTitleApp=()=>(
 
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+      <WebView />
+      <CustomModal />
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
         <ApolloProvider client={client}>
