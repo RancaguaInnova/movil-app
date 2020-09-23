@@ -52,12 +52,13 @@ const renderTitleApp=()=>(
 
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
-      <WebView />
-      <CustomModal />
+
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
         <ApolloProvider client={client}>
           <Provider store={store}>
+            <WebView />
+            <CustomModal />
             <TopNavigation
               title={renderTitleApp}
               accessoryRight={renderSettingsAction}
