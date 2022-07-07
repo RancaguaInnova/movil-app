@@ -27,7 +27,7 @@
 		"expo-svg-uri": "^1.1.0",
 		"graphql-tag": "^2.10.0",
 		"lodash": "^4.17.19",
-		"moment": "^2.23.0",
+		"moment": "^2.29.4",
 		"prop-types": "^15.6.2",
 		"query-string": "^6.2.0",
 		"react": "16.9.0",
